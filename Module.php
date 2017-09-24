@@ -1,82 +1,23 @@
 <?php
 namespace lawiet\rbac;
 
-use yii\base\Module as BaseModule;
-use yii\filters\AccessControl;
-
 /**
- * module for rbac.
- *
- * @author Jorge Gonzalez
- * @email ljorgelgonzalez@outlook.com
- *
- * @since 1.0
+ * lawiet module definition class
  */
-
-class Module extends BaseModule
-{
-    /** 
-     * @inheritdoc 
-     */ 
-    public $controllerNamespace = 'lawiet\rbac\controllers'; 
+class Module extends \yii\base\Module
 {
     /**
-     * @var string default route
+     * @inheritdoc
      */
-    public $defaultRoute = 'role/index';
+    public $controllerNamespace = 'app\lawiet\rbac\controllers';
 
     /**
-     * @var array
+     * @inheritdoc
      */
-    public $admins = [];
-
-	/**
-     * @var string The Administrator permission name.
-     */
-    public $adminPermission;
-
-    /** @inheritdoc */
-    public function behaviors()
+    public function init()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow'         => true,
-                        'roles'         => ['@'],
-                        'matchCallback' => [$this, 'checkAccess'],
-                    ]
-                ],
-            ],
-        ];
-    }
+        parent::init();
 
-    /** 
-     * @inheritdoc 
-     */ 
-    public function init() 
-    { 
-        parent::init(); 
-
-        // custom initialization code goes here 
-    }
-
-    /**
-     * Checks access.
-     *
-     * @return bool
-     */
-    public function checkAccess()
-    {
-        $user = \Yii::$app->user->identity;
-
-        if (method_exists($user, 'getIsAdmin')) {
-            return $user->getIsAdmin();
-        } else if ($this->adminPermission) {
-            return $this->adminPermission ? \Yii::$app->user->can($this->adminPermission) : false;
-        } else {
-            return isset($user->username) ? in_array($user->username, $this->admins) : false;
-        }
+        // custom initialization code goes here
     }
 }
