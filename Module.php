@@ -1,7 +1,8 @@
 <?php
 namespace lawiet\rbac;
 
-use yii\base\Module as BaseModule;
+use Yii;
+use yii\helpers\Inflector;
 use yii\filters\AccessControl;
 
 /**
@@ -13,7 +14,7 @@ use yii\filters\AccessControl;
  * @since 1.0
  */
 
-class Module extends BaseModule
+class Module extends yii\base\Module
 {
     /** 
      * @inheritdoc 
@@ -55,7 +56,9 @@ class Module extends BaseModule
     { 
         parent::init(); 
 
-        // custom initialization code goes here 
+		if (class_exists('yii\jui\JuiAsset')) {
+            Yii::$container->set('mdm\admin\AutocompleteAsset', 'yii\jui\JuiAsset');
+        }
     }
 
     /**
