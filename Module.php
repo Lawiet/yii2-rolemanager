@@ -4,7 +4,6 @@ namespace lawiet\rbac;
 use Yii;
 use yii\helpers\Inflector;
 use yii\filters\AccessControl;
-use lawiet\rbac\assets\RbacAsset;
 
 /**
  * module for rbac.
