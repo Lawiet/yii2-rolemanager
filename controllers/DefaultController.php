@@ -1,6 +1,6 @@
 <?php
 
-namespace app\lawiet\rbac\controllers;
+namespace lawiet\rbac\controllers;
 
 use yii\web\Controller;
 
