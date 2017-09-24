@@ -4,6 +4,7 @@ namespace lawiet\rbac;
 use Yii;
 use yii\helpers\Inflector;
 use yii\filters\AccessControl;
+use lawiet\rbac\assets\RbacAsset;
 
 /**
  * module for rbac.
@@ -53,12 +54,10 @@ class Module extends yii\base\Module
      * @inheritdoc 
      */ 
     public function init() 
-    { 
-        parent::init(); 
-
-		if (class_exists('yii\jui\JuiAsset')) {
-            Yii::$container->set('lawiet\rbac\assets\RbacAsset', 'yii\jui\JuiAsset');
-        }
+    {
+		//RbacAsset::register(Yii::$app->view);
+		
+        parent::init();
     }
 
     /**

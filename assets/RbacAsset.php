@@ -15,5 +15,11 @@ use yii\web\AssetBundle;
 
 class RbacAsset extends AssetBundle
 {
-	
+	/** 
+     * @inheritdoc 
+     */ 
+    public function init() 
+    { 
+        echo "hola";
+    }
 }
