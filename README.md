@@ -32,10 +32,24 @@ to the require section of your `composer.json` file.
 Role configuration
 --------------------
 
-    <?php ....
-    'params' => [
-        
-    ]
+In file web.php
+```
+    <?php 
+	....
+	'modules' => [
+        'rbac' => 'lawiet\rbac\Module',
+	],
     ...
     ?>
-    
+```
+
+In file assets/AppAsset.php change yii\web\AssetBundle for lawiet\rbac\assets\RbacAsset
+```
+    <?php 
+	....
+	use lawiet\rbac\assets\RbacAsset as AssetBundle;
+
+	class AppAsset extends AssetBundle
+    ...
+    ?>
+```
