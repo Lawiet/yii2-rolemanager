@@ -57,7 +57,7 @@ class Module extends yii\base\Module
         parent::init(); 
 
 		if (class_exists('yii\jui\JuiAsset')) {
-            Yii::$container->set('mdm\admin\AutocompleteAsset', 'yii\jui\JuiAsset');
+            Yii::$container->set('lawiet\rbac\assets\RbacAsset', 'yii\jui\JuiAsset');
         }
     }
 
