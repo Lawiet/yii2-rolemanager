@@ -32,7 +32,7 @@ to the require section of your `composer.json` file.
 Role configuration
 --------------------
 
-In file web.php
+In file `web.php`
 ```
     <?php 
 	....
@@ -43,13 +43,13 @@ In file web.php
     ?>
 ```
 
-In file assets/AppAsset.php change yii\web\AssetBundle for lawiet\rbac\assets\RbacAsset
+In file `assets/AppAsset.php` change yii\web\AssetBundle for lawiet\rbac\assets\RbacAsset
 ```
     <?php 
 	....
 	use lawiet\rbac\assets\RbacAsset as AssetBundle;
 
-	class AppAsset extends AssetBundle
+	class AppAsset extends AssetBundle {
     ...
     ?>
 ```

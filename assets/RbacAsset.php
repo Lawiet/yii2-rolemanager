@@ -19,7 +19,7 @@ class RbacAsset extends AssetBundle
      * @inheritdoc 
      */ 
     public function init() 
-    { 
-        echo "hola";
+    {
+		parent::init();
     }
 }

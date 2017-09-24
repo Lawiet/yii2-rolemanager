@@ -54,8 +54,6 @@ class Module extends yii\base\Module
      */ 
     public function init() 
     {
-		//RbacAsset::register(Yii::$app->view);
-		
         parent::init();
     }
 
@@ -68,9 +66,8 @@ class Module extends yii\base\Module
     {
         $user = \Yii::$app->user->identity;
 
-        if (!method_exists($user, 'getIsAdmin')) {
-            //return $user->getIsAdmin();
-			return true;
+        if (method_exists($user, 'getIsAdmin')) {
+            return $user->getIsAdmin();
         } else if ($this->adminPermission) {
             return $this->adminPermission ? \Yii::$app->user->can($this->adminPermission) : false;
         } else {
