@@ -15,6 +15,11 @@ use yii\filters\AccessControl;
 
 class Module extends BaseModule
 {
+    /** 
+     * @inheritdoc 
+     */ 
+    public $controllerNamespace = 'lawiet\rbac\controllers'; 
+{
     /**
      * @var string default route
      */
@@ -45,6 +50,16 @@ class Module extends BaseModule
                 ],
             ],
         ];
+    }
+
+    /** 
+     * @inheritdoc 
+     */ 
+    public function init() 
+    { 
+        parent::init(); 
+
+        // custom initialization code goes here 
     }
 
     /**

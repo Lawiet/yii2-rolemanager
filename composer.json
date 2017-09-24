@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "lawiet\\yii2rbac\\": ""
+            "lawiet\\rbac\\": ""
         }
     },
     "scripts": {
