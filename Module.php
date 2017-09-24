@@ -21,11 +21,6 @@ class Module extends BaseModule
     public $controllerNamespace = 'lawiet\rbac\controllers'; 
 
     /**
-     * @var string default route
-     */
-    public $defaultRoute = 'role/index';
-
-    /**
      * @var array
      */
     public $admins = [];
@@ -51,6 +46,7 @@ class Module extends BaseModule
             ],
         ];
     }
+	/* */
 
     /** 
      * @inheritdoc 
@@ -71,8 +67,9 @@ class Module extends BaseModule
     {
         $user = \Yii::$app->user->identity;
 
-        if (method_exists($user, 'getIsAdmin')) {
-            return $user->getIsAdmin();
+        if (!method_exists($user, 'getIsAdmin')) {
+            //return $user->getIsAdmin();
+			return true;
         } else if ($this->adminPermission) {
             return $this->adminPermission ? \Yii::$app->user->can($this->adminPermission) : false;
         } else {
