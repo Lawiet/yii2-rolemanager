@@ -37,14 +37,16 @@ In file `web.php`
     <?php 
 	....
 	'modules' => [
-		'class'=>'lawiet\rbac\Module',
-		'excludes'=>[
-			'modules' => ['rbac'], //List id Modules to RBAC exclude 
-			//'controllers' => ['rbac.default'], //List id controllers to RBAC exclude module.controller
-			//'actions' => ['rbac.default.index'], //List id action to RBAC exclude module.controller.action
-		],
-		'menu'=>[
-			'icon'=>true, // boolean show icon true or false. Default: true
+		'rbac' => [
+			'class'=>'lawiet\rbac\Module',
+			'excludes'=>[
+				//'modules' => ['test'], //List id Modules to RBAC exclude 
+				//'controllers' => ['test.default'], //List id controllers to RBAC exclude module.controller
+				//'actions' => ['test.default.index'], //List id action to RBAC exclude module.controller.action
+			],
+			'menu'=>[
+				'icon'=>true, // boolean show icon true or false. Default: true
+			],
 		],
 	],
 	...
