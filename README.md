@@ -37,7 +37,7 @@ In file `web.php`
     <?php 
 	....
 	'modules' => [
-        'class'=>'lawiet\rbac\Module',
+		'class'=>'lawiet\rbac\Module',
 		'excludes'=>[
 			'modules' => ['rbac'], //List id Modules to RBAC exclude 
 			//'controllers' => ['rbac.default'], //List id controllers to RBAC exclude module.controller
@@ -47,7 +47,7 @@ In file `web.php`
 			'icon'=>true, // boolean show icon true or false. Default: true
 		],
 	],
-    ...
+	...
     ?>
 ```
 
@@ -58,7 +58,7 @@ In file `assets/AppAsset.php` change yii\web\AssetBundle for lawiet\rbac\web\Ass
 	use lawiet\rbac\web\AssetBundle;
 
 	class AppAsset extends AssetBundle {
-    ...
+	...
     ?>
 ```
 
@@ -69,7 +69,7 @@ In each file `controllers/xxxController.php` change yii\web\Controller for lawie
 	use lawiet\rbac\web\Controller;
 
 	class xxxController extends Controller {
-    ...
+	...
     ?>
 ```
 
@@ -80,9 +80,9 @@ And remove method behaviors or modify and add the method parent
 	class xxxController extends Controller {
 	....
 	public function behaviors()
-    {
+	{
 		return parent::behaviors();
 	}
-    ...
+	...
     ?>
 ```
