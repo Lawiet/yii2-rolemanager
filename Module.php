@@ -19,35 +19,7 @@ class Module extends yii\base\Module
     /** 
      * @inheritdoc 
      */ 
-    public $controllerNamespace = 'lawiet\rbac\controllers'; 
-
-    /**
-     * @var array
-     */
-    public $admins = [];
-
-	/**
-     * @var string The Administrator permission name.
-     */
-    public $adminPermission;
-
-    /** @inheritdoc */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow'         => true,
-                        'roles'         => ['@'],
-                        'matchCallback' => [$this, 'checkAccess'],
-                    ]
-                ],
-            ],
-        ];
-    }
-	/* */
+    public $controllerNamespace = 'lawiet\rbac\controllers';
 
     /** 
      * @inheritdoc 
@@ -55,23 +27,5 @@ class Module extends yii\base\Module
     public function init() 
     {
         parent::init();
-    }
-
-    /**
-     * Checks access.
-     *
-     * @return bool
-     */
-    public function checkAccess()
-    {
-        $user = \Yii::$app->user->identity;
-
-        if (method_exists($user, 'getIsAdmin')) {
-            return $user->getIsAdmin();
-        } else if ($this->adminPermission) {
-            return $this->adminPermission ? \Yii::$app->user->can($this->adminPermission) : false;
-        } else {
-            return isset($user->username) ? in_array($user->username, $this->admins) : false;
-        }
     }
 }

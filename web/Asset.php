@@ -1,8 +1,8 @@
 <?php
 
-namespace lawiet\rbac\assets;
+namespace lawiet\rbac\web;
 
-use yii\web\AssetBundle;
+use yii\web\AssetBundle as AAssetBundle;
 use yii\filters\AccessControl;
 
 /**
@@ -14,7 +14,7 @@ use yii\filters\AccessControl;
  * @since 1.0
  */
 
-class RbacAsset extends AssetBundle
+class AssetBundle extends AAssetBundle
 {
 	
 	/** 

@@ -2,13 +2,21 @@
 
 namespace lawiet\rbac\controllers;
 
-use yii\web\Controller;
+use lawiet\rbac\web\Controller;
 
 /**
  * Default controller for the `lawiet` module
  */
 class DefaultController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+		return parent::behaviors();
+    }
+	
     /**
      * Renders the index view for the module
      * @return string
