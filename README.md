@@ -37,7 +37,15 @@ In file `web.php`
     <?php 
 	....
 	'modules' => [
-        'rbac' => 'lawiet\rbac\Module',
+        'class'=>'lawiet\rbac\Module',
+		'excludes'=>[
+			'modules' => ['rbac'], //List id Modules to RBAC exclude 
+			//'controllers' => ['rbac.default'], //List id controllers to RBAC exclude module.controller
+			//'actions' => ['rbac.default.index'], //List id action to RBAC exclude module.controller.action
+		],
+		'menu'=>[
+			'icon'=>true, // boolean show icon true or false. Default: true
+		],
 	],
     ...
     ?>

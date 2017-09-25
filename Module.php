@@ -20,6 +20,16 @@ class Module extends yii\base\Module
      * @inheritdoc 
      */ 
     public $controllerNamespace = 'lawiet\rbac\controllers';
+	
+    /** 
+     * @inheritdoc 
+     */ 
+    public $excludes;
+	
+    /** 
+     * @inheritdoc 
+     */ 
+    public $menu;
 
     /** 
      * @inheritdoc 
