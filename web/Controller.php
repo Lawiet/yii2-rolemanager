@@ -39,7 +39,7 @@ class Controller extends CController
 
     /** @inheritdoc */
     public function behaviors()
-    {	
+    {
 		if($this->isModuleExclude())
 			return [
 				'access' => [
@@ -94,9 +94,19 @@ class Controller extends CController
     }
 
     /**
+     * Get name layout.
+     *
+     * @return String
+     */
+    public function getLayout()
+    {
+		return isset(\Yii::$app->modules['rbac']->layout) ? \Yii::$app->modules['rbac']->layout : 'main' ;
+	}
+
+    /**
      * Get Modules Exclude By Default And User.
      *
-     * @return bool
+     * @return void
      */
     private function getExcludes()
     {
@@ -117,7 +127,7 @@ class Controller extends CController
 	}
 
     /**
-     * Get Modules Exclude By Default And User.
+     * Verify if current module controller and/or action is exclude.
      *
      * @return bool
      */

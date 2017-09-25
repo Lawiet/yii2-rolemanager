@@ -9,11 +9,14 @@ use lawiet\rbac\web\Controller;
  */
 class DefaultController extends Controller
 {
+	
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
+		$this->layout = parent::getLayout();
+		
 		return parent::behaviors();
     }
 	

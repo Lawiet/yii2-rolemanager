@@ -30,6 +30,11 @@ class Module extends yii\base\Module
      * @inheritdoc 
      */ 
     public $menu;
+	
+    /** 
+     * @inheritdoc 
+     */ 
+    public $layout;
 
     /** 
      * @inheritdoc 
