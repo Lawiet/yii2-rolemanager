@@ -16,6 +16,22 @@ use yii\filters\AccessControl;
 
 class RbacAsset extends AssetBundle
 {
+
+    // Predeterminado por Yii
+    public $basePath = '@webroot';
+    public $baseUrl = '@web';
+
+	// Manejo predeterminado de css
+    public $css = [
+        'css/site.css',
+    ];
+	
+    //dependencias predeterminadas
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
+        'kartik\icons\FontAwesomeAsset',
+    ];
 	
 	/** 
      * @inheritdoc 
@@ -24,4 +40,31 @@ class RbacAsset extends AssetBundle
     {
 		parent::init();
 	}
+	
+	/** 
+     * @inheritdoc 
+     */ 
+    public function addDepends($depends) 
+    {
+		if(is_array($depends))
+			if(count($depends) > 0)
+				foreach($depends as $depend)
+					$this->depends[] = $depend;
+		else
+			$this->depends[] = $depends;
+	}
+	
+	/** 
+     * @inheritdoc 
+     */ 
+    public function addCss($css) 
+    {
+		if(is_array($css))
+			if(count($css) > 0)
+				foreach($css as $cs)
+					$this->css[] = $cs;
+		else
+			$this->css[] = $css;
+	}
+	
 }

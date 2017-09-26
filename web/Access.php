@@ -21,6 +21,7 @@ class Access extends Controller
     public static function checkAccess()
     {
         $user = \Yii::$app->user->identity;
+        $guest = \Yii::$app->user->isGuest;
 		
 		if(method_exists($user, 'getIdRols') && method_exists($user, 'getIdAssignments')){
 			return true;
@@ -42,22 +43,25 @@ class Access extends Controller
      *
      * @var $icon. Default true
      * @var $dataLogout. Default username
+     * @var $iconLogout. Default off
      * @var $option. Default ['class' => 'navbar-nav navbar-right']
      *
      * @return array
      */
-    public static function getPrincipalMenu($icon = true, $dataLogout = "username", $option = ['class' => 'navbar-nav navbar-right'])
+    public static function getPrincipalMenu($icon = true, $dataLogout = "username", $iconLogout = "off", $option = ['class' => 'navbar-nav navbar-right'])
     {
         $user = \Yii::$app->user->identity;
         $guest = \Yii::$app->user->isGuest;
 		
-		eval('$dataLogout = !$guest ? $user->' . $dataLogout . ' : "" ;');
+		if(trim($dataLogout) != "")
+			eval('$dataLogout = !$guest ? " (" . $user->' . $dataLogout . ' . ")" : "" ;');
+		
 		$home = ['label' => Yii::t('app', 'Home'), 'url' => '/rbac/index', 'icon' => 'home'];
 		$login = ['label' => Yii::t('app', 'Login'), 'url' => '/site/login', 'icon' => 'sign-in'];
-		$logout = ['label' => Yii::t('app', 'Logout') . ' (' . $dataLogout . ')', 'url' => '/site/logout', 'icon' => 'power-off', 'method' => 'post'];
+		$logout = ['label' => Yii::t('app', 'Logout') . $dataLogout, 'url' => '/site/logout', 'icon' => $iconLogout, 'method' => 'post'];
 		$tmp = ['label' => Yii::t('app', 'Home'), 'url' => '/rbac/index'];
 		
-		$items = self::generatePrincipalMenu();
+		$items = self::generatePrincipalMenu($guest, $icon);
 		array_unshift($items, self::parserPrincipalMenu($home, $icon));
 		$items[] = self::parserPrincipalMenu(Yii::$app->user->isGuest ? $login : $logout, $icon);
 		
@@ -71,18 +75,24 @@ class Access extends Controller
 	/*
 	 * Get Items from database
 	 *
+	 * @var $guest. Default true
 	 * @var $icon. Default true
      *
      * @return array
 	 */
-	private function generatePrincipalMenu($icon = true){
+	private function generatePrincipalMenu($guest = true, $icon = true){
 		$i = [];
-		$items = [
-			['label' => Yii::t('app', 'Roles'), 'url' => '/rbac/roles'],
-			['label' => Yii::t('app', 'Groups'), 'url' => '/rbac/groups'],
-			['label' => Yii::t('app', 'Permissions'), 'url' => '/rbac/permissions'],
-			['label' => Yii::t('app', 'Assignments'), 'url' => '/rbac/assignments'],
-		];
+		
+		if(!$guest){
+			$items = [
+				['label' => Yii::t('app', 'Roles'), 'url' => '/rbac/roles'],
+				['label' => Yii::t('app', 'Groups'), 'url' => '/rbac/groups'],
+				['label' => Yii::t('app', 'Permissions'), 'url' => '/rbac/permissions'],
+				['label' => Yii::t('app', 'Assignments'), 'url' => '/rbac/assignments'],
+			];
+		}else{
+			
+		}
 		
 		foreach($items as $item){
 			$i[] = self::parserPrincipalMenu($item, $icon);
