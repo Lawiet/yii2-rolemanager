@@ -88,3 +88,23 @@ And remove method behaviors or modify and add the method parent
 	...
     ?>
 ```
+
+Generate principal menu dynamically in your layout add 
+```
+    <?php 
+	....
+	use lawiet\rbac\web\Access;
+	
+	....
+	NavBar::begin([
+		'brandLabel' => Yii::t('app', 'My Company'),
+		'brandUrl' => Yii::$app->homeUrl,
+		'options' => [
+			'class' => 'navbar-inverse navbar-fixed-top',
+		],
+	]);
+	echo Nav::widget(Access::getPrincipalMenu());
+	NavBar::end();
+	...
+    ?>
+```

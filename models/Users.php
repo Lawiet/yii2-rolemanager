@@ -59,7 +59,7 @@ class Users extends \yii\db\ActiveRecord
             [['email', 'password', 'token_security', 'token_recovery_password'], 'string', 'max' => 512],
             [['username'], 'string', 'max' => 64],
             [['email'], 'unique'],
-            [['username', 'email'], 'unique', 'targetAttribute' => ['username', 'email'], 'message' => 'The combination of Email and Username has already been taken.'],
+            [['username', 'email'], 'unique', 'targetAttribute' => ['username', 'email'], 'message' => Yii::t('app', 'The combination of Email and Username has already been taken.')],
             [['username'], 'unique'],
         ];
     }
@@ -70,19 +70,19 @@ class Users extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'status' => 'Status',
-            'email' => 'Email',
-            'username' => 'Username',
-            'password' => 'Password',
-            'last_conection' => 'Last Conection',
-            'last_activity' => 'Last Activity',
-            'token_security' => 'Token Security',
-            'date_expired_token_security' => 'Date Expired Token Security',
-            'token_recovery_password' => 'Token Recovery Password',
-            'date_token_recovery_password' => 'Date Token Recovery Password',
-            'date_modified' => 'Date Modified',
-            'date_created' => 'Date Created',
+            'id' => Yii::t('app', 'ID'),
+            'status' => Yii::t('app', 'Status'),
+            'email' => Yii::t('app', 'Email'),
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
+            'last_conection' => Yii::t('app', 'Last Conection'),
+            'last_activity' => Yii::t('app', 'Last Activity'),
+            'token_security' => Yii::t('app', 'Token Security'),
+            'date_expired_token_security' => Yii::t('app', 'Date Expired Token Security'),
+            'token_recovery_password' => Yii::t('app', 'Token Recovery Password'),
+            'date_token_recovery_password' => Yii::t('app', 'Date Token Recovery Password'),
+            'date_modified' => Yii::t('app', 'Date Modified'),
+            'date_created' => Yii::t('app', 'Date Created'),
         ];
     }
 

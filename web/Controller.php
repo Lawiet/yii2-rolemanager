@@ -82,16 +82,8 @@ class Controller extends CController
      */
     public function checkAccess()
     {
-        $user = \Yii::$app->user->identity;
-
-        if (method_exists($user, 'getIsAdmin')) {
-            return $user->getIsAdmin();
-        } else if ($this->adminPermission) {
-            return $this->adminPermission ? \Yii::$app->user->can($this->adminPermission) : false;
-        } else {
-            return isset($user->username) ? in_array($user->username, $this->admins) : false;
-        }
-    }
+        return Access::checkAccess();
+	}
 
     /**
      * Get name layout.
