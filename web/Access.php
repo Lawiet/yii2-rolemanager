@@ -22,11 +22,11 @@ class Access extends Controller
     {
         $user = \Yii::$app->user->identity;
         $guest = \Yii::$app->user->isGuest;
-		
+
 		if(method_exists($user, 'getIdRols') && method_exists($user, 'getIdAssignments')){
 			return true;
 		}
-		
+
 		return false;
 
         if (method_exists($user, 'getIsAdmin')) {
@@ -52,26 +52,25 @@ class Access extends Controller
     {
         $user = \Yii::$app->user->identity;
         $guest = \Yii::$app->user->isGuest;
-		
+
 		if(trim($dataLogout) != "")
 			eval('$dataLogout = !$guest ? " (" . $user->' . $dataLogout . ' . ")" : "" ;');
-		
-		$home = ['label' => Yii::t('app', 'Home'), 'url' => '/rbac/index', 'icon' => 'home'];
+
+		$home = ['label' => Yii::t('app', 'Home'), 'url' => '/', 'icon' => 'home'];
 		$login = ['label' => Yii::t('app', 'Login'), 'url' => '/site/login', 'icon' => 'sign-in'];
 		$logout = ['label' => Yii::t('app', 'Logout') . $dataLogout, 'url' => '/site/logout', 'icon' => $iconLogout, 'method' => 'post'];
-		$tmp = ['label' => Yii::t('app', 'Home'), 'url' => '/rbac/index'];
-		
+
 		$items = self::generatePrincipalMenu($guest, $icon);
 		array_unshift($items, self::parserPrincipalMenu($home, $icon));
 		$items[] = self::parserPrincipalMenu(Yii::$app->user->isGuest ? $login : $logout, $icon);
-		
+
 		return [
 				'options' => $option,
 				'encodeLabels' => false,
 				'items' => $items,
 			];
     }
-	
+
 	/*
 	 * Get Items from database
 	 *
@@ -82,8 +81,9 @@ class Access extends Controller
 	 */
 	private function generatePrincipalMenu($guest = true, $icon = true){
 		$i = [];
-		
+
 		if(!$guest){
+			//print_r(\Yii::$app->user->identity->rolesUsers);
 			$items = [
 				['label' => Yii::t('app', 'Roles'), 'url' => '/rbac/roles'],
 				['label' => Yii::t('app', 'Groups'), 'url' => '/rbac/groups'],
@@ -91,16 +91,15 @@ class Access extends Controller
 				['label' => Yii::t('app', 'Assignments'), 'url' => '/rbac/assignments'],
 			];
 		}else{
-			
 		}
-		
+
 		foreach($items as $item){
 			$i[] = self::parserPrincipalMenu($item, $icon);
 		}
-		
+
 		return $i;
 	}
-	
+
 	/*
 	 * Parser items to format NavBar
 	 *
@@ -112,11 +111,11 @@ class Access extends Controller
 	private function parserPrincipalMenu($link = ['label'=>''], $icon = true){
 		$label = isset($link['label']) ? $link['label'] : '&nbsp;' ;
 		$url = isset($link['url']) ? Url::to([$link['url']]) : '#' ;
-		
+
 		if($icon && isset($link['icon'])){
 			$label = Icon::show($link['icon']) . $label;
 		}
-		
+
 		if(isset($link['method'])){
 			if(strtolower($link['method']) == 'post'){
 				$item = ['label' => $label, 'url' => $url, 'linkOptions' => ['data-method' => 'post']];
@@ -126,7 +125,7 @@ class Access extends Controller
 		}else{
 			$item = ['label' => $label, 'url' => $url];
 		}
-		
+
 		return $item;
 	}
 
@@ -141,7 +140,7 @@ class Access extends Controller
     {
         $user = \Yii::$app->user->identity;
         $guest = \Yii::$app->user->isGuest;
-		
+
 		return [];
     }
 
@@ -156,7 +155,7 @@ class Access extends Controller
     {
         $user = \Yii::$app->user->identity;
         $guest = \Yii::$app->user->isGuest;
-		
+
 		return [];
     }
 }
