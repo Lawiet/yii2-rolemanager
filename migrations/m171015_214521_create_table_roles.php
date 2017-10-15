@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214532_create_table_groups extends Migration
+class m171015_214521_create_table_roles extends Migration
 {
     public function safeUp()
     {
@@ -11,19 +11,28 @@ class m171015_214532_create_table_groups extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%groups}}', [
-            'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
+        $this->createTable('{{%roles}}', [
+            'id' => $this->integer(10)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'status' => $this->smallInteger(1)->notNull()->defaultValue('1'),
             'name' => $this->string(64)->notNull(),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->createIndex('uk_groups_name_idx', '{{%groups}}', 'name', true);
+        $this->createIndex('uk_roles_unique_name_idx', '{{%roles}}', 'name', true);
+        
+        $this->insert('{{%roles}}', [
+            'id'=>'1',
+            'status'=>'1',
+            'name'=>'Develop',
+            'date_modified'=>null, //'2017-10-15 18:08:11',
+            'date_created'=>null, //'2017-10-15 18:08:11'
+        ]);
+
     }
 
     public function safeDown()
     {
-        $this->dropTable('{{%groups}}');
+        $this->dropTable('{{%roles}}');
     }
 }

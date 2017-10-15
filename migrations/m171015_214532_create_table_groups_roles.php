@@ -23,6 +23,14 @@ class m171015_214532_create_table_groups_roles extends Migration
 
         $this->addForeignKey('fk_groups_roles_group_idx', '{{%groups_roles}}', 'id_group', '{{%groups}}', 'id');
         $this->addForeignKey('fk_groups_roles_rol_idx', '{{%groups_roles}}', 'id_rol', '{{%roles}}', 'id');
+
+        $this->insert('{{%groups_roles}}', [
+            'id'=>'1',
+            'id_group'=>'1',
+            'id_rol'=>'1',
+            'date_modified'=>null, //'2017-10-15 18:09:06',
+            'date_created'=>null, //'2017-10-15 18:09:06'
+        ]);
     }
 
     public function safeDown()

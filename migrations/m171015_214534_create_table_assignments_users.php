@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214532_create_table_assignments_users extends Migration
+class m171015_214534_create_table_assignments_users extends Migration
 {
     public function safeUp()
     {

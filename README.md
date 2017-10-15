@@ -34,13 +34,13 @@ Role configuration
 
 In file `web.php`
 ```
-    <?php 
+    <?php
 	....
 	'modules' => [
 		'rbac' => [
 			'class'=>'lawiet\rbac\Module',
 			'excludes'=>[
-				//'modules' => ['test'], //List id Modules to RBAC exclude 
+				//'modules' => ['test'], //List id Modules to RBAC exclude
 				//'controllers' => ['test.default'], //List id controllers to RBAC exclude module.controller
 				//'actions' => ['test.default.index'], //List id action to RBAC exclude module.controller.action
 			],
@@ -55,7 +55,7 @@ In file `web.php`
 
 In file `assets/AppAsset.php` change yii\web\AssetBundle for lawiet\rbac\web\AssetBundle
 ```
-    <?php 
+    <?php
 	....
 	use lawiet\rbac\web\AssetBundle;
 
@@ -66,7 +66,7 @@ In file `assets/AppAsset.php` change yii\web\AssetBundle for lawiet\rbac\web\Ass
 
 In each file `controllers/xxxController.php` change yii\web\Controller for lawiet\rbac\web\Controller
 ```
-    <?php 
+    <?php
 	....
 	use lawiet\rbac\web\Controller;
 
@@ -77,7 +77,7 @@ In each file `controllers/xxxController.php` change yii\web\Controller for lawie
 
 And remove method behaviors or modify and add the method parent
 ```
-    <?php 
+    <?php
 	....
 	class xxxController extends Controller {
 	....
@@ -89,12 +89,12 @@ And remove method behaviors or modify and add the method parent
     ?>
 ```
 
-Generate principal menu dynamically in your layout add 
+Generate principal menu dynamically in your layout add
 ```
-    <?php 
+    <?php
 	....
 	use lawiet\rbac\web\Access;
-	
+
 	....
 	NavBar::begin([
 		'brandLabel' => Yii::t('app', 'My Company'),
@@ -107,4 +107,9 @@ Generate principal menu dynamically in your layout add
 	NavBar::end();
 	...
     ?>
+```
+
+Run command
+```
+php yii migrate  --migrationPath=@lawiet/rbac/migrations --interactive=0
 ```

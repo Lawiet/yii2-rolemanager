@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214532_create_table_permissions_roles extends Migration
+class m171015_214531_create_table_permissions_roles extends Migration
 {
     public function safeUp()
     {
@@ -23,6 +23,14 @@ class m171015_214532_create_table_permissions_roles extends Migration
 
         $this->addForeignKey('fk_permissions_roles_permission_idx', '{{%permissions_roles}}', 'id_permission', '{{%permissions}}', 'id');
         $this->addForeignKey('fk_permissions_roles_rol_idx', '{{%permissions_roles}}', 'id_rol', '{{%roles}}', 'id');
+
+        $this->insert('{{%permissions_roles}}', [
+            'id'=>'1',
+            'id_permission'=>'1',
+            'id_rol'=>'1',
+            'date_modified'=>null, //'2017-10-15 18:10:00',
+            'date_created'=>null, //'2017-10-15 18:10:00'
+        ]);
     }
 
     public function safeDown()

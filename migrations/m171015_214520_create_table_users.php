@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214533_create_table_users extends Migration
+class m171015_214520_create_table_users extends Migration
 {
     public function safeUp()
     {
@@ -14,7 +14,7 @@ class m171015_214533_create_table_users extends Migration
         $this->createTable('{{%users}}', [
             'id' => $this->integer(10)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'status' => $this->string()->notNull()->defaultValue('ACTIVE'),
-            'email' => $this->string(512),
+            'email' => $this->string(180),
             'username' => $this->string(64)->notNull(),
             'password' => $this->string(512)->notNull(),
             'last_conection' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
@@ -30,6 +30,22 @@ class m171015_214533_create_table_users extends Migration
         $this->createIndex('uk_users_username_idx', '{{%users}}', 'username', true);
         $this->createIndex('uk_users_email_idx', '{{%users}}', 'email', true);
         $this->createIndex('uk_users_username_email_idx', '{{%users}}', ['email','username'], true);
+
+        $this->insert('{{%users}}', [
+            'id'=>'1',
+            'status'=>'ACTIVE',
+            'email'=>'admin@noreply.com',
+            'username'=>'admin',
+            'password'=>'123',
+            'last_conection'=>null, //'2017-10-15 18:07:41',
+            'last_activity'=>null, //'2017-10-15 18:07:41',
+            'token_security'=>null, //'',
+            'date_expired_token_security'=>null, //'600',
+            'token_recovery_password'=>null, //'',
+            'date_token_recovery_password'=>null, //'',
+            'date_modified'=>null, //'2017-10-15 18:07:41',
+            'date_created'=>null, //'2017-10-15 18:07:41'
+        ]);
     }
 
     public function safeDown()

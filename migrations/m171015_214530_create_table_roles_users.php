@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214533_create_table_roles_users extends Migration
+class m171015_214530_create_table_roles_users extends Migration
 {
     public function safeUp()
     {
@@ -23,6 +23,14 @@ class m171015_214533_create_table_roles_users extends Migration
 
         $this->addForeignKey('fk_roles_users_rol_idx', '{{%roles_users}}', 'id_rol', '{{%roles}}', 'id');
         $this->addForeignKey('fk_roles_users_user_idx', '{{%roles_users}}', 'id_user', '{{%users}}', 'id');
+
+        $this->insert('{{%roles_users}}', [
+            'id'=>'1',
+            'id_rol'=>'1',
+            'id_user'=>'1',
+            'date_modified'=>null, //'2017-10-15 18:08:33',
+            'date_created'=>null, //'2017-10-15 18:08:33'
+        ]);
     }
 
     public function safeDown()
