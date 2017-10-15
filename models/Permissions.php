@@ -64,15 +64,15 @@ class Permissions extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'id_permission' => 'Id Permission',
-            'status' => 'Status',
-            'show_in_menu' => 'Show In Menu',
-            'name' => 'Name',
-            'uri' => 'Uri',
-            'icon' => 'Icon',
-            'date_modified' => 'Date Modified',
-            'date_created' => 'Date Created',
+            'id' => \Yii::t('app', 'ID'),
+            'id_permission' => \Yii::t('app', 'Id Permission'),
+            'status' => \Yii::t('app', 'Status'),
+            'show_in_menu' => \Yii::t('app', 'Show In Menu'),
+            'name' => \Yii::t('app', 'Name'),
+            'uri' => \Yii::t('app', 'Uri'),
+            'icon' => \Yii::t('app', 'Icon'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
         ];
     }
 

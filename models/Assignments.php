@@ -58,14 +58,14 @@ class Assignments extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('rbac', 'ID'),
-            'id_permission' => \Yii::t('rbac', 'Id Permission'),
-            'status' => \Yii::t('rbac', 'Status'),
-            'show_in_menu' => \Yii::t('rbac', 'Show In Menu'),
-            'name' => \Yii::t('rbac', 'Name'),
-            'method' => \Yii::t('rbac', 'Method'),
-            'date_modified' => \Yii::t('rbac', 'Date Modified'),
-            'date_created' => \Yii::t('rbac', 'Date Created'),
+            'id' => \Yii::t('app', 'ID'),
+            'id_permission' => \Yii::t('app', 'Id Permission'),
+            'status' => \Yii::t('app', 'Status'),
+            'show_in_menu' => \Yii::t('app', 'Show In Menu'),
+            'name' => \Yii::t('app', 'Name'),
+            'method' => \Yii::t('app', 'Method'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
         ];
     }
 

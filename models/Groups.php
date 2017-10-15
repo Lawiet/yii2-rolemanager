@@ -53,11 +53,11 @@ class Groups extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'status' => 'Status',
-            'name' => 'Name',
-            'date_modified' => 'Date Modified',
-            'date_created' => 'Date Created',
+            'id' => \Yii::t('app', 'ID'),
+            'status' => \Yii::t('app', 'Status'),
+            'name' => \Yii::t('app', 'Name'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
         ];
     }
 

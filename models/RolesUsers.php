@@ -54,11 +54,11 @@ class RolesUsers extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'id_rol' => 'Id Rol',
-            'id_user' => 'Id User',
-            'date_modified' => 'Date Modified',
-            'date_created' => 'Date Created',
+            'id' => \Yii::t('app', 'ID'),
+            'id_rol' => \Yii::t('app', 'Id Rol'),
+            'id_user' => \Yii::t('app', 'Id User'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
         ];
     }
 

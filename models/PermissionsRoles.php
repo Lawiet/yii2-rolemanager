@@ -54,11 +54,11 @@ class PermissionsRoles extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'id_permission' => 'Id Permission',
-            'id_rol' => 'Id Rol',
-            'date_modified' => 'Date Modified',
-            'date_created' => 'Date Created',
+            'id' => \Yii::t('app', 'ID'),
+            'id_permission' => \Yii::t('app', 'Id Permission'),
+            'id_rol' => \Yii::t('app', 'Id Rol'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
         ];
     }
 

@@ -54,11 +54,11 @@ class GroupsRoles extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'id_group' => 'Id Group',
-            'id_rol' => 'Id Rol',
-            'date_modified' => 'Date Modified',
-            'date_created' => 'Date Created',
+            'id' => \Yii::t('app', 'ID'),
+            'id_group' => \Yii::t('app', 'Id Group'),
+            'id_rol' => \Yii::t('app', 'Id Rol'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
         ];
     }
 

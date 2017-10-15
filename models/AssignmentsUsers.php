@@ -56,12 +56,12 @@ class AssignmentsUsers extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'id_assignment' => 'Id Assignment',
-            'id_user' => 'Id User',
-            'toggle' => 'Toggle',
-            'date_modified' => 'Date Modified',
-            'date_created' => 'Date Created',
+            'id' => \Yii::t('app', 'ID'),
+            'id_assignment' => \Yii::t('app', 'Id Assignment'),
+            'id_user' => \Yii::t('app', 'Id User'),
+            'toggle' => \Yii::t('app', 'Toggle'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
         ];
     }
 
