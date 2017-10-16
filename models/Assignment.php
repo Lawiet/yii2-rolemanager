@@ -23,17 +23,17 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property AssignmentsUsers[] $assignmentsUsers
- * @property Users[] $idUsers
+ * @property AssignmentUser[] $assignmentsUsers
+ * @property User[] $idUsers
  */
-class Assignments extends \yii\db\ActiveRecord
+class Assignment extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'assignments';
+        return 'assignment';
     }
 
     /**
@@ -74,7 +74,7 @@ class Assignments extends \yii\db\ActiveRecord
      */
     public function getAssignmentsUsers()
     {
-        return $this->hasMany(AssignmentsUsers::className(), ['id_assignment' => 'id']);
+        return $this->hasMany(AssignmentUser::className(), ['id_assignment' => 'id']);
     }
 
     /**
@@ -82,6 +82,6 @@ class Assignments extends \yii\db\ActiveRecord
      */
     public function getIdUsers()
     {
-        return $this->hasMany(Users::className(), ['id' => 'id_user'])->viaTable('assignments_users', ['id_assignment' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'id_user'])->viaTable('assignment_user', ['id_assignment' => 'id']);
     }
 }

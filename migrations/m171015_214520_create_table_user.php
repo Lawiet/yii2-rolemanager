@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214520_create_table_users extends Migration
+class m171015_214520_create_table_user extends Migration
 {
     public function safeUp()
     {
@@ -11,7 +11,7 @@ class m171015_214520_create_table_users extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%users}}', [
+        $this->createTable('{{%user}}', [
             'id' => $this->integer(10)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'status' => $this->string()->notNull()->defaultValue('ACTIVE'),
             'email' => $this->string(180),
@@ -27,16 +27,16 @@ class m171015_214520_create_table_users extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->createIndex('uk_users_username_idx', '{{%users}}', 'username', true);
-        $this->createIndex('uk_users_email_idx', '{{%users}}', 'email', true);
-        $this->createIndex('uk_users_username_email_idx', '{{%users}}', ['email','username'], true);
+        $this->createIndex('uk_users_username_idx', '{{%user}}', 'username', true);
+        $this->createIndex('uk_users_email_idx', '{{%user}}', 'email', true);
+        $this->createIndex('uk_users_username_email_idx', '{{%user}}', ['email','username'], true);
 
-        $this->insert('{{%users}}', [
+        $this->insert('{{%user}}', [
             'id'=>'1',
             'status'=>'ACTIVE',
             'email'=>'admin@noreply.com',
             'username'=>'admin',
-            'password'=>'123',
+            'password'=>'$2y$13$wqU2Gvp67UXifBiFS7PdJeZkFocCg8qJvb.6iw73yZ3fAi9T.2weO',
             'last_conection'=>null, //'2017-10-15 18:07:41',
             'last_activity'=>null, //'2017-10-15 18:07:41',
             'token_security'=>null, //'',
@@ -50,6 +50,6 @@ class m171015_214520_create_table_users extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('{{%users}}');
+        $this->dropTable('{{%user}}');
     }
 }

@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214531_create_table_permissions_roles extends Migration
+class m171015_214531_create_table_permission_role extends Migration
 {
     public function safeUp()
     {
@@ -11,7 +11,7 @@ class m171015_214531_create_table_permissions_roles extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%permissions_roles}}', [
+        $this->createTable('{{%permission_role}}', [
             'id' => $this->integer(11)->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'id_permission' => $this->integer(10)->unsigned()->notNull(),
             'id_rol' => $this->integer(10)->unsigned()->notNull(),
@@ -19,12 +19,12 @@ class m171015_214531_create_table_permissions_roles extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->createIndex('uk_permissions_roles_id_permission_id_rol_idx', '{{%permissions_roles}}', ['id_permission','id_rol'], true);
+        $this->createIndex('uk_permissions_roles_id_permission_id_rol_idx', '{{%permission_role}}', ['id_permission','id_rol'], true);
 
-        $this->addForeignKey('fk_permissions_roles_permission_idx', '{{%permissions_roles}}', 'id_permission', '{{%permissions}}', 'id');
-        $this->addForeignKey('fk_permissions_roles_rol_idx', '{{%permissions_roles}}', 'id_rol', '{{%roles}}', 'id');
+        $this->addForeignKey('fk_permissions_roles_permission_idx', '{{%permission_role}}', 'id_permission', '{{%permission}}', 'id');
+        $this->addForeignKey('fk_permissions_roles_rol_idx', '{{%permission_role}}', 'id_rol', '{{%role}}', 'id');
 
-        $this->insert('{{%permissions_roles}}', [
+        $this->insert('{{%permission_role}}', [
             'id'=>'1',
             'id_permission'=>'1',
             'id_rol'=>'1',
@@ -35,6 +35,6 @@ class m171015_214531_create_table_permissions_roles extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('{{%permissions_roles}}');
+        $this->dropTable('{{%permission_role}}');
     }
 }

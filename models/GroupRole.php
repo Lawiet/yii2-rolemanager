@@ -20,17 +20,17 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Groups $idGroup
- * @property Roles $idRol
+ * @property Group $idGroup
+ * @property Role $idRol
  */
-class GroupsRoles extends \yii\db\ActiveRecord
+class GroupRole extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'groups_roles';
+        return 'group_role';
     }
 
     /**
@@ -43,8 +43,8 @@ class GroupsRoles extends \yii\db\ActiveRecord
             [['id_group', 'id_rol'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
             [['id_rol', 'id_group'], 'unique', 'targetAttribute' => ['id_rol', 'id_group'], 'message' => 'The combination of Id Group and Id Rol has already been taken.'],
-            [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Groups::className(), 'targetAttribute' => ['id_group' => 'id']],
-            [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['id_rol' => 'id']],
+            [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['id_group' => 'id']],
+            [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_rol' => 'id']],
         ];
     }
 
@@ -67,7 +67,7 @@ class GroupsRoles extends \yii\db\ActiveRecord
      */
     public function getIdGroup()
     {
-        return $this->hasOne(Groups::className(), ['id' => 'id_group']);
+        return $this->hasOne(Group::className(), ['id' => 'id_group']);
     }
 
     /**
@@ -75,6 +75,6 @@ class GroupsRoles extends \yii\db\ActiveRecord
      */
     public function getIdRol()
     {
-        return $this->hasOne(Roles::className(), ['id' => 'id_rol']);
+        return $this->hasOne(Role::className(), ['id' => 'id_rol']);
     }
 }

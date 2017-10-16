@@ -20,17 +20,17 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property GroupsRoles[] $groupsRoles
- * @property Roles[] $idRols
+ * @property GroupsRole[] $groupsRoles
+ * @property Role[] $idRols
  */
-class Groups extends \yii\db\ActiveRecord
+class Group extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'groups';
+        return 'group';
     }
 
     /**
@@ -66,7 +66,7 @@ class Groups extends \yii\db\ActiveRecord
      */
     public function getGroupsRoles()
     {
-        return $this->hasMany(GroupsRoles::className(), ['id_group' => 'id']);
+        return $this->hasMany(GroupRole::className(), ['id_group' => 'id']);
     }
 
     /**
@@ -74,6 +74,6 @@ class Groups extends \yii\db\ActiveRecord
      */
     public function getIdRols()
     {
-        return $this->hasMany(Roles::className(), ['id' => 'id_rol'])->viaTable('groups_roles', ['id_group' => 'id']);
+        return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('group_role', ['id_group' => 'id']);
     }
 }

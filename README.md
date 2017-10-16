@@ -36,6 +36,12 @@ In file `web.php`
 ```
     <?php
 	....
+    'user' => [
+        'identityClass' => 'lawiet\rbac\models\User',
+        'enableAutoLogin' => true,
+        //'authTimeout' => 30,
+    ],
+	....
 	'modules' => [
 		'rbac' => [
 			'class'=>'lawiet\rbac\Module',

@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214530_create_table_roles_users extends Migration
+class m171015_214530_create_table_role_user extends Migration
 {
     public function safeUp()
     {
@@ -11,7 +11,7 @@ class m171015_214530_create_table_roles_users extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%roles_users}}', [
+        $this->createTable('{{%role_user}}', [
             'id' => $this->integer(11)->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'id_rol' => $this->integer(11)->unsigned()->notNull(),
             'id_user' => $this->integer(11)->unsigned()->notNull(),
@@ -19,12 +19,12 @@ class m171015_214530_create_table_roles_users extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->createIndex('uk_roles_users_id_rol_id_user_idx', '{{%roles_users}}', ['id_rol','id_user'], true);
+        $this->createIndex('uk_roles_users_id_rol_id_user_idx', '{{%role_user}}', ['id_rol','id_user'], true);
 
-        $this->addForeignKey('fk_roles_users_rol_idx', '{{%roles_users}}', 'id_rol', '{{%roles}}', 'id');
-        $this->addForeignKey('fk_roles_users_user_idx', '{{%roles_users}}', 'id_user', '{{%users}}', 'id');
+        $this->addForeignKey('fk_roles_users_rol_idx', '{{%role_user}}', 'id_rol', '{{%role}}', 'id');
+        $this->addForeignKey('fk_roles_users_user_idx', '{{%role_user}}', 'id_user', '{{%user}}', 'id');
 
-        $this->insert('{{%roles_users}}', [
+        $this->insert('{{%role_user}}', [
             'id'=>'1',
             'id_rol'=>'1',
             'id_user'=>'1',
@@ -35,6 +35,6 @@ class m171015_214530_create_table_roles_users extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('{{%roles_users}}');
+        $this->dropTable('{{%role_user}}');
     }
 }

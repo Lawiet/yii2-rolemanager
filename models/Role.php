@@ -20,12 +20,12 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property GroupsRoles[] $groupsRoles
- * @property Groups[] $idGroups
- * @property PermissionsRoles[] $permissionsRoles
- * @property Permissions[] $idPermissions
- * @property RolesUsers[] $rolesUsers
- * @property Users[] $idUsers
+ * @property GroupRole[] $groupsRoles
+ * @property Group[] $idGroups
+ * @property PermissionRole[] $permissionsRoles
+ * @property Permission[] $idPermissions
+ * @property RoleUser[] $rolesUsers
+ * @property User[] $idUsers
  */
 class Roles extends \yii\db\ActiveRecord
 {
@@ -34,7 +34,7 @@ class Roles extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'roles';
+        return 'role';
     }
 
     /**
@@ -70,7 +70,7 @@ class Roles extends \yii\db\ActiveRecord
      */
     public function getGroupsRoles()
     {
-        return $this->hasMany(GroupsRoles::className(), ['id_rol' => 'id']);
+        return $this->hasMany(GroupRole::className(), ['id_rol' => 'id']);
     }
 
     /**
@@ -78,7 +78,7 @@ class Roles extends \yii\db\ActiveRecord
      */
     public function getIdGroups()
     {
-        return $this->hasMany(Groups::className(), ['id' => 'id_group'])->viaTable('groups_roles', ['id_rol' => 'id']);
+        return $this->hasMany(Group::className(), ['id' => 'id_group'])->viaTable('group_role', ['id_rol' => 'id']);
     }
 
     /**
@@ -86,7 +86,7 @@ class Roles extends \yii\db\ActiveRecord
      */
     public function getPermissionsRoles()
     {
-        return $this->hasMany(PermissionsRoles::className(), ['id_rol' => 'id']);
+        return $this->hasMany(PermissionRole::className(), ['id_rol' => 'id']);
     }
 
     /**
@@ -94,7 +94,7 @@ class Roles extends \yii\db\ActiveRecord
      */
     public function getIdPermissions()
     {
-        return $this->hasMany(Permissions::className(), ['id' => 'id_permission'])->viaTable('permissions_roles', ['id_rol' => 'id']);
+        return $this->hasMany(Permission::className(), ['id' => 'id_permission'])->viaTable('permission_role', ['id_rol' => 'id']);
     }
 
     /**
@@ -102,7 +102,7 @@ class Roles extends \yii\db\ActiveRecord
      */
     public function getRolesUsers()
     {
-        return $this->hasMany(RolesUsers::className(), ['id_rol' => 'id']);
+        return $this->hasMany(RolesUser::className(), ['id_rol' => 'id']);
     }
 
     /**
@@ -110,6 +110,6 @@ class Roles extends \yii\db\ActiveRecord
      */
     public function getIdUsers()
     {
-        return $this->hasMany(Users::className(), ['id' => 'id_user'])->viaTable('roles_users', ['id_rol' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'id_user'])->viaTable('role_user', ['id_rol' => 'id']);
     }
 }

@@ -20,17 +20,17 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Permissions $idPermission
- * @property Roles $idRol
+ * @property Permission $idPermission
+ * @property Role $idRol
  */
-class PermissionsRoles extends \yii\db\ActiveRecord
+class PermissionRole extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'permissions_roles';
+        return 'permission_role';
     }
 
     /**
@@ -43,8 +43,8 @@ class PermissionsRoles extends \yii\db\ActiveRecord
             [['id_permission', 'id_rol'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
             [['id_permission', 'id_rol'], 'unique', 'targetAttribute' => ['id_permission', 'id_rol'], 'message' => 'The combination of Id Permission and Id Rol has already been taken.'],
-            [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permissions::className(), 'targetAttribute' => ['id_permission' => 'id']],
-            [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['id_rol' => 'id']],
+            [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
+            [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_rol' => 'id']],
         ];
     }
 
@@ -67,7 +67,7 @@ class PermissionsRoles extends \yii\db\ActiveRecord
      */
     public function getIdPermission()
     {
-        return $this->hasOne(Permissions::className(), ['id' => 'id_permission']);
+        return $this->hasOne(Permission::className(), ['id' => 'id_permission']);
     }
 
     /**
@@ -75,6 +75,6 @@ class PermissionsRoles extends \yii\db\ActiveRecord
      */
     public function getIdRol()
     {
-        return $this->hasOne(Roles::className(), ['id' => 'id_rol']);
+        return $this->hasOne(Role::className(), ['id' => 'id_rol']);
     }
 }

@@ -24,19 +24,19 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Permissions $idPermission
- * @property Permissions[] $permissions
- * @property PermissionsRoles[] $permissionsRoles
- * @property Roles[] $idRols
+ * @property Permission $idPermission
+ * @property Permission[] $permissions
+ * @property PermissionRole[] $permissionsRoles
+ * @property Role[] $idRols
  */
-class Permissions extends \yii\db\ActiveRecord
+class Permission extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'permissions';
+        return 'permission';
     }
 
     /**
@@ -54,7 +54,7 @@ class Permissions extends \yii\db\ActiveRecord
             [['icon'], 'string', 'max' => 16],
             [['id_permission', 'name', 'uri'], 'unique', 'targetAttribute' => ['id_permission', 'name', 'uri'], 'message' => 'The combination of Id Permission, Name and Uri has already been taken.'],
             [['name', 'uri'], 'unique', 'targetAttribute' => ['name', 'uri'], 'message' => 'The combination of Name and Uri has already been taken.'],
-            [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permissions::className(), 'targetAttribute' => ['id_permission' => 'id']],
+            [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
         ];
     }
 
@@ -81,7 +81,7 @@ class Permissions extends \yii\db\ActiveRecord
      */
     public function getIdPermission()
     {
-        return $this->hasOne(Permissions::className(), ['id' => 'id_permission']);
+        return $this->hasOne(Permission::className(), ['id' => 'id_permission']);
     }
 
     /**
@@ -89,7 +89,7 @@ class Permissions extends \yii\db\ActiveRecord
      */
     public function getPermissions()
     {
-        return $this->hasMany(Permissions::className(), ['id_permission' => 'id']);
+        return $this->hasMany(Permission::className(), ['id_permission' => 'id']);
     }
 
     /**
@@ -97,7 +97,7 @@ class Permissions extends \yii\db\ActiveRecord
      */
     public function getPermissionsRoles()
     {
-        return $this->hasMany(PermissionsRoles::className(), ['id_permission' => 'id']);
+        return $this->hasMany(PermissionRole::className(), ['id_permission' => 'id']);
     }
 
     /**
@@ -105,6 +105,6 @@ class Permissions extends \yii\db\ActiveRecord
      */
     public function getIdRols()
     {
-        return $this->hasMany(Roles::className(), ['id' => 'id_rol'])->viaTable('permissions_roles', ['id_permission' => 'id']);
+        return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('permission_role', ['id_permission' => 'id']);
     }
 }

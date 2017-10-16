@@ -6,6 +6,8 @@ use Yii;
 use yii\web\Controller as Controller;
 use yii\helpers\Url;
 use kartik\icons\Icon;
+use lawiet\rbac\models\PermissionRole;
+use lawiet\rbac\models\Permission;
 
 /**
  * Default controller for the `lawiet` module
@@ -80,16 +82,18 @@ class Access extends Controller
      * @return array
 	 */
 	private function generatePrincipalMenu($guest = true, $icon = true){
-		$i = [];
+		$i = $items = [];
 
 		if(!$guest){
-			//print_r(\Yii::$app->user->identity->rolesUsers);
-			$items = [
-				['label' => Yii::t('app', 'Roles'), 'url' => '/rbac/roles'],
-				['label' => Yii::t('app', 'Groups'), 'url' => '/rbac/groups'],
-				['label' => Yii::t('app', 'Permissions'), 'url' => '/rbac/permissions'],
-				['label' => Yii::t('app', 'Assignments'), 'url' => '/rbac/assignments'],
-			];
+            $roles = [];
+			foreach(\Yii::$app->user->identity->rolesUsers as $role)
+                $roles[] = $role->id_rol;
+
+            $permissionsRoles = PermissionRole::find()->where(['in', 'id_rol', $roles])->all();
+            $permissions = Permission::find()->where(['in', 'id', $permissionsRoles])->andWhere(['id_permission'=>null, 'show_in_menu'=>true, 'status'=>true])->all();
+            foreach($permissions as $permission)
+                $items[] = ['label' => Yii::t('app', $permission->name), 'url' => $permission->uri, 'icon' => $permission->icon];
+            
 		}else{
 		}
 
@@ -113,7 +117,8 @@ class Access extends Controller
 		$url = isset($link['url']) ? Url::to([$link['url']]) : '#' ;
 
 		if($icon && isset($link['icon'])){
-			$label = Icon::show($link['icon']) . $label;
+            if(!empty($link['icon']))
+                $label = Icon::show($link['icon']) . $label;
 		}
 
 		if(isset($link['method'])){

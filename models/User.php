@@ -3,168 +3,118 @@
 namespace lawiet\rbac\models;
 
 use Yii;
-use yii\db\Expression;
 
 /**
- * This is the model class for identity "user".
+ * @author Jorge Gonzalez
+ * @email ljorgelgonzalez@outlook.com
+ *
+ * @since 1.0
  */
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+
+/**
+ * This is the model class for table "users".
+ *
+ * @property integer $id
+ * @property string $status
+ * @property string $email
+ * @property string $username
+ * @property string $password
+ * @property string $last_conection
+ * @property string $last_activity
+ * @property string $token_security
+ * @property integer $date_expired_token_security
+ * @property string $token_recovery_password
+ * @property string $date_token_recovery_password
+ * @property string $date_modified
+ * @property string $date_created
+ * @property string $cedula
+ * @property string $nombres
+ * @property string $apellidos
+ *
+ * @property AssignmentUser[] $assignmentsUsers
+ * @property Assignment[] $idAssignments
+ * @property RoleUser[] $rolesUsers
+ * @property Role[] $idRols
+ */
+class User extends UserIdentity
 {
-    /** INCLUDE USER LOGIN VALIDATION FUNCTIONS **/
     /**
      * @inheritdoc
      */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return static::findOne($id);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    /* modified */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        return static::findOne(['token_security' => $token]);
-    }
-
-    /* removed
-        public static function findIdentityByAccessToken($token)
-        {
-            throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-        }
-    */
-    /**
-     * Finds user by username
-     *
-     * @param  string      $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        return static::findOne(['username' => $username]);
-    }
-
-    /**
-     * Finds user by password reset token
-     *
-     * @param  string      $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        $expire = \Yii::$app->params['user.passwordResetTokenExpire'];
-        $parts = explode('_', $token);
-        $timestamp = (int) end($parts);
-        if ($timestamp + $expire < time()) {
-            // token expired
-            return null;
-        }
-
-        return static::findOne([
-            'token_recovery_password' => $token
-        ]);
+        return 'user';
     }
 
     /**
      * @inheritdoc
      */
-    public function getId()
+    public function rules()
     {
-        return $this->getPrimaryKey();
+        return [
+            [['status'], 'string'],
+            [['username', 'password'], 'required'],
+            [['last_conection', 'last_activity', 'date_token_recovery_password', 'date_modified', 'date_created'], 'safe'],
+            [['date_expired_token_security'], 'integer'],
+            [['email', 'password', 'token_security', 'token_recovery_password'], 'string', 'max' => 512],
+            [['username'], 'string', 'max' => 64],
+            [['email'], 'unique'],
+            [['username', 'email'], 'unique', 'targetAttribute' => ['username', 'email'], 'message' => Yii::t('app', 'The combination of Email and Username has already been taken.')],
+            [['username'], 'unique'],
+        ];
     }
 
     /**
      * @inheritdoc
      */
-    public function makeLogin()
+    public function attributeLabels()
     {
-        $this->generateAuthKey();
-        $this->last_conection = new Expression('NOW()');
-        $this->save();
+        return [
+            'id' => \Yii::t('app', 'ID'),
+            'status' => \Yii::t('app', 'Status'),
+            'email' => \Yii::t('app', 'Email'),
+            'username' => \Yii::t('app', 'Username'),
+            'password' => \Yii::t('app', 'Password'),
+            'last_conection' => \Yii::t('app', 'Last Conection'),
+            'last_activity' => \Yii::t('app', 'Last Activity'),
+            'token_security' => \Yii::t('app', 'Token Security'),
+            'date_expired_token_security' => \Yii::t('app', 'Date Expired Token Security'),
+            'token_recovery_password' => \Yii::t('app', 'Token Recovery Password'),
+            'date_token_recovery_password' => \Yii::t('app', 'Date Token Recovery Password'),
+            'date_modified' => \Yii::t('app', 'Date Modified'),
+            'date_created' => \Yii::t('app', 'Date Created'),
+        ];
     }
 
     /**
-     * @inheritdoc
+     * @return \yii\db\ActiveQuery
      */
-    public function getAuthKey()
+    public function getAssignmentsUsers()
     {
-        return $this->token_security;
+        return $this->hasMany(AssignmentUser::className(), ['id_user' => 'id']);
     }
 
     /**
-     * @inheritdoc
+     * @return \yii\db\ActiveQuery
      */
-    public function validateAuthKey($authKey)
+    public function getIdAssignments()
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->hasMany(Assignment::className(), ['id' => 'id_assignment'])->viaTable('assignment_user', ['id_user' => 'id']);
     }
 
     /**
-     * Validates password
-     *
-     * @param  string  $password password to validate
-     * @return boolean if password provided is valid for current user
+     * @return \yii\db\ActiveQuery
      */
-    public function validatePassword($password)
+    public function getRolesUsers()
     {
-        //return $this->password === sha1($password);
-        return (strlen($this->password) < 15) ? false : Yii::$app->security->validatePassword($password, $this->password) ;
+        return $this->hasMany(RoleUser::className(), ['id_user' => 'id']);
     }
 
     /**
-     * Validates password
-     *
-     * @param  string  $password password to validate
-     * @return boolean if password provided is valid for current user
+     * @return \yii\db\ActiveQuery
      */
-    public function validateHash($texto, $hash)
+    public function getIdRols()
     {
-        return Yii::$app->security->validatePassword($texto, $hash);
+        return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('role_user', ['id_user' => 'id']);
     }
-
-    /**
-     * Generates password hash from password and sets it to the model
-     *
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = Yii::$app->security->generatePasswordHash($password);
-    }
-
-    /**
-     * Generates password hash from password and sets it to the model
-     *
-     * @param string $password
-     */
-    public function getHashPassword($password)
-    {
-        return Yii::$app->security->generatePasswordHash($password);
-    }
-
-    /**
-     * Generates "remember me" authentication key
-     */
-    public function generateAuthKey()
-    {
-        $this->token_security = Yii::$app->security->generateRandomString();
-    }
-
-    /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->token_recovery_password = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * Removes password reset token
-     */
-    public function removePasswordResetToken()
-    {
-        $this->token_recovery_password = null;
-    }
-    /** EXTENSION MOVIE **/
 }

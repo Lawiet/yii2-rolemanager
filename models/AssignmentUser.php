@@ -21,17 +21,17 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Assignments $idAssignment
- * @property Users $idUser
+ * @property Assignment $idAssignment
+ * @property User $idUser
  */
-class AssignmentsUsers extends \yii\db\ActiveRecord
+class AssignmentUser extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'assignments_users';
+        return 'assignment_user';
     }
 
     /**
@@ -45,8 +45,8 @@ class AssignmentsUsers extends \yii\db\ActiveRecord
             [['toggle'], 'boolean'],
             [['date_modified', 'date_created'], 'safe'],
             [['id_assignment', 'id_user'], 'unique', 'targetAttribute' => ['id_assignment', 'id_user'], 'message' => 'The combination of Id Assignment and Id User has already been taken.'],
-            [['id_assignment'], 'exist', 'skipOnError' => true, 'targetClass' => Assignments::className(), 'targetAttribute' => ['id_assignment' => 'id']],
-            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['id_user' => 'id']],
+            [['id_assignment'], 'exist', 'skipOnError' => true, 'targetClass' => Assignment::className(), 'targetAttribute' => ['id_assignment' => 'id']],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
 
@@ -70,7 +70,7 @@ class AssignmentsUsers extends \yii\db\ActiveRecord
      */
     public function getIdAssignment()
     {
-        return $this->hasOne(Assignments::className(), ['id' => 'id_assignment']);
+        return $this->hasOne(Assignment::className(), ['id' => 'id_assignment']);
     }
 
     /**
@@ -78,6 +78,6 @@ class AssignmentsUsers extends \yii\db\ActiveRecord
      */
     public function getIdUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'id_user']);
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 }

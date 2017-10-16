@@ -20,17 +20,17 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Roles $idRol
- * @property Users $idUser
+ * @property Role $idRol
+ * @property User $idUser
  */
-class RolesUsers extends \yii\db\ActiveRecord
+class RoleUser extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'roles_users';
+        return 'role_user';
     }
 
     /**
@@ -43,8 +43,8 @@ class RolesUsers extends \yii\db\ActiveRecord
             [['id_rol', 'id_user'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
             [['id_rol', 'id_user'], 'unique', 'targetAttribute' => ['id_rol', 'id_user'], 'message' => 'The combination of Id Rol and Id User has already been taken.'],
-            [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Roles::className(), 'targetAttribute' => ['id_rol' => 'id']],
-            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['id_user' => 'id']],
+            [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_rol' => 'id']],
+            [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
 
@@ -67,7 +67,7 @@ class RolesUsers extends \yii\db\ActiveRecord
      */
     public function getIdRol()
     {
-        return $this->hasOne(Roles::className(), ['id' => 'id_rol']);
+        return $this->hasOne(Role::className(), ['id' => 'id_rol']);
     }
 
     /**
@@ -75,6 +75,6 @@ class RolesUsers extends \yii\db\ActiveRecord
      */
     public function getIdUser()
     {
-        return $this->hasOne(Users::className(), ['id' => 'id_user']);
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 }
