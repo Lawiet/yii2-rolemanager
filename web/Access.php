@@ -91,10 +91,15 @@ class Access extends Controller
 
             $permissionsRoles = PermissionRole::find()->where(['in', 'id_rol', $roles])->all();
             $permissions = Permission::find()->where(['in', 'id', $permissionsRoles])->andWhere(['id_permission'=>null, 'show_in_menu'=>true, 'status'=>true])->all();
-            foreach($permissions as $permission)
-                $items[] = ['label' => Yii::t('app', $permission->name), 'url' => $permission->uri, 'icon' => $permission->icon];
-            
+            if(count($permissions) > 0)
+                foreach($permissions as $permission)
+                    $items[] = ['label' => Yii::t('app', $permission->name), 'url' => $permission->uri, 'icon' => $permission->icon];
+
 		}else{
+            //$permissions = Permission::find()->where(['id_permission'=>null, 'show_in_menu'=>true, 'status'=>true])->all();
+            //if(count($permissions) > 0)
+            //    foreach($permissions as $permission)
+            //        $items[] = ['label' => Yii::t('app', $permission->name), 'url' => $permission->uri, 'icon' => $permission->icon];
 		}
 
 		foreach($items as $item){
