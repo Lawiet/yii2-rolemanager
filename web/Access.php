@@ -83,6 +83,7 @@ class Access extends Controller
 	 */
 	private function generatePrincipalMenu($guest = true, $icon = true){
 		$i = $items = [];
+        $permissions = Permission::find();
 
 		if(!$guest){
             $roles = [];
@@ -90,17 +91,26 @@ class Access extends Controller
                 $roles[] = $role->id_rol;
 
             $permissionsRoles = PermissionRole::find()->where(['in', 'id_rol', $roles])->all();
-            $permissions = Permission::find()->where(['in', 'id', $permissionsRoles])->andWhere(['id_permission'=>null, 'show_in_menu'=>true, 'status'=>true])->all();
-            if(count($permissions) > 0)
-                foreach($permissions as $permission)
-                    $items[] = ['label' => Yii::t('app', $permission->name), 'url' => $permission->uri, 'icon' => $permission->icon];
+            $permissions = $permissions->where(['in', 'id', $permissionsRoles]);
+            $where = [
+                'id_permission'=>null,
+                'show_in_menu'=>true,
+                'status'=>true
+            ];
 
 		}else{
-            //$permissions = Permission::find()->where(['id_permission'=>null, 'show_in_menu'=>true, 'status'=>true])->all();
-            //if(count($permissions) > 0)
-            //    foreach($permissions as $permission)
-            //        $items[] = ['label' => Yii::t('app', $permission->name), 'url' => $permission->uri, 'icon' => $permission->icon];
+            $where = [
+                'id_permission'=>null,
+                'show_in_menu'=>true,
+                'status'=>true,
+                'logged'=>false
+            ];
 		}
+
+        $permissions = $permissions->andWhere($where)->all();
+        if(count($permissions) > 0)
+            foreach($permissions as $permission)
+                $items[] = ['label' => Yii::t('app', $permission->name), 'url' => $permission->uri, 'icon' => $permission->icon, 'method' => $permission->data_method];
 
 		foreach($items as $item){
 			$i[] = self::parserPrincipalMenu($item, $icon);
@@ -135,6 +145,8 @@ class Access extends Controller
 		}else{
 			$item = ['label' => $label, 'url' => $url];
 		}
+
+        //$_menu['items'][];
 
 		return $item;
 	}

@@ -17,10 +17,12 @@ class m171015_214522_create_table_permission extends Migration
             'id' => $this->integer(10)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'id_permission' => $this->integer(10)->unsigned(),
             'status' => $this->smallInteger(1)->notNull()->defaultValue('1'),
+            'logged' => $this->smallInteger(1)->notNull()->defaultValue('1'),
             'show_in_menu' => $this->smallInteger(1)->notNull()->defaultValue('0'),
             'name' => $this->string(32)->notNull(),
             'uri' => $this->string($uri)->notNull(),
             'icon' => $this->string(16),
+            'data_method' => $this->string()->notNull()->defaultValue('GET'),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);

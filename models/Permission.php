@@ -45,13 +45,14 @@ class Permission extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_permission', 'show_in_menu'], 'integer'],
+            [['id_permission', 'show_in_menu', 'logged'], 'integer'],
             [['status'], 'boolean'],
             [['name', 'uri'], 'required'],
             [['date_modified', 'date_created'], 'safe'],
             [['name'], 'string', 'max' => 64],
             [['uri'], 'string', 'max' => 760],
             [['icon'], 'string', 'max' => 16],
+            [['data_method'], 'string'],
             [['id_permission', 'name', 'uri'], 'unique', 'targetAttribute' => ['id_permission', 'name', 'uri'], 'message' => 'The combination of Id Permission, Name and Uri has already been taken.'],
             [['name', 'uri'], 'unique', 'targetAttribute' => ['name', 'uri'], 'message' => 'The combination of Name and Uri has already been taken.'],
             [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
