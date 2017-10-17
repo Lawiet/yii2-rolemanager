@@ -5,6 +5,7 @@ namespace lawiet\rbac\web;
 use yii\web\Controller as CController;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use lawiet\rbac\web\Access;
 
 /**
  * Default controller for the `lawiet` module
@@ -26,7 +27,7 @@ class Controller extends CController
      * @var array
      */
 	private $listActionsExcludeByDefault = [''];
-	
+
     /**
      * @var array
      */
@@ -104,15 +105,15 @@ class Controller extends CController
     {
 		$this->listModulesExcludeByDefault = array_merge($this->listModulesExcludeByDefault, [\Yii::$app->id]);
 		$excludes = isset(\Yii::$app->modules['rbac']->excludes) ? \Yii::$app->modules['rbac']->excludes : (isset(\Yii::$app->params->excludesRbac) ? \Yii::$app->params->excludesRbac : null ) ;
-			
+
 		if(isset($excludes['modules']) && is_array($excludes['modules']) && count($excludes['modules']) > 0){
 			$this->listModulesExcludeByDefault = array_merge($excludes['modules'], $this->listModulesExcludeByDefault);
 		}
-		
+
 		if(isset($excludes['controllers']) && is_array($excludes['controllers']) && count($excludes['controllers']) > 0){
 			$this->listControllersExcludeByDefault = array_merge($excludes['modules'], $this->listControllersExcludeByDefault);
 		}
-		
+
 		if(isset($excludes['actions']) && is_array($excludes['actions']) && count($excludes['actions']) > 0){
 			$this->listActionsExcludeByDefault = array_merge($excludes['actions'], $this->listActionsExcludeByDefault);
 		}
@@ -129,19 +130,19 @@ class Controller extends CController
 		$module = \Yii::$app->controller->module->id;
 		$controller = \Yii::$app->controller->id;
 		$action = \Yii::$app->controller->action->id;
-		
+
 		if(in_array($module, $this->listModulesExcludeByDefault)){
 			return true;
 		}
-		
+
 		if(in_array($module.'.'.$controller, $this->listControllersExcludeByDefault)){
 			return true;
 		}
-		
+
 		if(in_array($module.'.'.$controller.'.'.$action, $this->listActionsExcludeByDefault)){
 			return true;
 		}
-		
+
 		return false;
 	}
 }

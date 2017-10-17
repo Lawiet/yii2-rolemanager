@@ -59,17 +59,6 @@ In file `web.php`
     ?>
 ```
 
-In file `assets/AppAsset.php` change yii\web\AssetBundle for lawiet\rbac\web\AssetBundle
-```
-    <?php
-	....
-	use lawiet\rbac\web\AssetBundle;
-
-	class AppAsset extends AssetBundle {
-	...
-    ?>
-```
-
 In each file `controllers/xxxController.php` change yii\web\Controller for lawiet\rbac\web\Controller
 ```
     <?php
