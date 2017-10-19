@@ -47,25 +47,8 @@ class Access extends Controller
             return false;
 
         if($permissions->id_permission > 0){
-            $ppermissions = Permission::find()
-                                     ->joinWith(['permissionsRoles'])
-                                     ->where(['in', 'permission_role.id_rol', $roles])
-                                     ->andWhere(['Permission.id'=>$permissions->id_permission])
-                                     ->one();
-
-            if(!$ppermissions)
+            if(!self::getParentPermission($permissions, $roles))
                 return false;
-
-            if($ppermissions->id_permission > 0){
-                $pppermissions = Permission::find()
-                                         ->joinWith(['permissionsRoles'])
-                                         ->where(['in', 'permission_role.id_rol', $roles])
-                                         ->andWhere(['Permission.id'=>$ppermissions->id_permission])
-                                         ->one();
-
-                if(!$pppermissions)
-                    return false;
-            }
         }
 
         $assignments = Assignment::find()
@@ -80,6 +63,34 @@ class Access extends Controller
 
         if(!$assignments)
             return false;
+
+        return true;
+    }
+
+    /**
+     * Get item Principal Menu from user autenticated or guest.
+     *
+     * @var $icon. Default true
+     * @var $dataLogout. Default username
+     * @var $iconLogout. Default off
+     * @var $option. Default ['class' => 'navbar-nav navbar-right']
+     *
+     * @return array
+     */
+    public static function getParentPermission($permissions = true, $roles)
+    {
+        $permissions = Permission::find()
+                                 ->joinWith(['permissionsRoles'])
+                                 ->where(['in', 'permission_role.id_rol', $roles])
+                                 ->andWhere(['Permission.id'=>$permissions->id_permission])
+                                 ->one();
+
+        if(!$permissions)
+            return false;
+
+        if($permissions->id_permission > 0){
+            return self::getParentPermission($permissions, $roles);
+        }
 
         return true;
     }

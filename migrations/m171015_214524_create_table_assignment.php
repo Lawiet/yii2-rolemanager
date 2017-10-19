@@ -25,6 +25,33 @@ class m171015_214524_create_table_assignment extends Migration
         $this->createIndex('uk_assignments_id_permission_method_idx', '{{%assignment}}', ['id_permission','method'], true);
 
         $this->addForeignKey('fk_assignments_permission_idx', '{{%assignment}}', 'id_permission', '{{%permission}}', 'id');
+
+        $this->batchInsert('{{%assignment}}', ['id', 'id_permission', 'name', 'method'], [
+            // Role
+            ['1','2','Ver','VIEW',],
+            ['2','2','Listar','INDEX',],
+            ['3','2','Crear','CREATE',],
+            ['4','2','Actualizar','UPDATE',],
+            ['5','2','Eliminar','DELETE',],
+            // Permission
+            ['6','3','Ver','VIEW',],
+            ['7','3','Listar','INDEX',],
+            ['8','3','Crear','CREATE',],
+            ['9','3','Actualizar','UPDATE',],
+            ['10','3','Eliminar','DELETE',],
+            // Group
+            ['11','4','Ver','VIEW',],
+            ['12','4','Listar','INDEX',],
+            ['13','4','Crear','CREATE',],
+            ['14','4','Actualizar','UPDATE',],
+            ['15','4','Eliminar','DELETE',],
+            // Assignment
+            ['16','5','Ver','VIEW',],
+            ['17','5','Listar','INDEX',],
+            ['18','5','Crear','CREATE',],
+            ['19','5','Actualizar','UPDATE',],
+            ['20','5','Eliminar','DELETE',],
+        ]);
     }
 
     public function safeDown()

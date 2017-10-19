@@ -66,17 +66,17 @@ class PrincipalMenu extends Controller
 			foreach(\Yii::$app->user->identity->rolesUsers as $role)
                 $roles[] = $role->id_rol;
 
-            $permissionsRoles = PermissionRole::find()->where(['in', 'id_rol', $roles])->all();
-            $permissions = $permissions->where(['in', 'id', $permissionsRoles]);
+            $permissions = $permissions->joinWith(['permissionsRoles'])
+                                       ->where(['in', 'permission_role.id_rol', $roles]);
             $where = [
-                'id_permission'=>null,
+                'Permission.id_permission'=>null,
                 'show_in_menu'=>true,
                 'status'=>true,
             ];
 
 		}else{
             $where = [
-                'id_permission'=>null,
+                'Permission.id_permission'=>null,
                 'show_in_menu'=>true,
                 'status'=>true,
                 'logged'=>false,
@@ -91,7 +91,7 @@ class PrincipalMenu extends Controller
                     'url' => $permission->uri,
                     'icon' => $permission->icon,
                     'method' => $permission->data_method,
-                    'items' => self::generatePrincipalSubMenu($permission, $permissionsRoles, $guest, $icon),
+                    'items' => self::generatePrincipalSubMenu($permission, $roles, $guest, $icon),
                 ];
 
                 $items[] = $menu;
@@ -100,6 +100,7 @@ class PrincipalMenu extends Controller
 		foreach($items as $item){
 			$i[] = self::parserPrincipalMenu($item, $icon);
 		}
+
 
 		return $i;
 	}
@@ -114,14 +115,15 @@ class PrincipalMenu extends Controller
      *
      * @return array
 	 */
-	private function generatePrincipalSubMenu(Permission $permission, $permissionsRoles = [], $guest = true, $icon = true){
+	private function generatePrincipalSubMenu(Permission $permission, $roles = [], $guest = true, $icon = true){
 		$i = $items = [];
         $permissions = Permission::find();
 
 		if(!$guest){
-            $permissions = $permissions->where(['in', 'id', $permissionsRoles]);
+            $permissions = $permissions->joinWith(['permissionsRoles'])
+                                       ->where(['in', 'permission_role.id_rol', $roles]);
             $where = [
-                'id_permission'=>$permission->id,
+                'Permission.id_permission'=>$permission->id,
                 'show_in_menu'=>true,
                 'status'=>true
             ];
@@ -142,7 +144,7 @@ class PrincipalMenu extends Controller
                     'url' => $permission->uri,
                     'icon' => $permission->icon,
                     'method' => $permission->data_method,
-                    'items' => self::generatePrincipalSubMenu($permission, $permissionsRoles, $guest, $icon),
+                    'items' => self::generatePrincipalSubMenu($permission, $roles, $guest, $icon),
                 ];
 
                 $items[] = $menu;
@@ -182,9 +184,9 @@ class PrincipalMenu extends Controller
 			$item = ['label' => $label, 'url' => $url];
 		}
 
-        if(isset($link['items'][0]))
-            if(count($link['items'][0]) > 0)
-                $item['items'][0] = $link['items'][0];
+        if(isset($link['items']))
+            if(count($link['items']) > 0)
+                $item['items'] = $link['items'];
 
 		return $item;
 	}

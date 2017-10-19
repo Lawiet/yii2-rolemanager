@@ -24,12 +24,12 @@ class m171015_214531_create_table_permission_role extends Migration
         $this->addForeignKey('fk_permissions_roles_permission_idx', '{{%permission_role}}', 'id_permission', '{{%permission}}', 'id');
         $this->addForeignKey('fk_permissions_roles_rol_idx', '{{%permission_role}}', 'id_rol', '{{%role}}', 'id');
 
-        $this->insert('{{%permission_role}}', [
-            'id'=>'1',
-            'id_permission'=>'1',
-            'id_rol'=>'1',
-            'date_modified'=>null, //'2017-10-15 18:10:00',
-            'date_created'=>null, //'2017-10-15 18:10:00'
+        $this->batchInsert('{{%permission_role}}', ['id_permission', 'id_rol',], [
+            ['1','1',],
+            ['2','1',],
+            ['3','1',],
+            ['4','1',],
+            ['5','1',],
         ]);
     }
 

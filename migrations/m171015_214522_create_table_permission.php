@@ -32,16 +32,12 @@ class m171015_214522_create_table_permission extends Migration
 
         $this->addForeignKey('fk_permissions_permission_idx', '{{%permission}}', 'id_permission', '{{%permission}}', 'id');
 
-        $this->insert('{{%permission}}', [
-            'id'=>'1',
-            'id_permission'=>'',
-            'status'=>'1',
-            'show_in_menu'=>'1',
-            'name'=>'RBAC',
-            'uri'=>'/rbac',
-            'icon'=>'',
-            'date_modified'=>null, //'2017-10-15 18:09:48',
-            'date_created'=>null, //'2017-10-15 18:09:48'
+        $this->batchInsert('{{%permission}}', ['id', 'id_permission', 'show_in_menu', 'name', 'uri', 'icon'], [
+            ['1','','1','RBAC','/rbac','',],
+            ['2','1','1','Role','/rbac/role','',],
+            ['3','1','1','Permission','/rbac/permission','',],
+            ['4','1','1','Group','/rbac/group','',],
+            ['5','1','1','Assignment','/rbac/assignment','',],
         ]);
     }
 
