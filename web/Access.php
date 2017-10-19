@@ -4,8 +4,9 @@ namespace lawiet\rbac\web;
 
 use Yii;
 use yii\web\Controller;
-use lawiet\rbac\models\PermissionRole;
+use lawiet\rbac\models\Assignment;
 use lawiet\rbac\models\Permission;
+use lawiet\rbac\models\PermissionRole;
 
 /**
  * Default controller for the `lawiet` module
@@ -24,9 +25,8 @@ class Access extends Controller
         $module = \Yii::$app->controller->module->id;
         $controller = \Yii::$app->controller->id;
         $action = \Yii::$app->controller->action->id;
-        $uric = '/' . $module . '/' . $controller;
-        $uri = $uric . '/' . $action;
-        $permission = $roles = [];
+        $uri = '/' . $module . '/' . $controller;
+        $permissions = $roles = [];
         $where = [
             'status'=>true,
         ];
@@ -37,27 +37,48 @@ class Access extends Controller
 		foreach($user->rolesUsers as $role)
             $roles[] = $role->id_rol;
 
-        $permissionsRoles = PermissionRole::find()->where(['in', 'id_rol', $roles])->all();
-        $permissions = Permission::find()->where(['in', 'id', $permissionsRoles])
-                                ->andWhere(['uri'=> strtolower($action)=="index" ? $uric : $uri])
-                                ->all();
+        $permissions = Permission::find()
+                                 ->joinWith(['permissionsRoles'])
+                                 ->where(['in', 'permission_role.id_rol', $roles])
+                                 ->andWhere(['uri'=>$uri])
+                                 ->one();
 
         if(!$permissions)
             return false;
 
-        foreach($permissions as $p){
-            $permission[] = $p->id;
+        if($permissions->id_permission > 0){
+            $ppermissions = Permission::find()
+                                     ->joinWith(['permissionsRoles'])
+                                     ->where(['in', 'permission_role.id_rol', $roles])
+                                     ->andWhere(['Permission.id'=>$permissions->id_permission])
+                                     ->one();
 
-            if($p->status == false)
+            if(!$ppermissions)
                 return false;
+
+            if($ppermissions->id_permission > 0){
+                $pppermissions = Permission::find()
+                                         ->joinWith(['permissionsRoles'])
+                                         ->where(['in', 'permission_role.id_rol', $roles])
+                                         ->andWhere(['Permission.id'=>$ppermissions->id_permission])
+                                         ->one();
+
+                if(!$pppermissions)
+                    return false;
+            }
         }
 
-        $permissions = Permission::find()->where(['in', 'id', $permissionsRoles])
-                                ->andWhere(['in', 'id_permission', $p])
-                                ->andWhere($where)
+        $assignments = Assignment::find()
+                                 ->joinWith(['assignmentsUsers'])
+                                 ->where(['in', 'assignment_user.id_user', $user->id])
+                                 ->andWhere(['in', 'id_permission', $permissions->id])
+                                 ->andWhere([
+                                    'status'=>true,
+                                    'method'=>strtoupper($action),
+                                ])
                                 ->all();
 
-        if(!$permissions)
+        if(!$assignments)
             return false;
 
         return true;

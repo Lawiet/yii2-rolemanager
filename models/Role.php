@@ -27,7 +27,7 @@ use Yii;
  * @property RoleUser[] $rolesUsers
  * @property User[] $idUsers
  */
-class Roles extends \yii\db\ActiveRecord
+class Role extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
