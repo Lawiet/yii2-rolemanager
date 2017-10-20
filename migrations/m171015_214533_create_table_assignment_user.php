@@ -13,8 +13,8 @@ class m171015_214533_create_table_assignment_user extends Migration
 
         $this->createTable('{{%assignment_user}}', [
             'id' => $this->integer(11)->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
-            'id_assignment' => $this->integer(10)->unsigned()->notNull(),
-            'id_user' => $this->integer(10)->unsigned()->notNull(),
+            'id_assignment' => $this->integer(11)->unsigned()->notNull(),
+            'id_user' => $this->integer(11)->unsigned()->notNull(),
             'toggle' => $this->smallInteger(1)->notNull()->defaultValue('0'),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),

@@ -13,8 +13,8 @@ class m171015_214531_create_table_permission_role extends Migration
 
         $this->createTable('{{%permission_role}}', [
             'id' => $this->integer(11)->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
-            'id_permission' => $this->integer(10)->unsigned()->notNull(),
-            'id_rol' => $this->integer(10)->unsigned()->notNull(),
+            'id_permission' => $this->integer(11)->unsigned()->notNull(),
+            'id_rol' => $this->integer(11)->unsigned()->notNull(),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);

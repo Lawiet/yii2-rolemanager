@@ -12,7 +12,7 @@ class m171015_214521_create_table_role extends Migration
         }
 
         $this->createTable('{{%role}}', [
-            'id' => $this->integer(10)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
+            'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'status' => $this->smallInteger(1)->notNull()->defaultValue('1'),
             'name' => $this->string(64)->notNull(),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
@@ -20,7 +20,7 @@ class m171015_214521_create_table_role extends Migration
         ], $tableOptions);
 
         $this->createIndex('uk_roles_unique_name_idx', '{{%role}}', 'name', true);
-        
+
         $this->insert('{{%role}}', [
             'id'=>'1',
             'status'=>'1',

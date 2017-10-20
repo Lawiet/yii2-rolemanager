@@ -21,6 +21,7 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
+ * @property Audit[] $audits
  * @property AssignmentUser[] $assignmentUsers
  * @property Assignment[] $idAssignments
  * @property RoleUser[] $roleUsers
@@ -75,6 +76,14 @@ class User extends UserIdentity
             'date_modified' => Yii::t('app', 'Date Modified'),
             'date_created' => Yii::t('app', 'Date Created'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAudits()
+    {
+        return $this->hasMany(Audit::className(), ['id_user' => 'id']);
     }
 
     /**

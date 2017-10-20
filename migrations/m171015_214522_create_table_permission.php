@@ -14,8 +14,8 @@ class m171015_214522_create_table_permission extends Migration
         }
 
         $this->createTable('{{%permission}}', [
-            'id' => $this->integer(10)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
-            'id_permission' => $this->integer(10)->unsigned(),
+            'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
+            'id_permission' => $this->integer(11)->unsigned(),
             'status' => $this->smallInteger(1)->notNull()->defaultValue('1'),
             'logged' => $this->smallInteger(1)->notNull()->defaultValue('1'),
             'show_in_menu' => $this->smallInteger(1)->notNull()->defaultValue('0'),
