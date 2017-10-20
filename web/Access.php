@@ -34,11 +34,11 @@ class Access extends Controller
         if(\Yii::$app->user->isGuest)
             return false;
 
-		foreach($user->rolesUsers as $role)
+		foreach($user->roleUsers as $role)
             $roles[] = $role->id_rol;
 
         $permissions = Permission::find()
-                                 ->joinWith(['permissionsRoles'])
+                                 ->joinWith(['permissionRoles'])
                                  ->where(['in', 'permission_role.id_rol', $roles])
                                  ->andWhere(['uri'=>$uri])
                                  ->one();
@@ -52,7 +52,7 @@ class Access extends Controller
         }
 
         $assignments = Assignment::find()
-                                 ->joinWith(['assignmentsUsers'])
+                                 ->joinWith(['assignmentUsers'])
                                  ->where(['in', 'assignment_user.id_user', $user->id])
                                  ->andWhere(['in', 'id_permission', $permissions->id])
                                  ->andWhere([
@@ -80,7 +80,7 @@ class Access extends Controller
     public static function getParentPermission($permissions = true, $roles)
     {
         $permissions = Permission::find()
-                                 ->joinWith(['permissionsRoles'])
+                                 ->joinWith(['permissionRoles'])
                                  ->where(['in', 'permission_role.id_rol', $roles])
                                  ->andWhere(['Permission.id'=>$permissions->id_permission])
                                  ->one();

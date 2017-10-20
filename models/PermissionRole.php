@@ -5,18 +5,11 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * @author Jorge Gonzalez
- * @email ljorgelgonzalez@outlook.com
- *
- * @since 1.0
- */
-
-/**
- * This is the model class for table "permissions_roles".
+ * This is the model class for table "permission_role".
  *
  * @property integer $id
- * @property integer $id_permission
- * @property integer $id_rol
+ * @property string $id_permission
+ * @property string $id_rol
  * @property string $date_modified
  * @property string $date_created
  *
@@ -54,11 +47,11 @@ class PermissionRole extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('app', 'ID'),
-            'id_permission' => \Yii::t('app', 'Id Permission'),
-            'id_rol' => \Yii::t('app', 'Id Rol'),
-            'date_modified' => \Yii::t('app', 'Date Modified'),
-            'date_created' => \Yii::t('app', 'Date Created'),
+            'id' => Yii::t('app', 'ID'),
+            'id_permission' => Yii::t('app', 'Id Permission'),
+            'id_rol' => Yii::t('app', 'Id Rol'),
+            'date_modified' => Yii::t('app', 'Date Modified'),
+            'date_created' => Yii::t('app', 'Date Created'),
         ];
     }
 

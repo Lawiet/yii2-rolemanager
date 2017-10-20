@@ -5,25 +5,19 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * @author Jorge Gonzalez
- * @email ljorgelgonzalez@outlook.com
+ * This is the model class for table "assignment".
  *
- * @since 1.0
- */
-
-/**
- * This is the model class for table "assignments".
- *
- * @property integer $id
- * @property integer $id_permission
- * @property boolean $status
- * @property boolean $show_in_menu
+ * @property string $id
+ * @property string $id_permission
+ * @property integer $status
+ * @property integer $show_in_menu
  * @property string $name
  * @property string $method
  * @property string $date_modified
  * @property string $date_created
  *
- * @property AssignmentUser[] $assignmentsUsers
+ * @property Permission $idPermission
+ * @property AssignmentUser[] $assignmentUsers
  * @property User[] $idUsers
  */
 class Assignment extends \yii\db\ActiveRecord
@@ -43,12 +37,12 @@ class Assignment extends \yii\db\ActiveRecord
     {
         return [
             [['id_permission', 'name'], 'required'],
-            [['id_permission'], 'integer'],
-            [['status', 'show_in_menu'], 'boolean'],
-            [['method'], 'string'],
+            [['id_permission', 'status', 'show_in_menu'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
             [['name'], 'string', 'max' => 64],
+            [['method'], 'string', 'max' => 255],
             [['id_permission', 'method'], 'unique', 'targetAttribute' => ['id_permission', 'method'], 'message' => 'The combination of Id Permission and Method has already been taken.'],
+            [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
         ];
     }
 
@@ -58,21 +52,29 @@ class Assignment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('app', 'ID'),
-            'id_permission' => \Yii::t('app', 'Id Permission'),
-            'status' => \Yii::t('app', 'Status'),
-            'show_in_menu' => \Yii::t('app', 'Show In Menu'),
-            'name' => \Yii::t('app', 'Name'),
-            'method' => \Yii::t('app', 'Method'),
-            'date_modified' => \Yii::t('app', 'Date Modified'),
-            'date_created' => \Yii::t('app', 'Date Created'),
+            'id' => Yii::t('app', 'ID'),
+            'id_permission' => Yii::t('app', 'Id Permission'),
+            'status' => Yii::t('app', 'Status'),
+            'show_in_menu' => Yii::t('app', 'Show In Menu'),
+            'name' => Yii::t('app', 'Name'),
+            'method' => Yii::t('app', 'Method'),
+            'date_modified' => Yii::t('app', 'Date Modified'),
+            'date_created' => Yii::t('app', 'Date Created'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAssignmentsUsers()
+    public function getIdPermission()
+    {
+        return $this->hasOne(Permission::className(), ['id' => 'id_permission']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAssignmentUsers()
     {
         return $this->hasMany(AssignmentUser::className(), ['id_assignment' => 'id']);
     }

@@ -5,19 +5,12 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * @author Jorge Gonzalez
- * @email ljorgelgonzalez@outlook.com
- *
- * @since 1.0
- */
-
-/**
- * This is the model class for table "assignments_users".
+ * This is the model class for table "assignment_user".
  *
  * @property integer $id
- * @property integer $id_assignment
- * @property integer $id_user
- * @property boolean $toggle
+ * @property string $id_assignment
+ * @property string $id_user
+ * @property integer $toggle
  * @property string $date_modified
  * @property string $date_created
  *
@@ -41,8 +34,7 @@ class AssignmentUser extends \yii\db\ActiveRecord
     {
         return [
             [['id_assignment', 'id_user'], 'required'],
-            [['id_assignment', 'id_user'], 'integer'],
-            [['toggle'], 'boolean'],
+            [['id_assignment', 'id_user', 'toggle'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
             [['id_assignment', 'id_user'], 'unique', 'targetAttribute' => ['id_assignment', 'id_user'], 'message' => 'The combination of Id Assignment and Id User has already been taken.'],
             [['id_assignment'], 'exist', 'skipOnError' => true, 'targetClass' => Assignment::className(), 'targetAttribute' => ['id_assignment' => 'id']],
@@ -56,12 +48,12 @@ class AssignmentUser extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('app', 'ID'),
-            'id_assignment' => \Yii::t('app', 'Id Assignment'),
-            'id_user' => \Yii::t('app', 'Id User'),
-            'toggle' => \Yii::t('app', 'Toggle'),
-            'date_modified' => \Yii::t('app', 'Date Modified'),
-            'date_created' => \Yii::t('app', 'Date Created'),
+            'id' => Yii::t('app', 'ID'),
+            'id_assignment' => Yii::t('app', 'Id Assignment'),
+            'id_user' => Yii::t('app', 'Id User'),
+            'toggle' => Yii::t('app', 'Toggle'),
+            'date_modified' => Yii::t('app', 'Date Modified'),
+            'date_created' => Yii::t('app', 'Date Created'),
         ];
     }
 

@@ -5,22 +5,15 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * @author Jorge Gonzalez
- * @email ljorgelgonzalez@outlook.com
+ * This is the model class for table "group".
  *
- * @since 1.0
- */
-
-/**
- * This is the model class for table "groups".
- *
- * @property integer $id
- * @property boolean $status
+ * @property string $id
+ * @property integer $status
  * @property string $name
  * @property string $date_modified
  * @property string $date_created
  *
- * @property GroupsRole[] $groupsRoles
+ * @property GroupRole[] $groupRoles
  * @property Role[] $idRols
  */
 class Group extends \yii\db\ActiveRecord
@@ -39,7 +32,7 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'boolean'],
+            [['status'], 'integer'],
             [['name'], 'required'],
             [['date_modified', 'date_created'], 'safe'],
             [['name'], 'string', 'max' => 64],
@@ -53,18 +46,18 @@ class Group extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('app', 'ID'),
-            'status' => \Yii::t('app', 'Status'),
-            'name' => \Yii::t('app', 'Name'),
-            'date_modified' => \Yii::t('app', 'Date Modified'),
-            'date_created' => \Yii::t('app', 'Date Created'),
+            'id' => Yii::t('app', 'ID'),
+            'status' => Yii::t('app', 'Status'),
+            'name' => Yii::t('app', 'Name'),
+            'date_modified' => Yii::t('app', 'Date Modified'),
+            'date_created' => Yii::t('app', 'Date Created'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupsRoles()
+    public function getGroupRoles()
     {
         return $this->hasMany(GroupRole::className(), ['id_group' => 'id']);
     }

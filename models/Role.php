@@ -5,26 +5,19 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * @author Jorge Gonzalez
- * @email ljorgelgonzalez@outlook.com
+ * This is the model class for table "role".
  *
- * @since 1.0
- */
-
-/**
- * This is the model class for table "roles".
- *
- * @property integer $id
- * @property boolean $status
+ * @property string $id
+ * @property integer $status
  * @property string $name
  * @property string $date_modified
  * @property string $date_created
  *
- * @property GroupRole[] $groupsRoles
+ * @property GroupRole[] $groupRoles
  * @property Group[] $idGroups
- * @property PermissionRole[] $permissionsRoles
+ * @property PermissionRole[] $permissionRoles
  * @property Permission[] $idPermissions
- * @property RoleUser[] $rolesUsers
+ * @property RoleUser[] $roleUsers
  * @property User[] $idUsers
  */
 class Role extends \yii\db\ActiveRecord
@@ -43,7 +36,7 @@ class Role extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'boolean'],
+            [['status'], 'integer'],
             [['name'], 'required'],
             [['date_modified', 'date_created'], 'safe'],
             [['name'], 'string', 'max' => 64],
@@ -57,18 +50,18 @@ class Role extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('app', 'ID'),
-            'status' => \Yii::t('app', 'Status'),
-            'name' => \Yii::t('app', 'Name'),
-            'date_modified' => \Yii::t('app', 'Date Modified'),
-            'date_created' => \Yii::t('app', 'Date Created'),
+            'id' => Yii::t('app', 'ID'),
+            'status' => Yii::t('app', 'Status'),
+            'name' => Yii::t('app', 'Name'),
+            'date_modified' => Yii::t('app', 'Date Modified'),
+            'date_created' => Yii::t('app', 'Date Created'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupsRoles()
+    public function getGroupRoles()
     {
         return $this->hasMany(GroupRole::className(), ['id_rol' => 'id']);
     }
@@ -84,7 +77,7 @@ class Role extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPermissionsRoles()
+    public function getPermissionRoles()
     {
         return $this->hasMany(PermissionRole::className(), ['id_rol' => 'id']);
     }
@@ -100,9 +93,9 @@ class Role extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRolesUsers()
+    public function getRoleUsers()
     {
-        return $this->hasMany(RolesUser::className(), ['id_rol' => 'id']);
+        return $this->hasMany(RoleUser::className(), ['id_rol' => 'id']);
     }
 
     /**

@@ -5,18 +5,11 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * @author Jorge Gonzalez
- * @email ljorgelgonzalez@outlook.com
- *
- * @since 1.0
- */
-
-/**
- * This is the model class for table "roles_users".
+ * This is the model class for table "role_user".
  *
  * @property integer $id
- * @property integer $id_rol
- * @property integer $id_user
+ * @property string $id_rol
+ * @property string $id_user
  * @property string $date_modified
  * @property string $date_created
  *
@@ -54,11 +47,11 @@ class RoleUser extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => \Yii::t('app', 'ID'),
-            'id_rol' => \Yii::t('app', 'Id Rol'),
-            'id_user' => \Yii::t('app', 'Id User'),
-            'date_modified' => \Yii::t('app', 'Date Modified'),
-            'date_created' => \Yii::t('app', 'Date Created'),
+            'id' => Yii::t('app', 'ID'),
+            'id_rol' => Yii::t('app', 'Id Rol'),
+            'id_user' => Yii::t('app', 'Id User'),
+            'date_modified' => Yii::t('app', 'Date Modified'),
+            'date_created' => Yii::t('app', 'Date Created'),
         ];
     }
 

@@ -63,10 +63,10 @@ class PrincipalMenu extends Controller
 
 		if(!$guest){
             $roles = [];
-			foreach(\Yii::$app->user->identity->rolesUsers as $role)
+			foreach(\Yii::$app->user->identity->roleUsers as $role)
                 $roles[] = $role->id_rol;
 
-            $permissions = $permissions->joinWith(['permissionsRoles'])
+            $permissions = $permissions->joinWith(['permissionRoles'])
                                        ->where(['in', 'permission_role.id_rol', $roles]);
             $where = [
                 'Permission.id_permission'=>null,
@@ -120,7 +120,7 @@ class PrincipalMenu extends Controller
         $permissions = Permission::find();
 
 		if(!$guest){
-            $permissions = $permissions->joinWith(['permissionsRoles'])
+            $permissions = $permissions->joinWith(['permissionRoles'])
                                        ->where(['in', 'permission_role.id_rol', $roles]);
             $where = [
                 'Permission.id_permission'=>$permission->id,
