@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214525_create_table__audit extends Migration
+class m171015_214529_create_table__audit extends Migration
 {
     public function safeUp()
     {
@@ -18,8 +18,6 @@ class m171015_214525_create_table__audit extends Migration
             'type_operation' => $this->string(32)->notNull(),
             'old_change' => $this->text()->notNull(),
         ], $tableOptions);
-
-        $this->addForeignKey('fk_user_id', '{{%_audit}}', 'id_user', '{{%user}}', 'id');
     }
 
     public function safeDown()

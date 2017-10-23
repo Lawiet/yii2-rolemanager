@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214523_create_table_group extends Migration
+class m171015_214503_create_table_group extends Migration
 {
     public function safeUp()
     {
@@ -18,8 +18,6 @@ class m171015_214523_create_table_group extends Migration
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
-
-        $this->createIndex('uk_groups_name_idx', '{{%group}}', 'name', true);
 
         $this->insert('{{%group}}', [
             'id'=>'1',

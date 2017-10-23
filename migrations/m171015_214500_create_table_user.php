@@ -14,6 +14,7 @@ class m171015_214520_create_table_user extends Migration
         $this->createTable('{{%user}}', [
             'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'status' => $this->string()->notNull()->defaultValue('ACTIVE'),
+            'id_organization' => $this->integer(11)->unsigned()->notNull(),
             'email' => $this->string(180),
             'username' => $this->string(64)->notNull(),
             'password' => $this->string(512)->notNull(),
@@ -27,13 +28,10 @@ class m171015_214520_create_table_user extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->createIndex('uk_users_username_idx', '{{%user}}', 'username', true);
-        $this->createIndex('uk_users_email_idx', '{{%user}}', 'email', true);
-        $this->createIndex('uk_users_username_email_idx', '{{%user}}', ['email','username'], true);
-
         $this->insert('{{%user}}', [
             'id'=>'1',
             'status'=>'ACTIVE',
+            'id_organization'=>'1',
             'email'=>'admin@noreply.com',
             'username'=>'admin',
             'password'=>'$2y$13$wqU2Gvp67UXifBiFS7PdJeZkFocCg8qJvb.6iw73yZ3fAi9T.2weO',

@@ -5,26 +5,26 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * This is the model class for table "group".
+ * This is the model class for table "organization".
  *
  * @property string $id
+ * @property string $id_group
  * @property integer $status
  * @property string $name
  * @property string $date_modified
  * @property string $date_created
  *
- * @property GroupRole[] $groupRoles
- * @property Role[] $idRols
- * @property Organization[] $organizations
+ * @property Group $idGroup
+ * @property User[] $users
  */
-class Group extends \yii\db\ActiveRecord
+class Organization extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'group';
+        return 'organization';
     }
 
     /**
@@ -33,11 +33,11 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'integer'],
+            [['id_group', 'status'], 'integer'],
             [['name'], 'required'],
             [['date_modified', 'date_created'], 'safe'],
-            [['name'], 'string', 'max' => 64],
-            [['name'], 'unique'],
+            [['name'], 'string', 'max' => 128],
+            [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['id_group' => 'id']],
         ];
     }
 
@@ -48,6 +48,7 @@ class Group extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'id_group' => Yii::t('app', 'Id Group'),
             'status' => Yii::t('app', 'Status'),
             'name' => Yii::t('app', 'Name'),
             'date_modified' => Yii::t('app', 'Date Modified'),
@@ -58,24 +59,16 @@ class Group extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupRoles()
+    public function getIdGroup()
     {
-        return $this->hasMany(GroupRole::className(), ['id_group' => 'id']);
+        return $this->hasOne(Group::className(), ['id' => 'id_group']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdRols()
+    public function getUsers()
     {
-        return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('group_role', ['id_group' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrganizations()
-    {
-        return $this->hasMany(Organization::className(), ['id_group' => 'id']);
+        return $this->hasMany(User::className(), ['id_organization' => 'id']);
     }
 }

@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214524_create_table_assignment extends Migration
+class m171015_214504_create_table_assignment extends Migration
 {
     public function safeUp()
     {
@@ -21,10 +21,6 @@ class m171015_214524_create_table_assignment extends Migration
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
-
-        $this->createIndex('uk_assignments_id_permission_method_idx', '{{%assignment}}', ['id_permission','method'], true);
-
-        $this->addForeignKey('fk_assignments_permission_idx', '{{%assignment}}', 'id_permission', '{{%permission}}', 'id');
 
         $this->batchInsert('{{%assignment}}', ['id', 'id_permission', 'name', 'method'], [
             // Role

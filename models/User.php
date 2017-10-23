@@ -9,6 +9,7 @@ use Yii;
  *
  * @property string $id
  * @property string $status
+ * @property string $id_organization
  * @property string $email
  * @property string $username
  * @property string $password
@@ -26,6 +27,7 @@ use Yii;
  * @property Assignment[] $idAssignments
  * @property RoleUser[] $roleUsers
  * @property Role[] $idRols
+ * @property Organization $idOrganization
  */
 class User extends UserIdentity
 {
@@ -43,9 +45,9 @@ class User extends UserIdentity
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
+            [['id_organization', 'username', 'password'], 'required'],
+            [['id_organization', 'date_expired_token_security'], 'integer'],
             [['last_conection', 'last_activity', 'date_token_recovery_password', 'date_modified', 'date_created'], 'safe'],
-            [['date_expired_token_security'], 'integer'],
             [['status'], 'string', 'max' => 255],
             [['email'], 'string', 'max' => 180],
             [['username'], 'string', 'max' => 64],
@@ -53,6 +55,7 @@ class User extends UserIdentity
             [['username'], 'unique'],
             [['email'], 'unique'],
             [['email', 'username'], 'unique', 'targetAttribute' => ['email', 'username'], 'message' => 'The combination of Email and Username has already been taken.'],
+            [['id_organization'], 'exist', 'skipOnError' => true, 'targetClass' => Organization::className(), 'targetAttribute' => ['id_organization' => 'id']],
         ];
     }
 
@@ -64,6 +67,7 @@ class User extends UserIdentity
         return [
             'id' => Yii::t('app', 'ID'),
             'status' => Yii::t('app', 'Status'),
+            'id_organization' => Yii::t('app', 'Id Organization'),
             'email' => Yii::t('app', 'Email'),
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
@@ -116,5 +120,13 @@ class User extends UserIdentity
     public function getIdRols()
     {
         return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('role_user', ['id_user' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdOrganization()
+    {
+        return $this->hasOne(Organization::className(), ['id' => 'id_organization']);
     }
 }
