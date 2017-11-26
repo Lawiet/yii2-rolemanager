@@ -20,7 +20,8 @@
 	    "yiisoft/yii2": "^2.0.8",
         "yiisoft/yii2-jui": "*",
         "yiisoft/yii2-bootstrap": "*",
-		"kartik-v/yii2-icons": "@dev"
+		"kartik-v/yii2-icons": "@dev",
+        "kartik-v/yii2-widgets": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.1"
