@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\widgets\SwitchInput;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Group */
@@ -12,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->widget(SwitchInput::classname(), []); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\widgets\SwitchInput;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Assignment */
@@ -14,9 +15,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_permission')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->widget(SwitchInput::classname(), []); ?>
 
-    <?= $form->field($model, 'show_in_menu')->textInput() ?>
+    <?= $form->field($model, 'show_in_menu')->widget(SwitchInput::classname(), []); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
