@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
-use lawiet\multiselect\MultiSelectWidget;
+use wbraganca\multiselect\MultiSelectWidget;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Permission */
@@ -38,13 +38,11 @@ use lawiet\multiselect\MultiSelectWidget;
     <?= $form->field($model, 'icon')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a icon...')]) ?>
 
     <?= $form->field($model, 'data_method')->widget(MultiSelectWidget::classname(), [
-        'data' => ['Activo', 'inactivo'],
+        'data' => ['GET', 'POST', 'PUT', 'DELETE'],
         'model' => $model,
         'attribute' => 'date_modified',
     ]); ?>
-
-    <?= $form->field($model, 'data_method')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter GET, POST, PUT or DELETE...')]) ?>
-
+    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
