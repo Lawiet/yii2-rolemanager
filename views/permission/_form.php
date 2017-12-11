@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
+use lawiet\multiselect\MultiSelectWidget;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Permission */
@@ -14,7 +15,7 @@ use kartik\widgets\SwitchInput;
     <?php $form = ActiveForm::begin([
         'id' => 'signup-form',
         'type' => ActiveForm::TYPE_VERTICAL,
-        'enableAjaxValidation' => true,
+        'enableAjaxValidation' => false,
         'formConfig' => [
             'showLabels' => true,
             'labelSpan' => 3,
@@ -35,6 +36,12 @@ use kartik\widgets\SwitchInput;
     <?= $form->field($model, 'uri')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a valid uri address...')]) ?>
 
     <?= $form->field($model, 'icon')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a icon...')]) ?>
+
+    <?= $form->field($model, 'data_method')->widget(MultiSelectWidget::classname(), [
+        'data' => ['Activo', 'inactivo'],
+        'model' => $model,
+        'attribute' => 'date_modified',
+    ]); ?>
 
     <?= $form->field($model, 'data_method')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter GET, POST, PUT or DELETE...')]) ?>
 

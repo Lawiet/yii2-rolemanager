@@ -14,7 +14,7 @@ use kartik\widgets\SwitchInput;
     <?php $form = ActiveForm::begin([
         'id' => 'signup-form',
         'type' => ActiveForm::TYPE_VERTICAL,
-        'enableAjaxValidation' => true,
+        'enableAjaxValidation' => false,
         'formConfig' => [
             'showLabels' => true,
             'labelSpan' => 3,
