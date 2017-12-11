@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
-use lawiet\multiselect\MultiSelectWidget;
+use wbraganca\multiselect\MultiSelectWidget;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Permission */
@@ -37,8 +37,21 @@ use lawiet\multiselect\MultiSelectWidget;
 
     <?= $form->field($model, 'icon')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a icon...')]) ?>
 
-    <?= $form->field($model, 'data_method')->widget(MultiSelectWidget::classname(), [
-        'data' => ['Activo', 'inactivo'],
+    <?= $form->field($model, 'date_created')->widget(MultiSelectWidget::classname(), [
+        'options' => [
+            //'multiple' => 'multiple',
+        ],
+        'clientOptions' => [
+            'nonSelectedText' => Yii::t('app', 'Check an option!'),
+            'nSelectedText' => ' - ' . Yii::t('app', 'Options selected!'),
+            'allSelectedText' => Yii::t('app', 'All Selected'),
+            //'selectAllText' => Yii::t('app', 'Select all'),
+            'numberDisplayed' => 1,
+            //'enableCaseInsensitiveFiltering' => true,
+            'maxHeight' => 600, // The maximum height of the dropdown. This is useful when using the plugin with plenty of options.
+            //'includeSelectAllOption' => true
+        ],
+        'data' => ['GET', 'POST', 'PUT', 'DELETE'],
         'model' => $model,
         'attribute' => 'date_modified',
     ]); ?>
