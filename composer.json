@@ -22,8 +22,7 @@
         "yiisoft/yii2-bootstrap": "*",
 		"kartik-v/yii2-icons": "@dev",
         "kartik-v/yii2-widgets": "*",
-        "wbraganca/yii2-multiselect": "~1.0.1",
-        "wbraganca/yii2-selectivity": "*"
+        "lawiet/yii2-multiselect": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.1"
