@@ -6,9 +6,13 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use lawiet\rbac\models\GroupRole;
+use lawiet\rbac\models\Role;
+use lawiet\rbac\models\RoleSearch;
 use lawiet\rbac\models\Group;
 use lawiet\rbac\models\GroupSearch;
 use lawiet\rbac\web\Controller;
+use yii\helpers\ArrayHelper;
 
 /**
  * GroupController implements the CRUD actions for Group model.
@@ -60,12 +64,16 @@ class GroupController extends Controller
     public function actionCreate()
     {
         $model = new Group();
+        $modelRole = Role::find()->select(['id', 'name'])->all();
+        $modelGroupRole = new GroupRole();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
+                'modelGroupRole' => $modelGroupRole,
             ]);
         }
     }
@@ -79,12 +87,16 @@ class GroupController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelRole = Role::find()->select(['id', 'name'])->all();
+        $modelGroupRole = new GroupRole();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
+                'modelGroupRole' => $modelGroupRole,
             ]);
         }
     }

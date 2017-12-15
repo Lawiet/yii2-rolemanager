@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
-use lawiet\multiselect\MultiSelectWidget;
+use lawiet\multiselect\MultiSelectBoxWidget;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Group */
@@ -27,13 +27,13 @@ use lawiet\multiselect\MultiSelectWidget;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a Name...')]) ?>
 
-    <?= $form->field($model, 'date_created')->widget(MultiSelectWidget::classname(), [
+    <?= $form->field($modelGroupRole, 'id_rol')->widget(MultiSelectBoxWidget::classname(), [
         'options' => [
             'multiple' => 'multiple',
         ],
-        'data' => ['Activo', 'inactivo'],
-        'model' => $model,
-        'attribute' => 'date_modified',
+        'data' => $modelRole,
+        'model' => $modelGroupRole,
+        'attribute' => 'id_rol',
     ]); ?>
 
     <div class="form-group">
