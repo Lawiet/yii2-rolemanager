@@ -70,4 +70,14 @@ class GroupRole extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Role::className(), ['id' => 'id_rol']);
     }
+
+    /**
+     * @inheritdoc
+     */
+	public function beforeSave($insert)
+	{
+	    // hash password on before saving the record:
+        $this->date_modified = new \yii\db\Expression('NOW()');
+		return parent::beforeSave($insert);
+	}
 }

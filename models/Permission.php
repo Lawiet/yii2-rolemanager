@@ -113,4 +113,14 @@ class Permission extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('permission_role', ['id_permission' => 'id']);
     }
+
+    /**
+     * @inheritdoc
+     */
+	public function beforeSave($insert)
+	{
+	    // hash password on before saving the record:
+        $this->date_modified = new \yii\db\Expression('NOW()');
+		return parent::beforeSave($insert);
+	}
 }

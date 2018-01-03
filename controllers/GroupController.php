@@ -66,16 +66,21 @@ class GroupController extends Controller
         $model = new Group();
         $modelRole = Role::find()->select(['id', 'name'])->all();
         $modelGroupRole = new GroupRole();
+        $postData = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
-                'modelGroupRole' => $modelGroupRole,
-            ]);
+        if ($postData) {
+            if ($model->load($postData)) {
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
+            'modelGroupRole' => $modelGroupRole,
+        ]);
     }
 
     /**
@@ -89,16 +94,21 @@ class GroupController extends Controller
         $model = $this->findModel($id);
         $modelRole = Role::find()->select(['id', 'name'])->all();
         $modelGroupRole = new GroupRole();
+        $postData = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
-                'modelGroupRole' => $modelGroupRole,
-            ]);
+        if ($postData) {
+            if ($model->load($postData)) {
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+
+        return $this->render('update', [
+            'model' => $model,
+            'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
+            'modelGroupRole' => $modelGroupRole,
+        ]);
     }
 
     /**

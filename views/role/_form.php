@@ -12,10 +12,10 @@ use kartik\widgets\SwitchInput;
 <div class="roles-form">
 
     <?php $form = ActiveForm::begin([
-        'id' => 'signup-form',
+        'id' => 'role-form',
         'type' => ActiveForm::TYPE_VERTICAL,
         'enableAjaxValidation' => false,
-        'formConfig' => [
+        'formConfig' => [ 
             'showLabels' => true,
             'labelSpan' => 3,
             'showErrors' => true,

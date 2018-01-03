@@ -78,4 +78,14 @@ class Group extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Organization::className(), ['id_group' => 'id']);
     }
+
+    /**
+     * @inheritdoc
+     */
+	public function beforeSave($insert)
+	{
+	    // hash password on before saving the record:
+        $this->date_modified = new \yii\db\Expression('NOW()');
+		return parent::beforeSave($insert);
+	}
 }

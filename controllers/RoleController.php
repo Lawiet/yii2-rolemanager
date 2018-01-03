@@ -60,14 +60,19 @@ class RoleController extends Controller
     public function actionCreate()
     {
         $model = new Role();
+        $postData = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($postData) {
+            if ($model->load($postData)) {
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -79,14 +84,19 @@ class RoleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $postData = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($postData) {
+            if ($model->load($postData)) {
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

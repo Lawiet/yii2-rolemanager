@@ -37,9 +37,12 @@ use wbraganca\multiselect\MultiSelectWidget;
 
     <?= $form->field($model, 'icon')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a icon...')]) ?>
 
-<<<<<<< HEAD
     <?= $form->field($model, 'data_method')->widget(MultiSelectWidget::classname(), [
-=======
+            'data' => ['GET', 'POST', 'PUT', 'DELETE'],
+            'model' => $model,
+            'attribute' => 'date_modified',
+        ]); ?>
+
     <?= $form->field($model, 'date_created')->widget(MultiSelectWidget::classname(), [
         'options' => [
             //'multiple' => 'multiple',
@@ -54,12 +57,11 @@ use wbraganca\multiselect\MultiSelectWidget;
             'maxHeight' => 600, // The maximum height of the dropdown. This is useful when using the plugin with plenty of options.
             //'includeSelectAllOption' => true
         ],
->>>>>>> 73f7458e7f63c488e038d7d87aed7cc5fda718a1
-        'data' => ['GET', 'POST', 'PUT', 'DELETE'],
-        'model' => $model,
-        'attribute' => 'date_modified',
+                'data' => ['GET', 'POST', 'PUT', 'DELETE'],
+                'model' => $model,
+                'attribute' => 'date_modified',
     ]); ?>
-    
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
