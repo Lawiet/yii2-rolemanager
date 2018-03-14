@@ -18,13 +18,13 @@ class m171015_214500_create_table_user extends Migration
             'email' => $this->string(180),
             'username' => $this->string(64)->notNull(),
             'password' => $this->string(512)->notNull(),
-            'last_conection' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
-            'last_activity' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
+            'last_conection' => $this->timestamp()->defaultExpression('0'),
+            'last_activity' => $this->timestamp()->defaultExpression('0'),
             'token_security' => $this->string(512),
             'date_expired_token_security' => $this->integer(11)->defaultValue('600'),
             'token_recovery_password' => $this->string(512),
             'date_token_recovery_password' => $this->timestamp(),
-            'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+            'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 

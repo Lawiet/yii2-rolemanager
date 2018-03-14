@@ -18,7 +18,7 @@ class m171015_214504_create_table_assignment extends Migration
             'show_in_menu' => $this->smallInteger(1)->notNull()->defaultValue('0'),
             'name' => $this->string(64)->notNull(),
             'method' => $this->string()->notNull()->defaultValue('INDEX'),
-            'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+            'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 

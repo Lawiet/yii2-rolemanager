@@ -23,7 +23,7 @@ class m171015_214502_create_table_permission extends Migration
             'uri' => $this->string($uri)->notNull(),
             'icon' => $this->string(16),
             'data_method' => $this->string()->notNull()->defaultValue('GET'),
-            'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+            'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 

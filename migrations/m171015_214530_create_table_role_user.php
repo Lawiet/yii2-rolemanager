@@ -15,7 +15,7 @@ class m171015_214530_create_table_role_user extends Migration
             'id' => $this->integer(11)->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'id_rol' => $this->integer(11)->unsigned()->notNull(),
             'id_user' => $this->integer(11)->unsigned()->notNull(),
-            'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+            'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 

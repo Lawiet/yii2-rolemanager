@@ -97,10 +97,11 @@ class GroupController extends Controller
         $postData = Yii::$app->request->post();
 
         if ($postData) {
-            if ($model->load($postData)) {
-                if($model->save()){
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+            if ($model->load($postData['Group'])) {
+				print_r($postData);
+                //if($model->save()){
+                    //return $this->redirect(['view', 'id' => $model->id]);
+                //}
             }
         }
 

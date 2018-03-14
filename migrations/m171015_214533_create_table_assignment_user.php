@@ -16,7 +16,7 @@ class m171015_214533_create_table_assignment_user extends Migration
             'id_assignment' => $this->integer(11)->unsigned()->notNull(),
             'id_user' => $this->integer(11)->unsigned()->notNull(),
             'toggle' => $this->smallInteger(1)->notNull()->defaultValue('0'),
-            'date_modified' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+            'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
