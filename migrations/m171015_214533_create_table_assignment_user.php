@@ -12,18 +12,13 @@ class m171015_214533_create_table_assignment_user extends Migration
         }
 
         $this->createTable('{{%assignment_user}}', [
-            'id' => $this->integer(11)->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
+            'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'id_assignment' => $this->integer(11)->unsigned()->notNull(),
             'id_user' => $this->integer(11)->unsigned()->notNull(),
             'toggle' => $this->smallInteger(1)->notNull()->defaultValue('0'),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
-
-        $this->createIndex('uk_permissions_users_id_assignment_id_user_idx', '{{%assignment_user}}', ['id_assignment','id_user'], true);
-
-        $this->addForeignKey('fk_assignments_users_assignment_idx', '{{%assignment_user}}', 'id_assignment', '{{%assignment}}', 'id');
-        $this->addForeignKey('fk_assignments_users_user_idx', '{{%assignment_user}}', 'id_user', '{{%user}}', 'id');
 
         $this->batchInsert('{{%assignment_user}}', ['id_assignment', 'id_user',], [
             ['1','1',],

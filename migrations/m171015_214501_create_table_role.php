@@ -19,12 +19,8 @@ class m171015_214501_create_table_role extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->insert('{{%role}}', [
-            'id'=>'1',
-            'status'=>'1',
-            'name'=>'Develop',
-            'date_modified'=>null, //'2017-10-15 18:08:11',
-            'date_created'=>null, //'2017-10-15 18:08:11'
+        $this->batchInsert('{{%role}}', ['id', 'name',], [
+            ['1','Develop',],
         ]);
 
     }

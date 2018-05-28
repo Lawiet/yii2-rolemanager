@@ -20,13 +20,8 @@ class m171015_214506_create_table_organization extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->insert('{{%organization}}', [
-            'id'=>'1',
-            'id_group'=>'1',
-            'status'=>'1',
-            'name'=>'Master',
-            'date_modified'=>null, //'2017-10-15 18:07:41',
-            'date_created'=>null, //'2017-10-15 18:07:41'
+        $this->batchInsert('{{%organization}}', ['id', 'id_group', 'name'], [
+            ['1','1','Master',],
         ]);
     }
 

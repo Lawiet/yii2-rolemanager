@@ -19,12 +19,8 @@ class m171015_214503_create_table_group extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->insert('{{%group}}', [
-            'id'=>'1',
-            'status'=>'1',
-            'name'=>'Develop',
-            'date_modified'=>null, //'2017-10-15 18:08:55',
-            'date_created'=>null, //'2017-10-15 18:08:55'
+        $this->batchInsert('{{%group}}', ['id', 'name',], [
+            ['1','Develop',],
         ]);
     }
 

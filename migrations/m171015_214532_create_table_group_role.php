@@ -12,17 +12,12 @@ class m171015_214532_create_table_group_role extends Migration
         }
 
         $this->createTable('{{%group_role}}', [
-            'id' => $this->integer(11)->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
+            'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'id_group' => $this->integer(11)->unsigned()->notNull(),
             'id_rol' => $this->integer(11)->unsigned()->notNull(),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
-
-        $this->createIndex('uk_groups_roles_id_rol_id_group_idx', '{{%group_role}}', ['id_group','id_rol'], true);
-
-        $this->addForeignKey('fk_groups_roles_group_idx', '{{%group_role}}', 'id_group', '{{%group}}', 'id');
-        $this->addForeignKey('fk_groups_roles_rol_idx', '{{%group_role}}', 'id_rol', '{{%role}}', 'id');
 
         $this->insert('{{%group_role}}', [
             'id'=>'1',
