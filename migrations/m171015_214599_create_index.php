@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214540_create_index extends Migration
+class m171015_214599_create_index extends Migration
 {
     public function safeUp()
     {
@@ -53,7 +53,7 @@ class m171015_214540_create_index extends Migration
 		
 		// user
         $this->addForeignKey('fk_users_user_status_idx', '{{%user}}', 'id_status', '{{%user_status}}', 'id');
-        $this->addForeignKey('fk_users_user_status_idx', '{{%user}}', 'id_organization', '{{%organization}}', 'id');
+        $this->addForeignKey('fk_users_organization_idx', '{{%user}}', 'id_organization', '{{%organization}}', 'id');
 
 		// organization
         $this->addForeignKey('fk_organization_group_idx', '{{%organization}}', 'id_group', '{{%group}}', 'id');

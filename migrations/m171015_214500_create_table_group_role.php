@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214499_create_table_user_status extends Migration
+class m171015_214500_create_table_group_role extends Migration
 {
     public function safeUp()
     {
@@ -11,24 +11,25 @@ class m171015_214499_create_table_user_status extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user_status}}', [
+        $this->createTable('{{%group_role}}', [
             'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
-            'status' => $this->smallInteger(1)->notNull()->defaultValue('1'),
-            'name' => $this->string(64)->notNull(),
+            'id_group' => $this->integer(11)->unsigned()->notNull(),
+            'id_rol' => $this->integer(11)->unsigned()->notNull(),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->batchInsert('{{%user_status}}', ['id', 'name'], [
-            ['1','Activo',],
-            ['2','Inactivo',],
-            ['3','Inhabilitado',],
-            ['4','Eliminado',],
+        $this->insert('{{%group_role}}', [
+            'id'=>'1',
+            'id_group'=>'1',
+            'id_rol'=>'1',
+            'date_modified'=>null, //'2017-10-15 18:09:06',
+            'date_created'=>null, //'2017-10-15 18:09:06'
         ]);
     }
 
     public function safeDown()
     {
-        $this->dropTable('{{%user_status}}');
+        $this->dropTable('{{%group_role}}');
     }
 }

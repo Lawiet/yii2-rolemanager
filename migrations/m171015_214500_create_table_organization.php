@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_214531_create_table_permission_role extends Migration
+class m171015_214500_create_table_organization extends Migration
 {
     public function safeUp()
     {
@@ -11,25 +11,22 @@ class m171015_214531_create_table_permission_role extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%permission_role}}', [
+        $this->createTable('{{%organization}}', [
             'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
-            'id_permission' => $this->integer(11)->unsigned()->notNull(),
-            'id_rol' => $this->integer(11)->unsigned()->notNull(),
+            'id_group' => $this->integer(11)->unsigned(),
+            'status' => $this->smallInteger(1)->notNull()->defaultValue('1'),
+            'name' => $this->string(128)->notNull(),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->batchInsert('{{%permission_role}}', ['id_permission', 'id_rol',], [
-            ['1','1',],
-            ['2','1',],
-            ['3','1',],
-            ['4','1',],
-            ['5','1',],
+        $this->batchInsert('{{%organization}}', ['id', 'id_group', 'name'], [
+            ['1','1','Master',],
         ]);
     }
 
     public function safeDown()
     {
-        $this->dropTable('{{%permission_role}}');
+        $this->dropTable('{{%organization}}');
     }
 }
