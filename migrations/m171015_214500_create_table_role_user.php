@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m171015_2145300_create_table_role_user extends Migration
+class m171015_214500_create_table_role_user extends Migration
 {
     public function safeUp()
     {
