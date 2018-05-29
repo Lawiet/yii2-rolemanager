@@ -5,12 +5,12 @@ namespace lawiet\rbac\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use lawiet\rbac\models\Group;
+use lawiet\rbac\models\Organization;
 
 /**
- * GroupSearch represents the model behind the search form of `lawiet\rbac\models\Group`.
+ * OrganizationSearch represents the model behind the search form of `lawiet\rbac\models\Organization`.
  */
-class GroupSearch extends Group
+class OrganizationSearch extends Organization
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class GroupSearch extends Group
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
+            [['id', 'id_group', 'status'], 'integer'],
             [['name', 'date_modified', 'date_created'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class GroupSearch extends Group
      */
     public function search($params)
     {
-        $query = Group::find();
+        $query = Organization::find();
 
         // add conditions that should always apply here
 
@@ -60,6 +60,7 @@ class GroupSearch extends Group
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'id_group' => $this->id_group,
             'status' => $this->status,
             'date_modified' => $this->date_modified,
             'date_created' => $this->date_created,

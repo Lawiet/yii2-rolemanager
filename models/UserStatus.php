@@ -5,7 +5,7 @@ namespace lawiet\rbac\models;
 use Yii;
 
 /**
- * This is the model class for table "group".
+ * This is the model class for table "user_status".
  *
  * @property string $id
  * @property int $status
@@ -13,18 +13,16 @@ use Yii;
  * @property string $date_modified
  * @property string $date_created
  *
- * @property GroupRole[] $groupRoles
- * @property Role[] $rols
- * @property Organization[] $organizations
+ * @property User[] $users
  */
-class Group extends \yii\db\ActiveRecord
+class UserStatus extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'group';
+        return 'user_status';
     }
 
     /**
@@ -58,24 +56,8 @@ class Group extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGroupRoles()
+    public function getUsers()
     {
-        return $this->hasMany(GroupRole::className(), ['id_group' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRols()
-    {
-        return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('group_role', ['id_group' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrganizations()
-    {
-        return $this->hasMany(Organization::className(), ['id_group' => 'id']);
+        return $this->hasMany(User::className(), ['id_status' => 'id']);
     }
 }

@@ -8,12 +8,12 @@ use yii\data\ActiveDataProvider;
 use lawiet\rbac\models\Permission;
 
 /**
- * PermissionSearch represents the model behind the search form about `lawiet\rbac\models\Permission`.
+ * PermissionSearch represents the model behind the search form of `lawiet\rbac\models\Permission`.
  */
 class PermissionSearch extends Permission
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -24,7 +24,7 @@ class PermissionSearch extends Permission
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {

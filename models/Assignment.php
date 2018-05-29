@@ -9,21 +9,21 @@ use Yii;
  *
  * @property string $id
  * @property string $id_permission
- * @property integer $status
- * @property integer $show_in_menu
+ * @property int $status
+ * @property int $show_in_menu
  * @property string $name
  * @property string $method
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Permission $idPermission
+ * @property Permission $permission
  * @property AssignmentUser[] $assignmentUsers
- * @property User[] $idUsers
+ * @property User[] $users
  */
 class Assignment extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -31,7 +31,7 @@ class Assignment extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -41,13 +41,13 @@ class Assignment extends \yii\db\ActiveRecord
             [['date_modified', 'date_created'], 'safe'],
             [['name'], 'string', 'max' => 64],
             [['method'], 'string', 'max' => 255],
-            [['id_permission', 'method'], 'unique', 'targetAttribute' => ['id_permission', 'method'], 'message' => 'The combination of Id Permission and Method has already been taken.'],
+            [['id_permission', 'method'], 'unique', 'targetAttribute' => ['id_permission', 'method']],
             [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -66,7 +66,7 @@ class Assignment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdPermission()
+    public function getPermission()
     {
         return $this->hasOne(Permission::className(), ['id' => 'id_permission']);
     }
@@ -82,18 +82,8 @@ class Assignment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdUsers()
+    public function getUsers()
     {
         return $this->hasMany(User::className(), ['id' => 'id_user'])->viaTable('assignment_user', ['id_assignment' => 'id']);
     }
-
-    /**
-     * @inheritdoc
-     */
-	public function beforeSave($insert)
-	{
-	    // hash password on before saving the record:
-        $this->date_modified = new \yii\db\Expression('NOW()');
-		return parent::beforeSave($insert);
-	}
 }

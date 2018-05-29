@@ -9,18 +9,18 @@ use Yii;
  *
  * @property string $id
  * @property string $id_group
- * @property integer $status
+ * @property int $status
  * @property string $name
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Group $idGroup
+ * @property Group $group
  * @property User[] $users
  */
 class Organization extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -28,7 +28,7 @@ class Organization extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -37,12 +37,13 @@ class Organization extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['date_modified', 'date_created'], 'safe'],
             [['name'], 'string', 'max' => 128],
+            [['id_group', 'name'], 'unique', 'targetAttribute' => ['id_group', 'name']],
             [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['id_group' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -59,7 +60,7 @@ class Organization extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdGroup()
+    public function getGroup()
     {
         return $this->hasOne(Group::className(), ['id' => 'id_group']);
     }
@@ -71,14 +72,4 @@ class Organization extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::className(), ['id_organization' => 'id']);
     }
-
-    /**
-     * @inheritdoc
-     */
-	public function beforeSave($insert)
-	{
-	    // hash password on before saving the record:
-        $this->date_modified = new \yii\db\Expression('NOW()');
-		return parent::beforeSave($insert);
-	}
 }

@@ -9,9 +9,9 @@ use Yii;
  *
  * @property string $id
  * @property string $id_permission
- * @property integer $status
- * @property integer $logged
- * @property integer $show_in_menu
+ * @property int $status
+ * @property int $logged
+ * @property int $show_in_menu
  * @property string $name
  * @property string $uri
  * @property string $icon
@@ -20,15 +20,15 @@ use Yii;
  * @property string $date_created
  *
  * @property Assignment[] $assignments
- * @property Permission $idPermission
+ * @property Permission $permission
  * @property Permission[] $permissions
  * @property PermissionRole[] $permissionRoles
- * @property Role[] $idRols
+ * @property Role[] $rols
  */
 class Permission extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -36,7 +36,7 @@ class Permission extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -48,14 +48,14 @@ class Permission extends \yii\db\ActiveRecord
             [['uri'], 'string', 'max' => 150],
             [['icon'], 'string', 'max' => 16],
             [['data_method'], 'string', 'max' => 255],
-            [['name', 'uri'], 'unique', 'targetAttribute' => ['name', 'uri'], 'message' => 'The combination of Name and Uri has already been taken.'],
-            [['id_permission', 'name', 'uri'], 'unique', 'targetAttribute' => ['id_permission', 'name', 'uri'], 'message' => 'The combination of Id Permission, Name and Uri has already been taken.'],
+            [['name', 'uri'], 'unique', 'targetAttribute' => ['name', 'uri']],
+            [['id_permission', 'name', 'uri'], 'unique', 'targetAttribute' => ['id_permission', 'name', 'uri']],
             [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -85,7 +85,7 @@ class Permission extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdPermission()
+    public function getPermission()
     {
         return $this->hasOne(Permission::className(), ['id' => 'id_permission']);
     }
@@ -109,18 +109,8 @@ class Permission extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdRols()
+    public function getRols()
     {
         return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('permission_role', ['id_permission' => 'id']);
     }
-
-    /**
-     * @inheritdoc
-     */
-	public function beforeSave($insert)
-	{
-	    // hash password on before saving the record:
-        $this->date_modified = new \yii\db\Expression('NOW()');
-		return parent::beforeSave($insert);
-	}
 }

@@ -7,20 +7,20 @@ use Yii;
 /**
  * This is the model class for table "assignment_user".
  *
- * @property integer $id
+ * @property string $id
  * @property string $id_assignment
  * @property string $id_user
- * @property integer $toggle
+ * @property int $toggle
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Assignment $idAssignment
- * @property User $idUser
+ * @property Assignment $assignment
+ * @property User $user
  */
 class AssignmentUser extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -28,7 +28,7 @@ class AssignmentUser extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -36,14 +36,14 @@ class AssignmentUser extends \yii\db\ActiveRecord
             [['id_assignment', 'id_user'], 'required'],
             [['id_assignment', 'id_user', 'toggle'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
-            [['id_assignment', 'id_user'], 'unique', 'targetAttribute' => ['id_assignment', 'id_user'], 'message' => 'The combination of Id Assignment and Id User has already been taken.'],
+            [['id_assignment', 'id_user'], 'unique', 'targetAttribute' => ['id_assignment', 'id_user']],
             [['id_assignment'], 'exist', 'skipOnError' => true, 'targetClass' => Assignment::className(), 'targetAttribute' => ['id_assignment' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -60,7 +60,7 @@ class AssignmentUser extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdAssignment()
+    public function getAssignment()
     {
         return $this->hasOne(Assignment::className(), ['id' => 'id_assignment']);
     }
@@ -68,18 +68,8 @@ class AssignmentUser extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdUser()
+    public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
-
-    /**
-     * @inheritdoc
-     */
-	public function beforeSave($insert)
-	{
-	    // hash password on before saving the record:
-        $this->date_modified = new \yii\db\Expression('NOW()');
-		return parent::beforeSave($insert);
-	}
 }

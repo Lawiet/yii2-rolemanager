@@ -7,19 +7,19 @@ use Yii;
 /**
  * This is the model class for table "group_role".
  *
- * @property integer $id
+ * @property string $id
  * @property string $id_group
  * @property string $id_rol
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Group $idGroup
- * @property Role $idRol
+ * @property Group $group
+ * @property Role $rol
  */
 class GroupRole extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -27,7 +27,7 @@ class GroupRole extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -35,14 +35,14 @@ class GroupRole extends \yii\db\ActiveRecord
             [['id_group', 'id_rol'], 'required'],
             [['id_group', 'id_rol'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
-            [['id_group', 'id_rol'], 'unique', 'targetAttribute' => ['id_group', 'id_rol'], 'message' => 'The combination of Id Group and Id Rol has already been taken.'],
+            [['id_group', 'id_rol'], 'unique', 'targetAttribute' => ['id_group', 'id_rol']],
             [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['id_group' => 'id']],
             [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_rol' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -58,7 +58,7 @@ class GroupRole extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdGroup()
+    public function getGroup()
     {
         return $this->hasOne(Group::className(), ['id' => 'id_group']);
     }
@@ -66,18 +66,8 @@ class GroupRole extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdRol()
+    public function getRol()
     {
         return $this->hasOne(Role::className(), ['id' => 'id_rol']);
     }
-
-    /**
-     * @inheritdoc
-     */
-	public function beforeSave($insert)
-	{
-	    // hash password on before saving the record:
-        $this->date_modified = new \yii\db\Expression('NOW()');
-		return parent::beforeSave($insert);
-	}
 }

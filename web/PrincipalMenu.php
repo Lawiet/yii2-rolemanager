@@ -64,7 +64,7 @@ class PrincipalMenu extends Controller
 		if(!$guest){
             $roles = [];
 			foreach(\Yii::$app->user->identity->roleUsers as $role)
-                $roles[] = $role->id_rol;
+                $roles[] = $role->id_role;
 
             $permissions = $permissions->joinWith(['permissionRoles'])
                                        ->where(['in', 'permission_role.id_rol', $roles]);

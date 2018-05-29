@@ -5,12 +5,12 @@ namespace lawiet\rbac\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use lawiet\rbac\models\Group;
+use lawiet\rbac\models\User;
 
 /**
- * GroupSearch represents the model behind the search form of `lawiet\rbac\models\Group`.
+ * UserSearch represents the model behind the search form of `lawiet\rbac\models\User`.
  */
-class GroupSearch extends Group
+class UserSearch extends User
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class GroupSearch extends Group
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['name', 'date_modified', 'date_created'], 'safe'],
+            [['id', 'id_status', 'id_organization', 'date_expired_token_security'], 'integer'],
+            [['email', 'username', 'password', 'last_conection', 'last_activity', 'token_security', 'token_recovery_password', 'date_token_recovery_password', 'date_modified', 'date_created'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class GroupSearch extends Group
      */
     public function search($params)
     {
-        $query = Group::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 
@@ -60,12 +60,21 @@ class GroupSearch extends Group
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'id_status' => $this->id_status,
+            'id_organization' => $this->id_organization,
+            'last_conection' => $this->last_conection,
+            'last_activity' => $this->last_activity,
+            'date_expired_token_security' => $this->date_expired_token_security,
+            'date_token_recovery_password' => $this->date_token_recovery_password,
             'date_modified' => $this->date_modified,
             'date_created' => $this->date_created,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'password', $this->password])
+            ->andFilterWhere(['like', 'token_security', $this->token_security])
+            ->andFilterWhere(['like', 'token_recovery_password', $this->token_recovery_password]);
 
         return $dataProvider;
     }

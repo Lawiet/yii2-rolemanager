@@ -8,22 +8,22 @@ use Yii;
  * This is the model class for table "role".
  *
  * @property string $id
- * @property integer $status
+ * @property int $status
  * @property string $name
  * @property string $date_modified
  * @property string $date_created
  *
  * @property GroupRole[] $groupRoles
- * @property Group[] $idGroups
+ * @property Group[] $groups
  * @property PermissionRole[] $permissionRoles
- * @property Permission[] $idPermissions
+ * @property Permission[] $permissions
  * @property RoleUser[] $roleUsers
- * @property User[] $idUsers
+ * @property User[] $users
  */
 class Role extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -31,7 +31,7 @@ class Role extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -45,7 +45,7 @@ class Role extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -69,7 +69,7 @@ class Role extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdGroups()
+    public function getGroups()
     {
         return $this->hasMany(Group::className(), ['id' => 'id_group'])->viaTable('group_role', ['id_rol' => 'id']);
     }
@@ -85,7 +85,7 @@ class Role extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdPermissions()
+    public function getPermissions()
     {
         return $this->hasMany(Permission::className(), ['id' => 'id_permission'])->viaTable('permission_role', ['id_rol' => 'id']);
     }
@@ -95,24 +95,14 @@ class Role extends \yii\db\ActiveRecord
      */
     public function getRoleUsers()
     {
-        return $this->hasMany(RoleUser::className(), ['id_rol' => 'id']);
+        return $this->hasMany(RoleUser::className(), ['id_role' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdUsers()
+    public function getUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'id_user'])->viaTable('role_user', ['id_rol' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'id_user'])->viaTable('role_user', ['id_role' => 'id']);
     }
-
-    /**
-     * @inheritdoc
-     */
-	public function beforeSave($insert)
-	{
-	    // hash password on before saving the record:
-        $this->date_modified = new \yii\db\Expression('NOW()');
-		return parent::beforeSave($insert);
-	}
 }

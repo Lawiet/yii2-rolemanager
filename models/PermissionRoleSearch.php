@@ -5,12 +5,12 @@ namespace lawiet\rbac\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use lawiet\rbac\models\Group;
+use lawiet\rbac\models\PermissionRole;
 
 /**
- * GroupSearch represents the model behind the search form of `lawiet\rbac\models\Group`.
+ * PermissionRoleSearch represents the model behind the search form of `lawiet\rbac\models\PermissionRole`.
  */
-class GroupSearch extends Group
+class PermissionRoleSearch extends PermissionRole
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class GroupSearch extends Group
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['name', 'date_modified', 'date_created'], 'safe'],
+            [['id', 'id_permission', 'id_rol'], 'integer'],
+            [['date_modified', 'date_created'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class GroupSearch extends Group
      */
     public function search($params)
     {
-        $query = Group::find();
+        $query = PermissionRole::find();
 
         // add conditions that should always apply here
 
@@ -60,12 +60,11 @@ class GroupSearch extends Group
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'id_permission' => $this->id_permission,
+            'id_rol' => $this->id_rol,
             'date_modified' => $this->date_modified,
             'date_created' => $this->date_created,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

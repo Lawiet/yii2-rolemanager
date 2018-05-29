@@ -8,12 +8,12 @@ use yii\data\ActiveDataProvider;
 use lawiet\rbac\models\Assignment;
 
 /**
- * AssignmentSearch represents the model behind the search form about `lawiet\rbac\models\Assignment`.
+ * AssignmentSearch represents the model behind the search form of `lawiet\rbac\models\Assignment`.
  */
 class AssignmentSearch extends Assignment
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -24,7 +24,7 @@ class AssignmentSearch extends Assignment
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {

@@ -7,19 +7,19 @@ use Yii;
 /**
  * This is the model class for table "permission_role".
  *
- * @property integer $id
+ * @property string $id
  * @property string $id_permission
  * @property string $id_rol
  * @property string $date_modified
  * @property string $date_created
  *
- * @property Permission $idPermission
- * @property Role $idRol
+ * @property Permission $permission
+ * @property Role $rol
  */
 class PermissionRole extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -27,7 +27,7 @@ class PermissionRole extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -35,14 +35,14 @@ class PermissionRole extends \yii\db\ActiveRecord
             [['id_permission', 'id_rol'], 'required'],
             [['id_permission', 'id_rol'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
-            [['id_permission', 'id_rol'], 'unique', 'targetAttribute' => ['id_permission', 'id_rol'], 'message' => 'The combination of Id Permission and Id Rol has already been taken.'],
+            [['id_permission', 'id_rol'], 'unique', 'targetAttribute' => ['id_permission', 'id_rol']],
             [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
             [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_rol' => 'id']],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -58,7 +58,7 @@ class PermissionRole extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdPermission()
+    public function getPermission()
     {
         return $this->hasOne(Permission::className(), ['id' => 'id_permission']);
     }
@@ -66,18 +66,8 @@ class PermissionRole extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdRol()
+    public function getRol()
     {
         return $this->hasOne(Role::className(), ['id' => 'id_rol']);
     }
-
-    /**
-     * @inheritdoc
-     */
-	public function beforeSave($insert)
-	{
-	    // hash password on before saving the record:
-        $this->date_modified = new \yii\db\Expression('NOW()');
-		return parent::beforeSave($insert);
-	}
 }

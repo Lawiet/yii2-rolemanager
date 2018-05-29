@@ -5,12 +5,12 @@ namespace lawiet\rbac\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use lawiet\rbac\models\Group;
+use lawiet\rbac\models\UserStatus;
 
 /**
- * GroupSearch represents the model behind the search form of `lawiet\rbac\models\Group`.
+ * UserStatusSearch represents the model behind the search form of `lawiet\rbac\models\UserStatus`.
  */
-class GroupSearch extends Group
+class UserStatusSearch extends UserStatus
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class GroupSearch extends Group
      */
     public function search($params)
     {
-        $query = Group::find();
+        $query = UserStatus::find();
 
         // add conditions that should always apply here
 

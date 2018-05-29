@@ -5,14 +5,15 @@ namespace lawiet\rbac\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use lawiet\rbac\models\Role;
 
 /**
- * RoleSearch represents the model behind the search form about `app\lawiet\rbac\models\Role`.
+ * RoleSearch represents the model behind the search form of `lawiet\rbac\models\Role`.
  */
 class RoleSearch extends Role
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -23,7 +24,7 @@ class RoleSearch extends Role
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
