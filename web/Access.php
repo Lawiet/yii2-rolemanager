@@ -82,7 +82,7 @@ class Access extends Controller
         $permissions = Permission::find()
                                  ->joinWith(['permissionRoles'])
                                  ->where(['in', 'permission_role.id_rol', $roles])
-                                 ->andWhere(['Permission.id'=>$permissions->id_permission])
+                                 ->andWhere(['permission.id'=>$permissions->id_permission])
                                  ->one();
 
         if(!$permissions)
