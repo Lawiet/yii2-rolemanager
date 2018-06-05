@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            // 'id_permission',
+            //'id',
+            'permission.name',
             'status:boolean',
             'show_in_menu:boolean',
             'name',

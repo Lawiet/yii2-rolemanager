@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
+use wbraganca\multiselect\MultiSelectWidget;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Assignment */
@@ -13,8 +14,8 @@ use kartik\widgets\SwitchInput;
 
     <?php $form = ActiveForm::begin([
         'id' => 'signup-form',
-        'type' => ActiveForm::TYPE_VERTICAL,
-        'enableAjaxValidation' => true,
+        'type' => ActiveForm::TYPE_HORIZONTAL,
+        'enableAjaxValidation' => false,
         'formConfig' => [
             'showLabels' => true,
             'labelSpan' => 3,
@@ -23,6 +24,12 @@ use kartik\widgets\SwitchInput;
     ]); ?>
 
     <?php // $form->field($model, 'id_permission')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'id_permission')->widget(MultiSelectWidget::classname(), [
+            'data' => $modelPermission,
+            'model' => $model,
+            'attribute' => 'id_permission',
+        ]); ?>
 
     <?= $form->field($model, 'status')->widget(SwitchInput::classname(), []); ?>
 

@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_permission',
+            'permission.name',
             'status:boolean',
-            'show_in_menu',
+            'show_in_menu:boolean',
             'name',
             'method',
             'date_modified',
