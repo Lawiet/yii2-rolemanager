@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'id_permission',
+            'id_permission.name',
             'status:boolean',
             'logged:boolean',
             'show_in_menu:boolean',

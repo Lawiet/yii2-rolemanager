@@ -22,6 +22,7 @@
         "yiisoft/yii2-bootstrap": "*",
 		"kartik-v/yii2-icons": "@dev",
         "kartik-v/yii2-widgets": "*",
+		"kartik-v/yii2-widget-select2": "@dev",
         "lawiet/yii2-multiselect": "*",
         "wbraganca/yii2-multiselect": "*"
     },

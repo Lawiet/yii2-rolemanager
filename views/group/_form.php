@@ -14,7 +14,7 @@ use lawiet\multiselect\MultiSelectBoxWidget;
 
     <?php $form = ActiveForm::begin([
         'id' => 'signup-form',
-        'type' => ActiveForm::TYPE_VERTICAL,
+        'type' => ActiveForm::TYPE_HORIZONTAL,
         'enableAjaxValidation' => false,
         'formConfig' => [
             'showLabels' => true,
@@ -35,6 +35,16 @@ use lawiet\multiselect\MultiSelectBoxWidget;
         'model' => $modelGroupRole,
         'attribute' => 'id_rol',
     ]); ?>
+	
+	<?= $form->field($model, 'colorTags')->widget(Select2::classname(), [
+		'data' => $data,
+		'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
+		'pluginOptions' => [
+			'tags' => true,
+			'tokenSeparators' => [',', ' '],
+			'maximumInputLength' => 10
+		],
+	])->label('Tag Multiple'); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

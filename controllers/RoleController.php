@@ -3,11 +3,15 @@
 namespace lawiet\rbac\controllers;
 
 use Yii;
+use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use lawiet\rbac\models\Role;
 use lawiet\rbac\models\RoleSearch;
+use lawiet\rbac\models\Permission;
+use lawiet\rbac\models\PermissionRole;
 use lawiet\rbac\web\Controller;
 
 /**
@@ -60,6 +64,7 @@ class RoleController extends Controller
     public function actionCreate()
     {
         $model = new Assignment();
+        $modelPermissionRole = new PermissionRole();
         $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
 
         if ( $model->load(Yii::$app->request->post()) ) {
@@ -74,6 +79,7 @@ class RoleController extends Controller
 		return $this->render('create', [
 			'model' => $model,
 			'modelPermission' => $modelPermission,
+			'modelPermissionRole' => $modelPermissionRole,
 		]);
     }
 
@@ -86,6 +92,9 @@ class RoleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelPermissionRole = PermissionRole::find()->where(['id_rol'=>$id])->all();
+        //$modelPermissionRole = ArrayHelper::map(PermissionRole::find()->where(['id_rol'=>$id])->all(), 'id_rol', 'id_permission');
+		//print_r($modelPermissionRole);
         $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
 
         if ( $model->load(Yii::$app->request->post()) ) {
@@ -99,6 +108,7 @@ class RoleController extends Controller
 		return $this->render('update', [
 			'model' => $model,
 			'modelPermission' => $modelPermission,
+			'modelPermissionRole' => $modelPermissionRole,
 		]);
     }
 
