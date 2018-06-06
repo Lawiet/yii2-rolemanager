@@ -85,7 +85,7 @@ class RoleController extends Controller
 					if(!empty($permissions))
 						foreach($permissions as $permission){
 							$gr = new PermissionRole();
-							$gr->id_rol = $id;
+							$gr->id_role = $id;
 							$gr->id_permission = $permission;
 							
 							if(!$gr->save())
@@ -140,7 +140,7 @@ class RoleController extends Controller
 					if(!empty($permissions))
 						foreach($permissions as $permission){
 							$gr = new PermissionRole();
-							$gr->id_rol = $id;
+							$gr->id_role = $id;
 							$gr->id_permission = $permission;
 							
 							if(!$gr->save())

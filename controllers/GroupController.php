@@ -87,7 +87,7 @@ class GroupController extends Controller
 						foreach($roles as $rol){
 							$gr = new GroupRole();
 							$gr->id_group = $id;
-							$gr->id_rol = $rol;
+							$gr->id_role = $rol;
 							
 							if(!$gr->save())
 								$save = false;
@@ -142,7 +142,7 @@ class GroupController extends Controller
 						foreach($roles as $rol){
 							$gr = new GroupRole();
 							$gr->id_group = $id;
-							$gr->id_rol = $rol;
+							$gr->id_role = $rol;
 							
 							if(!$gr->save())
 								$save = false;
