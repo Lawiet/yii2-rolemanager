@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
-use lawiet\multiselect\MultiSelectBoxWidget;
+use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Group */
@@ -26,25 +26,22 @@ use lawiet\multiselect\MultiSelectBoxWidget;
     <?= $form->field($model, 'status')->widget(SwitchInput::classname(), []); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a Name...')]) ?>
-
-    <?= $form->field($modelGroupRole, 'id_rol')->widget(MultiSelectBoxWidget::classname(), [
-        'options' => [
-            'multiple' => 'multiple',
-        ],
-        'data' => $modelRole,
-        'model' => $modelGroupRole,
-        'attribute' => 'id_rol',
-    ]); ?>
 	
-	<?= $form->field($model, 'colorTags')->widget(Select2::classname(), [
-		'data' => $data,
-		'options' => ['placeholder' => 'Select a color ...', 'multiple' => true],
+	<?= $form->field($model, 'rols')->widget(Select2::classname(), [
+		'data' => $modelRole,
+		'name' => 'rols',
+		'options' => [
+			'placeholder' => Yii::t("app", "Select a permission"), 
+			'multiple'=>true, 
+			"required" => true
+		],
 		'pluginOptions' => [
-			'tags' => true,
+			//'tags' => true,
+			'allowClear' => false,
 			'tokenSeparators' => [',', ' '],
 			'maximumInputLength' => 10
 		],
-	])->label('Tag Multiple'); ?>
+	]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

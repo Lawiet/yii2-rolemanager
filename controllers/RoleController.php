@@ -64,22 +64,50 @@ class RoleController extends Controller
     public function actionCreate()
     {
         $model = new Assignment();
-        $modelPermissionRole = new PermissionRole();
-        $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
+        $modelPermission = Permission::find()->all();
+        $postData = Yii::$app->request->post();
+		$save = true;
 
-        if ( $model->load(Yii::$app->request->post()) ) {
-			$model->date_modified = new Expression('NOW()');
-			$model->date_created = new Expression('NOW()');
-			
-			if( $model->save() ){
-				return $this->redirect(['view', 'id' => $model->id]);
-			}
+        if ($postData) {
+            if ($model->load($postData)) {
+				$permissions = $postData['Role']['permissions'];
+				$model->date_modified = new Expression('NOW()');
+				$model->date_created = new Expression('NOW()');
+				
+				$transaction = Yii::$app->db->beginTransaction();
+
+				try {
+					if(!$model->save())
+						$save = false;
+					
+					PermissionRole::deleteAll(['id_rol'=>$id]);
+					
+					if(!empty($permissions))
+						foreach($permissions as $permission){
+							$gr = new PermissionRole();
+							$gr->id_rol = $id;
+							$gr->id_permission = $permission;
+							
+							if(!$gr->save())
+								$save = false;
+						}
+					
+					if ($save) {
+						$transaction->commit();
+						
+						return $this->redirect(['view', 'id' => $model->id]);
+					} else {
+						$transaction->rollBack();
+					}
+				} catch (Exception $e) {
+					$transaction->rollBack();
+				}
+            }
         }
 		
 		return $this->render('create', [
 			'model' => $model,
-			'modelPermission' => $modelPermission,
-			'modelPermissionRole' => $modelPermissionRole,
+            'modelPermission' => ArrayHelper::map($modelPermission, 'id', 'name'),
 		]);
     }
 
@@ -92,23 +120,49 @@ class RoleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelPermissionRole = PermissionRole::find()->where(['id_rol'=>$id])->all();
-        //$modelPermissionRole = ArrayHelper::map(PermissionRole::find()->where(['id_rol'=>$id])->all(), 'id_rol', 'id_permission');
-		//print_r($modelPermissionRole);
-        $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
+        $modelPermission = Permission::find()->all();
+        $postData = Yii::$app->request->post();
+		$save = true;
 
-        if ( $model->load(Yii::$app->request->post()) ) {
-			$model->date_modified = new Expression('NOW()');
-			
-			if( $model->save() ){
-				return $this->redirect(['view', 'id' => $model->id]);
-			}
+        if ($postData) {
+            if ($model->load($postData)) {
+				$permissions = $postData['Role']['permissions'];
+				$model->date_modified = new Expression('NOW()');
+				
+				$transaction = Yii::$app->db->beginTransaction();
+
+				try {
+					if(!$model->save())
+						$save = false;
+					
+					PermissionRole::deleteAll(['id_rol'=>$id]);
+					
+					if(!empty($permissions))
+						foreach($permissions as $permission){
+							$gr = new PermissionRole();
+							$gr->id_rol = $id;
+							$gr->id_permission = $permission;
+							
+							if(!$gr->save())
+								$save = false;
+						}
+					
+					if ($save) {
+						$transaction->commit();
+						
+						return $this->redirect(['view', 'id' => $model->id]);
+					} else {
+						$transaction->rollBack();
+					}
+				} catch (Exception $e) {
+					$transaction->rollBack();
+				}
+            }
         }
 		
 		return $this->render('update', [
 			'model' => $model,
-			'modelPermission' => $modelPermission,
-			'modelPermissionRole' => $modelPermissionRole,
+            'modelPermission' => ArrayHelper::map($modelPermission, 'id', 'name'),
 		]);
     }
 

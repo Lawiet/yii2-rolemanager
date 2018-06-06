@@ -65,21 +65,49 @@ class GroupController extends Controller
     {
         $model = new Group();
         $modelRole = Role::find()->select(['id', 'name'])->all();
-        $modelGroupRole = new GroupRole();
         $postData = Yii::$app->request->post();
+		$save = true;
 
         if ($postData) {
             if ($model->load($postData)) {
-                if($model->save()){
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+				$roles = $postData['Group']['rols'];
+				$model->date_modified = new Expression('NOW()');
+				$model->date_created = new Expression('NOW()');
+				
+				$transaction = Yii::$app->db->beginTransaction();
+
+				try {
+					if(!$model->save())
+						$save = false;
+					
+					GroupRole::deleteAll(['id_group'=>$id]);
+					
+					if(!empty($roles))
+						foreach($roles as $rol){
+							$gr = new GroupRole();
+							$gr->id_group = $id;
+							$gr->id_rol = $rol;
+							
+							if(!$gr->save())
+								$save = false;
+						}
+					
+					if ($save) {
+						$transaction->commit();
+						
+						return $this->redirect(['view', 'id' => $model->id]);
+					} else {
+						$transaction->rollBack();
+					}
+				} catch (Exception $e) {
+					$transaction->rollBack();
+				}
             }
         }
 
         return $this->render('create', [
             'model' => $model,
             'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
-            'modelGroupRole' => $modelGroupRole,
         ]);
     }
 
@@ -93,22 +121,48 @@ class GroupController extends Controller
     {
         $model = $this->findModel($id);
         $modelRole = Role::find()->select(['id', 'name'])->all();
-        $modelGroupRole = new GroupRole();
         $postData = Yii::$app->request->post();
+		$save = true;
 
         if ($postData) {
-            if ($model->load($postData['Group'])) {
-				print_r($postData);
-                //if($model->save()){
-                    //return $this->redirect(['view', 'id' => $model->id]);
-                //}
+            if ($model->load($postData)) {
+				$roles = $postData['Group']['rols'];
+				$model->date_modified = new Expression('NOW()');
+				
+				$transaction = Yii::$app->db->beginTransaction();
+
+				try {
+					if(!$model->save())
+						$save = false;
+					
+					GroupRole::deleteAll(['id_group'=>$id]);
+					
+					if(!empty($roles))
+						foreach($roles as $rol){
+							$gr = new GroupRole();
+							$gr->id_group = $id;
+							$gr->id_rol = $rol;
+							
+							if(!$gr->save())
+								$save = false;
+						}
+					
+					if ($save) {
+						$transaction->commit();
+						
+						return $this->redirect(['view', 'id' => $model->id]);
+					} else {
+						$transaction->rollBack();
+					}
+				} catch (Exception $e) {
+					$transaction->rollBack();
+				}
             }
         }
 
         return $this->render('update', [
             'model' => $model,
             'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
-            'modelGroupRole' => $modelGroupRole,
         ]);
     }
 

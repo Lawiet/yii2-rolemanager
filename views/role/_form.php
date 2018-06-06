@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
-use lawiet\multiselect\MultiSelectBoxWidget;
+use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Roles */
@@ -27,13 +27,20 @@ use lawiet\multiselect\MultiSelectBoxWidget;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a Name...')]) ?>
 
-    <?= $form->field($modelPermissionRole, 'id_permission')->widget(MultiSelectBoxWidget::classname(), [
-        'options' => [
-            'multiple' => 'multiple',
-        ],
+    <?= $form->field($model, 'permissions')->widget(Select2::classname(), [
         'data' => $modelPermission,
-        'model' => $model,
-        'attribute' => 'id_permission',
+		'name' => 'permissions',
+		'options' => [
+			'placeholder' => Yii::t("app", "Select a permission"), 
+			'multiple'=>true,
+			"required" => true
+		],
+		'pluginOptions' => [
+			//'tags' => true,
+			'allowClear' => false,
+			'tokenSeparators' => [',', ' '],
+			'maximumInputLength' => 10
+		],
     ]); ?>
 
     <div class="form-group">

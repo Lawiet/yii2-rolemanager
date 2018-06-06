@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
-use wbraganca\multiselect\MultiSelectWidget;
+use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Permission */
@@ -36,12 +36,16 @@ use wbraganca\multiselect\MultiSelectWidget;
     <?= $form->field($model, 'uri')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a valid uri address...')]) ?>
 
     <?= $form->field($model, 'icon')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a icon...')]) ?>
-
-    <?= $form->field($model, 'data_method')->widget(MultiSelectWidget::classname(), [
-            'data' => ['GET', 'POST', 'PUT', 'DELETE'],
-            'model' => $model,
-            'attribute' => 'data_method',
-        ]); ?>
+	
+	<?= $form->field($model, 'data_method')->widget(Select2::classname(), [
+		'data' => ['GET'=>'GET', 'POST'=>'POST', 'PUT'=>'PUT', 'DELETE'=>'DELETE'],
+		'options' => ['placeholder' => Yii::t("app", "Select a permission")],
+		'pluginOptions' => [
+			//'tags' => true,
+			'tokenSeparators' => [',', ' '],
+			'maximumInputLength' => 10
+		],
+	]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

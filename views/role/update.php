@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
 		'modelPermission' => $modelPermission,
-		'modelPermissionRole' => $modelPermissionRole,
     ]) ?>
 
 </div>
