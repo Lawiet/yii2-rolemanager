@@ -35,7 +35,7 @@ class GroupRole extends \yii\db\ActiveRecord
             [['id_group', 'id_role'], 'required'],
             [['id_group', 'id_role'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
-            [['id_group', 'id_role'], 'unique', 'targetAttribute' => ['id_group', 'id_rol']],
+            [['id_group', 'id_role'], 'unique', 'targetAttribute' => ['id_group', 'id_role']],
             [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['id_group' => 'id']],
             [['id_role'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_role' => 'id']],
         ];
