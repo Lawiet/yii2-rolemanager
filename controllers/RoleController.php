@@ -59,20 +59,22 @@ class RoleController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Role();
-        $postData = Yii::$app->request->post();
+        $model = new Assignment();
+        $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
 
-        if ($postData) {
-            if ($model->load($postData)) {
-                if($model->save()){
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            }
+        if ( $model->load(Yii::$app->request->post()) ) {
+			$model->date_modified = new Expression('NOW()');
+			$model->date_created = new Expression('NOW()');
+			
+			if( $model->save() ){
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+		
+		return $this->render('create', [
+			'model' => $model,
+			'modelPermission' => $modelPermission,
+		]);
     }
 
     /**
@@ -84,19 +86,20 @@ class RoleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $postData = Yii::$app->request->post();
+        $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
 
-        if ($postData) {
-            if ($model->load($postData)) {
-                if($model->save()){
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            }
+        if ( $model->load(Yii::$app->request->post()) ) {
+			$model->date_modified = new Expression('NOW()');
+			
+			if( $model->save() ){
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+		
+		return $this->render('update', [
+			'model' => $model,
+			'modelPermission' => $modelPermission,
+		]);
     }
 
     /**

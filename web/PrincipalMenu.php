@@ -69,14 +69,14 @@ class PrincipalMenu extends Controller
             $permissions = $permissions->joinWith(['permissionRoles'])
                                        ->where(['in', 'permission_role.id_rol', $roles]);
             $where = [
-                'Permission.id_permission'=>null,
+                'permission.id_permission'=>null,
                 'show_in_menu'=>true,
                 'status'=>true,
             ];
 
 		}else{
             $where = [
-                'Permission.id_permission'=>null,
+                'permission.id_permission'=>null,
                 'show_in_menu'=>true,
                 'status'=>true,
                 'logged'=>false,
@@ -123,7 +123,7 @@ class PrincipalMenu extends Controller
             $permissions = $permissions->joinWith(['permissionRoles'])
                                        ->where(['in', 'permission_role.id_rol', $roles]);
             $where = [
-                'Permission.id_permission'=>$permission->id,
+                'permission.id_permission'=>$permission->id,
                 'show_in_menu'=>true,
                 'status'=>true
             ];
