@@ -22,7 +22,7 @@ class m171015_214599_create_index extends Migration
         $this->createIndex('uk_groups_name_idx', '{{%group}}', 'name', true);
 
 		// group_role
-        $this->createIndex('uk_groups_roles_id_rol_id_group_idx', '{{%group_role}}', ['id_group','id_rol'], true);
+        $this->createIndex('uk_groups_roles_id_role_id_group_idx', '{{%group_role}}', ['id_group','id_role'], true);
 
 		// organization
         $this->createIndex('uk_organization_unique_name_idx', '{{%organization}}', ['id_group','name'], true);
@@ -32,7 +32,7 @@ class m171015_214599_create_index extends Migration
         $this->createIndex('uk_permissions_id_permission_name_uri_idx', '{{%permission}}', ['id_permission','name','uri'], true);
 		
 		// permission_role
-        $this->createIndex('uk_permissions_roles_id_permission_id_rol_idx', '{{%permission_role}}', ['id_permission','id_rol'], true);
+        $this->createIndex('uk_permissions_roles_id_permission_id_role_idx', '{{%permission_role}}', ['id_permission','id_role'], true);
 
 		// role
         $this->createIndex('uk_roles_unique_name_idx', '{{%role}}', 'name', true);
@@ -63,7 +63,7 @@ class m171015_214599_create_index extends Migration
 
 		// group_role
         $this->addForeignKey('fk_groups_roles_group_idx', '{{%group_role}}', 'id_group', '{{%group}}', 'id');
-        $this->addForeignKey('fk_groups_roles_rol_idx', '{{%group_role}}', 'id_rol', '{{%role}}', 'id');
+        $this->addForeignKey('fk_groups_roles_role_idx', '{{%group_role}}', 'id_role', '{{%role}}', 'id');
 
 		// organization
         $this->addForeignKey('fk_organization_group_idx', '{{%organization}}', 'id_group', '{{%group}}', 'id');
@@ -73,10 +73,10 @@ class m171015_214599_create_index extends Migration
 		
 		// permission_role
         $this->addForeignKey('fk_permissions_roles_permission_idx', '{{%permission_role}}', 'id_permission', '{{%permission}}', 'id');
-        $this->addForeignKey('fk_permissions_roles_rol_idx', '{{%permission_role}}', 'id_rol', '{{%role}}', 'id');
+        $this->addForeignKey('fk_permissions_roles_role_idx', '{{%permission_role}}', 'id_role', '{{%role}}', 'id');
 		
 		// role_user
-        $this->addForeignKey('fk_roles_users_rol_idx', '{{%role_user}}', 'id_role', '{{%role}}', 'id');
+        $this->addForeignKey('fk_roles_users_role_idx', '{{%role_user}}', 'id_role', '{{%role}}', 'id');
         $this->addForeignKey('fk_roles_users_user_idx', '{{%role_user}}', 'id_user', '{{%user}}', 'id');
 		
 		// user

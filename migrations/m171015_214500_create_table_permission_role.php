@@ -19,7 +19,7 @@ class m171015_214500_create_table_permission_role extends Migration
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);
 
-        $this->batchInsert('{{%permission_role}}', ['id_permission', 'id_rol',], [
+        $this->batchInsert('{{%permission_role}}', ['id_permission', 'id_role',], [
             ['1','1',],
             ['2','1',],
             ['3','1',],

@@ -22,7 +22,7 @@ class m171015_214500_create_table_group_role extends Migration
         $this->insert('{{%group_role}}', [
             'id'=>'1',
             'id_group'=>'1',
-            'id_rol'=>'1',
+            'id_role'=>'1',
             'date_modified'=>null, //'2017-10-15 18:09:06',
             'date_created'=>null, //'2017-10-15 18:09:06'
         ]);
