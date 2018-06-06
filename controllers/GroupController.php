@@ -3,6 +3,8 @@
 namespace lawiet\rbac\controllers;
 
 use Yii;
+use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -12,7 +14,6 @@ use lawiet\rbac\models\RoleSearch;
 use lawiet\rbac\models\Group;
 use lawiet\rbac\models\GroupSearch;
 use lawiet\rbac\web\Controller;
-use yii\helpers\ArrayHelper;
 
 /**
  * GroupController implements the CRUD actions for Group model.

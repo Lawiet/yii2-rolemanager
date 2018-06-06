@@ -18,7 +18,7 @@ class GroupRoleSearch extends GroupRole
     public function rules()
     {
         return [
-            [['id', 'id_group', 'id_rol'], 'integer'],
+            [['id', 'id_group', 'id_role'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
         ];
     }
@@ -61,7 +61,7 @@ class GroupRoleSearch extends GroupRole
         $query->andFilterWhere([
             'id' => $this->id,
             'id_group' => $this->id_group,
-            'id_rol' => $this->id_rol,
+            'id_role' => $this->id_rol,
             'date_modified' => $this->date_modified,
             'date_created' => $this->date_created,
         ]);

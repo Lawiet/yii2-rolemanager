@@ -111,6 +111,6 @@ class Permission extends \yii\db\ActiveRecord
      */
     public function getRols()
     {
-        return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('permission_role', ['id_permission' => 'id']);
+        return $this->hasMany(Role::className(), ['id' => 'id_role'])->viaTable('permission_role', ['id_permission' => 'id']);
     }
 }

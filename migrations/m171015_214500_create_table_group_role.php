@@ -14,7 +14,7 @@ class m171015_214500_create_table_group_role extends Migration
         $this->createTable('{{%group_role}}', [
             'id' => $this->integer(11)->unsigned()->notNull()->append('AUTO_INCREMENT PRIMARY KEY'),
             'id_group' => $this->integer(11)->unsigned()->notNull(),
-            'id_rol' => $this->integer(11)->unsigned()->notNull(),
+            'id_role' => $this->integer(11)->unsigned()->notNull(),
             'date_modified' => $this->timestamp()->notNull()->defaultExpression('0'),
             'date_created' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ], $tableOptions);

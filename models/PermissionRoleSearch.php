@@ -18,7 +18,7 @@ class PermissionRoleSearch extends PermissionRole
     public function rules()
     {
         return [
-            [['id', 'id_permission', 'id_rol'], 'integer'],
+            [['id', 'id_permission', 'id_role'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
         ];
     }
@@ -61,7 +61,7 @@ class PermissionRoleSearch extends PermissionRole
         $query->andFilterWhere([
             'id' => $this->id,
             'id_permission' => $this->id_permission,
-            'id_rol' => $this->id_rol,
+            'id_role' => $this->id_rol,
             'date_modified' => $this->date_modified,
             'date_created' => $this->date_created,
         ]);

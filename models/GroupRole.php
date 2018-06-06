@@ -9,7 +9,7 @@ use Yii;
  *
  * @property string $id
  * @property string $id_group
- * @property string $id_rol
+ * @property string $id_role
  * @property string $date_modified
  * @property string $date_created
  *
@@ -32,12 +32,12 @@ class GroupRole extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_group', 'id_rol'], 'required'],
-            [['id_group', 'id_rol'], 'integer'],
+            [['id_group', 'id_role'], 'required'],
+            [['id_group', 'id_role'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
-            [['id_group', 'id_rol'], 'unique', 'targetAttribute' => ['id_group', 'id_rol']],
+            [['id_group', 'id_role'], 'unique', 'targetAttribute' => ['id_group', 'id_rol']],
             [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['id_group' => 'id']],
-            [['id_rol'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_rol' => 'id']],
+            [['id_role'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_role' => 'id']],
         ];
     }
 
@@ -49,7 +49,7 @@ class GroupRole extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'id_group' => Yii::t('app', 'Id Group'),
-            'id_rol' => Yii::t('app', 'Id Rol'),
+            'id_role' => Yii::t('app', 'Id Rol'),
             'date_modified' => Yii::t('app', 'Date Modified'),
             'date_created' => Yii::t('app', 'Date Created'),
         ];
@@ -68,6 +68,6 @@ class GroupRole extends \yii\db\ActiveRecord
      */
     public function getRol()
     {
-        return $this->hasOne(Role::className(), ['id' => 'id_rol']);
+        return $this->hasOne(Role::className(), ['id' => 'id_role']);
     }
 }

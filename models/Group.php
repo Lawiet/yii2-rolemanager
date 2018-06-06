@@ -68,7 +68,7 @@ class Group extends \yii\db\ActiveRecord
      */
     public function getRols()
     {
-        return $this->hasMany(Role::className(), ['id' => 'id_rol'])->viaTable('group_role', ['id_group' => 'id']);
+        return $this->hasMany(Role::className(), ['id' => 'id_role'])->viaTable('group_role', ['id_group' => 'id']);
     }
 
     /**
