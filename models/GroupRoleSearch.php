@@ -61,7 +61,7 @@ class GroupRoleSearch extends GroupRole
         $query->andFilterWhere([
             'id' => $this->id,
             'id_group' => $this->id_group,
-            'id_role' => $this->id_rol,
+            'id_role' => $this->id_role,
             'date_modified' => $this->date_modified,
             'date_created' => $this->date_created,
         ]);

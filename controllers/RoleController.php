@@ -80,7 +80,7 @@ class RoleController extends Controller
 					if(!$model->save())
 						$save = false;
 					
-					PermissionRole::deleteAll(['id_rol'=>$id]);
+					PermissionRole::deleteAll(['id_role'=>$id]);
 					
 					if(!empty($permissions))
 						foreach($permissions as $permission){
@@ -135,7 +135,7 @@ class RoleController extends Controller
 					if(!$model->save())
 						$save = false;
 					
-					PermissionRole::deleteAll(['id_rol'=>$id]);
+					PermissionRole::deleteAll(['id_role'=>$id]);
 					
 					if(!empty($permissions))
 						foreach($permissions as $permission){

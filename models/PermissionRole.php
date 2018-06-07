@@ -35,7 +35,7 @@ class PermissionRole extends \yii\db\ActiveRecord
             [['id_permission', 'id_role'], 'required'],
             [['id_permission', 'id_role'], 'integer'],
             [['date_modified', 'date_created'], 'safe'],
-            [['id_permission', 'id_role'], 'unique', 'targetAttribute' => ['id_permission', 'id_rol']],
+            [['id_permission', 'id_role'], 'unique', 'targetAttribute' => ['id_permission', 'id_role']],
             [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
             [['id_role'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['id_role' => 'id']],
         ];
