@@ -59,12 +59,6 @@ class m171015_214500_create_table_assignment extends Migration
             ['28','7','Crear','CREATE',],
             ['29','7','Actualizar','UPDATE',],
             ['30','7','Eliminar','DELETE',],
-            // Audit
-            ['31','8','Ver','VIEW',],
-            ['32','8','Listar','INDEX',],
-            ['33','8','Crear','CREATE',],
-            ['34','8','Actualizar','UPDATE',],
-            ['35','8','Eliminar','DELETE',],
         ]);
     }
 

@@ -3,6 +3,8 @@
 namespace lawiet\rbac\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use kartik\builder\Form;
 
 /**
  * This is the model class for table "assignment".
@@ -45,6 +47,51 @@ class Assignment extends \yii\db\ActiveRecord
             [['id_permission'], 'exist', 'skipOnError' => true, 'targetClass' => Permission::className(), 'targetAttribute' => ['id_permission' => 'id']],
         ];
     }
+	
+    /**
+     * {@inheritdoc}
+     */
+	public function getFormAttribs() {
+		return [
+			'status'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\SwitchInput', 
+			],
+			'show_in_menu'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\SwitchInput', 
+			],
+			'id_permission'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\Select2', 
+				'options'=>[
+					'data'=>ArrayHelper::map(Permission::find()->where(['status'=>true])->all(), 'id', 'name'),
+					'options' => [
+						'placeholder' => Yii::t("app", "Select a group"),
+						'required' => true,
+					],
+					'pluginOptions' => [
+						//'tags' => true,
+						'tokenSeparators' => [',', ' '],
+						'maximumInputLength' => 10,
+					],
+				], 
+				//'hint'=>Yii::t('app','Select a group...'),
+			],
+			'name'=>[
+				'type'=>Form::INPUT_TEXT, 
+				'options'=>[
+					'placeholder'=>Yii::t('app','Enter a Name...'),
+				],
+			],
+			'method'=>[
+				'type'=>Form::INPUT_TEXT, 
+				'options'=>[
+					'placeholder'=>Yii::t('app','Enter GET, POST, PUT or DELETE...'),
+				],
+			],
+		];
+	}
 
     /**
      * {@inheritdoc}

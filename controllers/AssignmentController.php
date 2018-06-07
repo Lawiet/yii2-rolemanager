@@ -4,13 +4,11 @@ namespace lawiet\rbac\controllers;
 
 use Yii;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use lawiet\rbac\models\Assignment;
 use lawiet\rbac\models\AssignmentSearch;
-use lawiet\rbac\models\Permission;
 use lawiet\rbac\web\Controller;
 
 /**
@@ -63,7 +61,6 @@ class AssignmentController extends Controller
     public function actionCreate()
     {
         $model = new Assignment();
-        $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
 
         if ( $model->load(Yii::$app->request->post()) ) {
 			$model->date_modified = new Expression('NOW()');
@@ -76,7 +73,6 @@ class AssignmentController extends Controller
 		
 		return $this->render('create', [
 			'model' => $model,
-			'modelPermission' => $modelPermission,
 		]);
     }
 
@@ -89,7 +85,6 @@ class AssignmentController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelPermission = ArrayHelper::map(Permission::find()->all(), 'id', 'name');
 
         if ( $model->load(Yii::$app->request->post()) ) {
 			$model->date_modified = new Expression('NOW()');
@@ -101,7 +96,6 @@ class AssignmentController extends Controller
 		
 		return $this->render('update', [
 			'model' => $model,
-			'modelPermission' => $modelPermission,
 		]);
     }
 

@@ -1,9 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use kartik\builder\Form;
 use kartik\widgets\ActiveForm;
-use kartik\widgets\SwitchInput;
-use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Permission */
@@ -22,32 +21,11 @@ use kartik\widgets\Select2;
             'showErrors' => true,
         ],
     ]); ?>
-
-    <?php // $form->field($model, 'id_permission')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->widget(SwitchInput::classname(), []); ?>
-
-    <?= $form->field($model, 'logged')->widget(SwitchInput::classname(), []); ?>
-
-    <?= $form->field($model, 'show_in_menu')->widget(SwitchInput::classname(), []); ?>
-
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a Name...')]) ?>
-
-    <?= $form->field($model, 'uri')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a valid uri address...')]) ?>
-
-    <?= $form->field($model, 'icon')->textInput(['maxlength' => true, 'placeholder'=> Yii::t('app','Enter a icon...')]) ?>
 	
-	<?= $form->field($model, 'data_method')->widget(Select2::classname(), [
-		'data' => ['GET'=>'GET', 'POST'=>'POST', 'PUT'=>'PUT', 'DELETE'=>'DELETE'],
-		'options' => [
-			'placeholder' => Yii::t("app", "Select a permission"),
-			'required' => true,
-		],
-		'pluginOptions' => [
-			//'tags' => true,
-			'tokenSeparators' => [',', ' '],
-			'maximumInputLength' => 10,
-		],
+	<?= Form::widget([
+		'model'=>$model,
+		'form'=>$form,
+		'attributes'=>$model->formAttribs,
 	]); ?>
 
     <div class="form-group">

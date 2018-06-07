@@ -4,7 +4,7 @@ namespace lawiet\rbac\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use kartik\builder\Form;
 
 /**
  * This is the model class for table "organization".
@@ -36,7 +36,7 @@ class Organization extends \yii\db\ActiveRecord
     {
         return [
             [['id_group', 'status'], 'integer'],
-            [['name'], 'required'],
+            [['id_group', 'name'], 'required'],
             [['date_modified', 'date_created'], 'safe'],
             [['name'], 'string', 'max' => 128],
             [['id_group', 'name'], 'unique', 'targetAttribute' => ['id_group', 'name']],
@@ -44,17 +44,20 @@ class Organization extends \yii\db\ActiveRecord
         ];
     }
 	
+    /**
+     * {@inheritdoc}
+     */
 	public function getFormAttribs() {
 		return [
 			'status'=>[
 				'type'=>Form::INPUT_WIDGET, 
-				'widgetClass'=>'\kartik\widgets\Select2', 
+				'widgetClass'=>'\kartik\widgets\SwitchInput', 
 			],
 			'id_group'=>[
 				'type'=>Form::INPUT_WIDGET, 
 				'widgetClass'=>'\kartik\widgets\Select2', 
 				'options'=>[
-					'data'=>ArrayHelper::map(Group::find()->all(), 'id', 'name'),
+					'data'=>ArrayHelper::map(Group::find()->where(['status'=>true])->all(), 'id', 'name'),
 					'options' => [
 						'placeholder' => Yii::t("app", "Select a group"),
 						'required' => true,
@@ -65,17 +68,13 @@ class Organization extends \yii\db\ActiveRecord
 						'maximumInputLength' => 10,
 					],
 				], 
-				'hint'=>Yii::t('app','Select a group...'),
+				//'hint'=>Yii::t('app','Select a group...'),
 			],
 			'name'=>[
 				'type'=>Form::INPUT_TEXT, 
 				'options'=>[
 					'placeholder'=>Yii::t('app','Enter a Name...'),
 				],
-			],
-			'actions'=>[
-				'type'=>Form::INPUT_RAW, 
-				'value'=>Html::submitButton('Submit', ['class'=>'btn btn-primary']),
 			],
 		];
 	}

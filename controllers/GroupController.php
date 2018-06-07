@@ -4,15 +4,12 @@ namespace lawiet\rbac\controllers;
 
 use Yii;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use lawiet\rbac\models\GroupRole;
-use lawiet\rbac\models\Role;
-use lawiet\rbac\models\RoleSearch;
 use lawiet\rbac\models\Group;
 use lawiet\rbac\models\GroupSearch;
+use lawiet\rbac\models\GroupRole;
 use lawiet\rbac\web\Controller;
 
 /**
@@ -65,7 +62,6 @@ class GroupController extends Controller
     public function actionCreate()
     {
         $model = new Group();
-        $modelRole = Role::find()->select(['id', 'name'])->all();
         $postData = Yii::$app->request->post();
 		$save = true;
 
@@ -108,7 +104,6 @@ class GroupController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
         ]);
     }
 
@@ -121,7 +116,6 @@ class GroupController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelRole = Role::find()->select(['id', 'name'])->all();
         $postData = Yii::$app->request->post();
 		$save = true;
 
@@ -163,7 +157,6 @@ class GroupController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'modelRole' => ArrayHelper::map($modelRole, 'id', 'name'),
         ]);
     }
 

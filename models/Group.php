@@ -3,6 +3,8 @@
 namespace lawiet\rbac\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use kartik\builder\Form;
 
 /**
  * This is the model class for table "group".
@@ -40,6 +42,43 @@ class Group extends \yii\db\ActiveRecord
             [['name'], 'unique'],
         ];
     }
+	
+    /**
+     * {@inheritdoc}
+     */
+	public function getFormAttribs() {
+		return [
+			'status'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\SwitchInput', 
+			],
+			'name'=>[
+				'type'=>Form::INPUT_TEXT, 
+				'options'=>[
+					'placeholder'=>Yii::t('app','Enter a Name...'),
+				],
+			],
+			'rols'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\Select2', 
+				'options'=>[
+					'data'=>ArrayHelper::map(Role::find()->where(['status'=>true])->all(), 'id', 'name'),
+					'options' => [
+						'placeholder' => Yii::t("app", "Select a role"),
+						'multiple'=>true, 
+						'required' => true,
+					],
+					'pluginOptions' => [
+						//'tags' => true,
+						'allowClear' => false,
+						'tokenSeparators' => [',', ' '],
+						'maximumInputLength' => 10,
+					],
+				], 
+				//'hint'=>Yii::t('app','Select a group...'),
+			],
+		];
+	}
 
     /**
      * {@inheritdoc}

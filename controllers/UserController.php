@@ -4,13 +4,11 @@ namespace lawiet\rbac\controllers;
 
 use Yii;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use lawiet\rbac\models\User;
 use lawiet\rbac\models\UserSearch;
-use lawiet\rbac\models\Organization;
 use lawiet\rbac\web\Controller;
 
 /**
@@ -63,7 +61,6 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-        $modelGroup = Organization::find()->all();
         $postData = Yii::$app->request->post();
 
         if ( $model->load(Yii::$app->request->post()) ) {
@@ -81,7 +78,6 @@ class UserController extends Controller
 		
 		return $this->render('create', [
 			'model' => $model,
-            'modelOrganization' => ArrayHelper::map($modelOrganization, 'id', 'name'),
 		]);
     }
 
@@ -94,11 +90,14 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelOrganization = Organization::find()->all();
         $postData = Yii::$app->request->post();
 
         if ( $model->load(Yii::$app->request->post()) ) {
 			$model->date_modified = new Expression('NOW()');
+			
+			if(strrpos($model->password, "$2y$") < 0){
+				$model-setPassword($model->password);
+			}
 			
 			if( $model->save() ){
 				return $this->redirect(['view', 'id' => $model->id]);
@@ -107,7 +106,6 @@ class UserController extends Controller
 		
 		return $this->render('update', [
 			'model' => $model,
-            'modelOrganization' => ArrayHelper::map($modelOrganization, 'id', 'name'),
 		]);
     }
 

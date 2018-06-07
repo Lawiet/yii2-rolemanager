@@ -3,6 +3,8 @@
 namespace lawiet\rbac\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use kartik\builder\Form;
 
 /**
  * This is the model class for table "user".
@@ -46,7 +48,7 @@ class User extends UserIdentity
     public function rules()
     {
         return [
-            [['id_status', 'id_organization', 'username', 'password'], 'required'],
+            [['id_status', 'id_organization', 'username', 'email', 'password'], 'required'],
             [['id_status', 'id_organization', 'date_expired_token_security'], 'integer'],
             [['last_conection', 'last_activity', 'date_token_recovery_password', 'date_modified', 'date_created'], 'safe'],
             [['email'], 'string', 'max' => 180],
@@ -59,6 +61,56 @@ class User extends UserIdentity
             [['id_status'], 'exist', 'skipOnError' => true, 'targetClass' => UserStatus::className(), 'targetAttribute' => ['id_status' => 'id']],
         ];
     }
+	
+    /**
+     * {@inheritdoc}
+     */
+	public function getFormAttribs() {
+		return [
+			'status'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\SwitchInput', 
+			],
+			'id_organization'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\Select2', 
+				'options'=>[
+					'data'=>ArrayHelper::map(Organization::find()->where(['status'=>true])->all(), 'id', 'name'),
+					'options' => [
+						'placeholder' => Yii::t("app", "Select a group"),
+						'required' => true,
+					],
+					'pluginOptions' => [
+						//'tags' => true,
+						'tokenSeparators' => [',', ' '],
+						'maximumInputLength' => 10,
+					],
+				], 
+				//'hint'=>Yii::t('app','Select a group...'),
+			],
+			'username'=>[
+				'type'=>Form::INPUT_TEXT, 
+				'options'=>[
+					'placeholder'=>Yii::t('app','Enter a UserName...'),
+				],
+			],
+			'email'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\yii\widgets\MaskedInput', 
+				'options'=>[
+					'clientOptions' => [
+						'alias' =>  'email',
+					],
+				],
+			],
+			'password'=>[
+				'type'=>Form::INPUT_PASSWORD, 
+				'options'=>[
+					'placeholder'=>Yii::t('app','Enter a Password...'),
+				],
+			],
+		];
+	}
 
     /**
      * {@inheritdoc}

@@ -4,13 +4,11 @@ namespace lawiet\rbac\controllers;
 
 use Yii;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use lawiet\rbac\models\Role;
 use lawiet\rbac\models\RoleSearch;
-use lawiet\rbac\models\Permission;
 use lawiet\rbac\models\PermissionRole;
 use lawiet\rbac\web\Controller;
 
@@ -64,7 +62,6 @@ class RoleController extends Controller
     public function actionCreate()
     {
         $model = new Assignment();
-        $modelPermission = Permission::find()->all();
         $postData = Yii::$app->request->post();
 		$save = true;
 
@@ -107,7 +104,6 @@ class RoleController extends Controller
 		
 		return $this->render('create', [
 			'model' => $model,
-            'modelPermission' => ArrayHelper::map($modelPermission, 'id', 'name'),
 		]);
     }
 
@@ -120,7 +116,6 @@ class RoleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelPermission = Permission::find()->all();
         $postData = Yii::$app->request->post();
 		$save = true;
 
@@ -162,7 +157,6 @@ class RoleController extends Controller
 		
 		return $this->render('update', [
 			'model' => $model,
-            'modelPermission' => ArrayHelper::map($modelPermission, 'id', 'name'),
 		]);
     }
 

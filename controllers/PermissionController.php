@@ -4,7 +4,6 @@ namespace lawiet\rbac\controllers;
 
 use Yii;
 use yii\db\Expression;
-use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
