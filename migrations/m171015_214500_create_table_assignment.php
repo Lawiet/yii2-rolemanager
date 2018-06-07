@@ -47,6 +47,24 @@ class m171015_214500_create_table_assignment extends Migration
             ['18','5','Crear','CREATE',],
             ['19','5','Actualizar','UPDATE',],
             ['20','5','Eliminar','DELETE',],
+            // Organization
+            ['21','6','Ver','VIEW',],
+            ['22','6','Listar','INDEX',],
+            ['23','6','Crear','CREATE',],
+            ['24','6','Actualizar','UPDATE',],
+            ['25','6','Eliminar','DELETE',],
+            // User
+            ['26','7','Ver','VIEW',],
+            ['27','7','Listar','INDEX',],
+            ['28','7','Crear','CREATE',],
+            ['29','7','Actualizar','UPDATE',],
+            ['30','7','Eliminar','DELETE',],
+            // Audit
+            ['31','8','Ver','VIEW',],
+            ['32','8','Listar','INDEX',],
+            ['33','8','Crear','CREATE',],
+            ['34','8','Actualizar','UPDATE',],
+            ['35','8','Eliminar','DELETE',],
         ]);
     }
 

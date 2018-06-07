@@ -33,6 +33,9 @@ class m171015_214500_create_table_permission extends Migration
             ['3','1','1','Permission','/rbac/permission','',],
             ['4','1','1','Group','/rbac/group','',],
             ['5','1','1','Assignment','/rbac/assignment','',],
+            ['6','1','1','Organization','/rbac/organization','',],
+            ['7','1','1','User','/rbac/user','',],
+            ['8','1','1','Audit','/rbac/audit','',],
         ]);
     }
 

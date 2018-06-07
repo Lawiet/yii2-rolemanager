@@ -25,6 +25,9 @@ class m171015_214500_create_table_permission_role extends Migration
             ['3','1',],
             ['4','1',],
             ['5','1',],
+            ['6','1',],
+            ['7','1',],
+            ['8','1',],
         ]);
     }
 
