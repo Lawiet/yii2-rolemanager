@@ -30,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'status:boolean',
+            'id_organization.name',
             'username',
+            'email',
             'date_modified',
             'date_created',
         ],

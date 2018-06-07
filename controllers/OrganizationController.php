@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 
 use lawiet\rbac\models\Organization;
 use lawiet\rbac\models\OrganizationSearch;
+use lawiet\rbac\models\Group;
 use lawiet\rbac\web\Controller;
 
 /**
@@ -62,6 +63,7 @@ class OrganizationController extends Controller
     public function actionCreate()
     {
         $model = new Organization();
+        $modelGroup = Group::find()->all();
         $postData = Yii::$app->request->post();
 
         if ( $model->load(Yii::$app->request->post()) ) {
@@ -75,6 +77,7 @@ class OrganizationController extends Controller
 		
 		return $this->render('create', [
 			'model' => $model,
+            'modelGroup' => ArrayHelper::map($modelGroup, 'id', 'name'),
 		]);
     }
 
@@ -87,6 +90,7 @@ class OrganizationController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelGroup = Group::find()->all();
         $postData = Yii::$app->request->post();
 
         if ( $model->load(Yii::$app->request->post()) ) {
@@ -99,6 +103,7 @@ class OrganizationController extends Controller
 		
 		return $this->render('update', [
 			'model' => $model,
+            'modelGroup' => ArrayHelper::map($modelGroup, 'id', 'name'),
 		]);
     }
 

@@ -31,11 +31,14 @@ use kartik\widgets\Select2;
 	
 	<?= $form->field($model, 'id_permission')->widget(Select2::classname(), [
 		'data' => $modelPermission,
-		'options' => ['placeholder' => Yii::t("app", "Select a permission")],
+		'options' => [
+			'placeholder' => Yii::t("app", "Select a permission"),
+			'required' => true,
+		],
 		'pluginOptions' => [
 			'tags' => true,
 			'tokenSeparators' => [',', ' '],
-			'maximumInputLength' => 10
+			'maximumInputLength' => 10,
 		],
 	]); ?>
 

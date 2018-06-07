@@ -39,11 +39,14 @@ use kartik\widgets\Select2;
 	
 	<?= $form->field($model, 'data_method')->widget(Select2::classname(), [
 		'data' => ['GET'=>'GET', 'POST'=>'POST', 'PUT'=>'PUT', 'DELETE'=>'DELETE'],
-		'options' => ['placeholder' => Yii::t("app", "Select a permission")],
+		'options' => [
+			'placeholder' => Yii::t("app", "Select a permission"),
+			'required' => true,
+		],
 		'pluginOptions' => [
 			//'tags' => true,
 			'tokenSeparators' => [',', ' '],
-			'maximumInputLength' => 10
+			'maximumInputLength' => 10,
 		],
 	]); ?>
 

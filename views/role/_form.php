@@ -33,13 +33,13 @@ use kartik\widgets\Select2;
 		'options' => [
 			'placeholder' => Yii::t("app", "Select a permission"), 
 			'multiple'=>true,
-			"required" => true
+			'required' => true,
 		],
 		'pluginOptions' => [
 			//'tags' => true,
 			'allowClear' => false,
 			'tokenSeparators' => [',', ' '],
-			'maximumInputLength' => 10
+			'maximumInputLength' => 10,
 		],
     ]); ?>
 

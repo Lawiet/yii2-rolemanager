@@ -3,6 +3,8 @@
 namespace lawiet\rbac\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "organization".
@@ -41,6 +43,42 @@ class Organization extends \yii\db\ActiveRecord
             [['id_group'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['id_group' => 'id']],
         ];
     }
+	
+	public function getFormAttribs() {
+		return [
+			'status'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\Select2', 
+			],
+			'id_group'=>[
+				'type'=>Form::INPUT_WIDGET, 
+				'widgetClass'=>'\kartik\widgets\Select2', 
+				'options'=>[
+					'data'=>ArrayHelper::map(Group::find()->all(), 'id', 'name'),
+					'options' => [
+						'placeholder' => Yii::t("app", "Select a group"),
+						'required' => true,
+					],
+					'pluginOptions' => [
+						//'tags' => true,
+						'tokenSeparators' => [',', ' '],
+						'maximumInputLength' => 10,
+					],
+				], 
+				'hint'=>Yii::t('app','Select a group...'),
+			],
+			'name'=>[
+				'type'=>Form::INPUT_TEXT, 
+				'options'=>[
+					'placeholder'=>Yii::t('app','Enter a Name...'),
+				],
+			],
+			'actions'=>[
+				'type'=>Form::INPUT_RAW, 
+				'value'=>Html::submitButton('Submit', ['class'=>'btn btn-primary']),
+			],
+		];
+	}
 
     /**
      * {@inheritdoc}

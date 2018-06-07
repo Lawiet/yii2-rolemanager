@@ -22,7 +22,8 @@
         "yiisoft/yii2-bootstrap": "*",
 		"kartik-v/yii2-icons": "@dev",
         "kartik-v/yii2-widgets": "*",
-		"kartik-v/yii2-widget-select2": "@dev"
+		"kartik-v/yii2-widget-select2": "@dev",
+		"kartik-v/yii2-builder": "@dev"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.1"
