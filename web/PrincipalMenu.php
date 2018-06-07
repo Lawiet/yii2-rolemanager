@@ -67,7 +67,7 @@ class PrincipalMenu extends Controller
                 $roles[] = $role->id_role;
 
             $permissions = $permissions->joinWith(['permissionRoles'])
-                                       ->where(['in', 'permission_role.id_rol', $roles]);
+                                       ->where(['in', 'permission_role.id_role', $roles]);
             $where = [
                 'permission.id_permission'=>null,
                 'show_in_menu'=>true,
@@ -121,7 +121,7 @@ class PrincipalMenu extends Controller
 
 		if(!$guest){
             $permissions = $permissions->joinWith(['permissionRoles'])
-                                       ->where(['in', 'permission_role.id_rol', $roles]);
+                                       ->where(['in', 'permission_role.id_role', $roles]);
             $where = [
                 'permission.id_permission'=>$permission->id,
                 'show_in_menu'=>true,

@@ -35,11 +35,11 @@ class Access extends Controller
             return false;
 
 		foreach($user->roleUsers as $role)
-            $roles[] = $role->id_rol;
+            $roles[] = $role->id_role;
 
         $permissions = Permission::find()
                                  ->joinWith(['permissionRoles'])
-                                 ->where(['in', 'permission_role.id_rol', $roles])
+                                 ->where(['in', 'permission_role.id_role', $roles])
                                  ->andWhere(['uri'=>$uri])
                                  ->one();
 
@@ -81,7 +81,7 @@ class Access extends Controller
     {
         $permissions = Permission::find()
                                  ->joinWith(['permissionRoles'])
-                                 ->where(['in', 'permission_role.id_rol', $roles])
+                                 ->where(['in', 'permission_role.id_role', $roles])
                                  ->andWhere(['permission.id'=>$permissions->id_permission])
                                  ->one();
 
