@@ -117,7 +117,11 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+		if($id > 2){
+			$this->findModel($id)->delete();
+		} else {
+            throw new NotFoundHttpException(Yii::t('app', 'This item can not be delete.'));
+        }
 
         return $this->redirect(['index']);
     }
@@ -134,7 +138,7 @@ class UserController extends Controller
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }

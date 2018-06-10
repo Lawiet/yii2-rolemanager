@@ -47,6 +47,14 @@ class Group extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
 	public function getFormAttribs() {
+		$o = Role::find();
+		if(Yii::$app->user->identity->id < 2){
+			$o = $o->where(['status'=>true]);
+		}else{
+			$o = $o->where(['>', 'id', '1'])->andWhere(['status'=>true]);
+		}
+		$o = $o->all();
+		
 		return [
 			'status'=>[
 				'type'=>Form::INPUT_WIDGET, 
@@ -62,7 +70,7 @@ class Group extends \yii\db\ActiveRecord
 				'type'=>Form::INPUT_WIDGET, 
 				'widgetClass'=>'\kartik\widgets\Select2', 
 				'options'=>[
-					'data'=>ArrayHelper::map(Role::find()->where(['status'=>true])->all(), 'id', 'name'),
+					'data'=>ArrayHelper::map($o, 'id', 'name'),
 					'options' => [
 						'placeholder' => Yii::t("app", "Select a role"),
 						'multiple'=>true, 

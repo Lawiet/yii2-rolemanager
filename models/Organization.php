@@ -48,6 +48,14 @@ class Organization extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
 	public function getFormAttribs() {
+		$o = Group::find();
+		if(Yii::$app->user->identity->id < 2){
+			$o = $o->where(['status'=>true]);
+		}else{
+			$o = $o->where(['>', 'id', '1'])->andWhere(['status'=>true]);
+		}
+		$o = $o->all();
+		
 		return [
 			'status'=>[
 				'type'=>Form::INPUT_WIDGET, 
