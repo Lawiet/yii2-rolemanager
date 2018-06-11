@@ -12,7 +12,7 @@ use kartik\widgets\ActiveForm;
 <div class="roles-form">
 
     <?php $form = ActiveForm::begin([
-        'id' => 'role-form',
+        'id' => 'roles-form',
         'type' => ActiveForm::TYPE_HORIZONTAL,
         'enableAjaxValidation' => false,
         'formConfig' => [ 

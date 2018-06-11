@@ -12,7 +12,7 @@ use kartik\widgets\ActiveForm;
 <div class="group-form">
 
     <?php $form = ActiveForm::begin([
-        'id' => 'signup-form',
+        'id' => 'group-form',
         'type' => ActiveForm::TYPE_HORIZONTAL,
         'enableAjaxValidation' => false,
         'formConfig' => [
