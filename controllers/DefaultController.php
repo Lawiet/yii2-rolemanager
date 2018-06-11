@@ -15,8 +15,6 @@ class DefaultController extends Controller
      */
     public function behaviors()
     {
-		$this->layout = parent::getLayout();
-
 		return parent::behaviors();
     }
 

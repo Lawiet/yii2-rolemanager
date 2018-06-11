@@ -22,8 +22,6 @@ class RoleController extends Controller
      */
     public function behaviors()
     {
-		$this->layout = parent::getLayout();
-
 		return parent::behaviors();
     }
 
@@ -168,11 +166,11 @@ class RoleController extends Controller
      */
     public function actionDelete($id)
     {
-		if($id > 2){
-			$this->findModel($id)->delete();
-		} else {
+		if($id < 2) {
             throw new NotFoundHttpException(Yii::t('app', 'This item can not be delete.'));
-        }
+		}
+
+		$this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -188,8 +186,8 @@ class RoleController extends Controller
     {
         if (($model = Role::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
+
+		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

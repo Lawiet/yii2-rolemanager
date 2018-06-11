@@ -21,8 +21,6 @@ class OrganizationController extends Controller
      */
     public function behaviors()
     {
-		$this->layout = parent::getLayout();
-
 		return parent::behaviors();
     }
 
@@ -109,7 +107,11 @@ class OrganizationController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+		if($id < 2) {
+            throw new NotFoundHttpException(Yii::t('app', 'This item can not be delete.'));
+		}
+
+		$this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -125,8 +127,8 @@ class OrganizationController extends Controller
     {
         if (($model = Organization::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+
+		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

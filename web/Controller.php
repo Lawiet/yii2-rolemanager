@@ -28,6 +28,21 @@ class Controller extends CController
      */
 	private $listActionsExcludeByDefault = [''];
 
+	/**
+     * @var string The Administrator permission name.
+     */
+    private $rbacModules = [];
+
+	/**
+     * @var string The ID module.
+     */
+    private $rbacModuleID = "";
+
+	/**
+     * @var string The ID controller.
+     */
+    private $rbacControllerID = "";
+
     /**
      * @var array
      */
@@ -37,6 +52,23 @@ class Controller extends CController
      * @var string The Administrator permission name.
      */
     public $adminPermission;
+
+    /**
+     * contructor.
+     */
+    public function __construct($id, $module, $config = [])
+    {
+		parent::__construct($id, $module, $config = []);
+		
+		$this->rbacModules = \Yii::$app->modules['rbac'];
+		$this->rbacModuleID = $module->id;
+		$this->rbacControllerID = $id;
+		
+		if(empty($this->layout))
+			$this->layout = isset($this->rbacModules->layout) ? $this->rbacModules->layout : (isset($this->rbacModules['layout']) ? $this->rbacModules['layout'] : '@app/views/layouts/main') ;
+		
+		$this->getExcludes();
+	}
 
     /** @inheritdoc */
     public function behaviors()
@@ -87,16 +119,6 @@ class Controller extends CController
 	}
 
     /**
-     * Get name layout.
-     *
-     * @return String
-     */
-    public function getLayout()
-    {
-		return isset(\Yii::$app->modules['rbac']->layout) ? \Yii::$app->modules['rbac']->layout : 'main' ;
-	}
-
-    /**
      * Get Modules Exclude By Default And User.
      *
      * @return void
@@ -104,7 +126,7 @@ class Controller extends CController
     private function getExcludes()
     {
 		$this->listModulesExcludeByDefault = array_merge($this->listModulesExcludeByDefault, [\Yii::$app->id]);
-		$excludes = isset(\Yii::$app->modules['rbac']->excludes) ? \Yii::$app->modules['rbac']->excludes : (isset(\Yii::$app->modules['rbac']['excludes']) ? \Yii::$app->modules['rbac']['excludes'] : null ) ;
+		$excludes = isset($this->rbacModules->excludes) ? $this->rbacModules->excludes : (isset($this->rbacModules['excludes']) ? $this->rbacModules['excludes'] : null ) ;
 
 		if(isset($excludes['modules']) && is_array($excludes['modules']) && count($excludes['modules']) > 0){
 			$this->listModulesExcludeByDefault = array_merge($excludes['modules'], $this->listModulesExcludeByDefault);
@@ -126,24 +148,21 @@ class Controller extends CController
      */
     private function isModuleExclude()
     {
-		$this->getExcludes();
-		$module = \Yii::$app->controller->module->id;
-		$controller = \Yii::$app->controller->id;
 		$action = \Yii::$app->controller->action->id;
 
 		if(in_array('*', $this->listModulesExcludeByDefault)){
 			return true;
 		}
 
-		if(in_array($module, $this->listModulesExcludeByDefault)){
+		if(in_array($this->rbacModuleID, $this->listModulesExcludeByDefault)){
 			return true;
 		}
 
-		if(in_array($module.'.'.$controller, $this->listControllersExcludeByDefault)){
+		if(in_array($this->rbacModuleID.'.'.$this->rbacControllerID, $this->listControllersExcludeByDefault)){
 			return true;
 		}
 
-		if(in_array($module.'.'.$controller.'.'.$action, $this->listActionsExcludeByDefault)){
+		if(in_array($this->rbacModuleID.'.'.$this->rbacControllerID.'.'.$action, $this->listActionsExcludeByDefault)){
 			return true;
 		}
 

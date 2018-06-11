@@ -21,8 +21,6 @@ class AuditController extends Controller
      */
     public function behaviors()
     {
-		$this->layout = parent::getLayout();
-
 		return parent::behaviors();
     }
 
@@ -188,7 +186,7 @@ class AuditController extends Controller
         if (($model = Audit::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }
