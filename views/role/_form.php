@@ -15,18 +15,18 @@ use kartik\widgets\ActiveForm;
         'id' => 'roles-form',
         'type' => ActiveForm::TYPE_HORIZONTAL,
         'enableAjaxValidation' => false,
-        'formConfig' => [ 
+        'formConfig' => [
             'showLabels' => true,
             'labelSpan' => 3,
             'showErrors' => true,
         ],
     ]); ?>
-	
-	<?= Form::widget([
-		'model'=>$model,
-		'form'=>$form,
-		'attributes'=>$model->formAttribs,
-	]); ?>
+
+    <?= Form::widget([
+        'model'=>$model,
+        'form'=>$form,
+        'attributes'=>$model->formAttribs,
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

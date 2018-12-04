@@ -7,44 +7,44 @@ use yii\helpers\ArrayHelper;
 use kartik\builder\Form;
 
 /**
- * This is the model class for table "user".
- *
- * @property string $id
- * @property string $id_status
- * @property string $id_organization
- * @property string $email
- * @property string $username
- * @property string $password
- * @property string $last_conection
- * @property string $last_activity
- * @property string $token_security
- * @property int $date_expired_token_security
- * @property string $token_recovery_password
- * @property string $date_token_recovery_password
- * @property string $date_modified
- * @property string $date_created
- *
- * @property Audit[] $audits
- * @property AssignmentUser[] $assignmentUsers
- * @property Assignment[] $assignments
- * @property RoleUser[] $roleUsers
- * @property Role[] $roles
- * @property Organization $organization
- * @property UserStatus $status
- */
+* This is the model class for table "user".
+*
+* @property string $id
+* @property string $id_status
+* @property string $id_organization
+* @property string $email
+* @property string $username
+* @property string $password
+* @property string $last_conection
+* @property string $last_activity
+* @property string $token_security
+* @property int $date_expired_token_security
+* @property string $token_recovery_password
+* @property string $date_token_recovery_password
+* @property string $date_modified
+* @property string $date_created
+*
+* @property Audit[] $audits
+* @property AssignmentUser[] $assignmentUsers
+* @property Assignment[] $assignments
+* @property RoleUser[] $roleUsers
+* @property Role[] $roles
+* @property Organization $organization
+* @property UserStatus $status
+*/
 class User extends UserIdentity
 {
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public static function tableName()
     {
         return 'user';
     }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function rules()
     {
         return [
@@ -61,68 +61,85 @@ class User extends UserIdentity
             [['id_status'], 'exist', 'skipOnError' => true, 'targetClass' => UserStatus::className(), 'targetAttribute' => ['id_status' => 'id']],
         ];
     }
-	
+
     /**
-     * {@inheritdoc}
-     */
-	public function getFormAttribs() {
-		$o = Organization::find();
-		if(Yii::$app->user->identity->id < 2){
-			$o = $o->where(['status'=>true]);
-		}else{
-			$o = $o->where(['>', 'id', '1'])->andWhere(['status'=>true]);
-		}
-		$o = $o->all();
-		
-		return [
-			'status'=>[
-				'type'=>Form::INPUT_WIDGET, 
-				'widgetClass'=>'\kartik\widgets\SwitchInput', 
-			],
-			'id_organization'=>[
-				'type'=>Form::INPUT_WIDGET, 
-				'widgetClass'=>'\kartik\widgets\Select2', 
+    * {@inheritdoc}
+    */
+    public function getFormAttribs() {
+        $o = Organization::find();
+        if(Yii::$app->user->identity->id > 1){
+            $o = $o->where(['>', 'id', '1']);
+        }
+        $o = $o->where(['status'=>true])->all();
+
+        return [
+            'status'=>[
+                'type'=>Form::INPUT_WIDGET,
+                'widgetClass'=>'\kartik\widgets\SwitchInput',
+            ],
+            'id_organization'=>[
+                'type'=>Form::INPUT_WIDGET,
+                'widgetClass'=>'\kartik\widgets\Select2',
+                'options'=>[
+                    'data'=>ArrayHelper::map($o, 'id', 'name'),
+                    'options' => [
+                        'placeholder' => Yii::t("app", "Select a group"),
+                        'required' => true,
+                    ],
+                    'pluginOptions' => [
+                        //'tags' => true,
+                        'tokenSeparators' => [',', ' '],
+                        'maximumInputLength' => 10,
+                    ],
+                ],
+                //'hint'=>Yii::t('app','Select a group...'),
+            ],
+			'roles'=>[
+				'type'=>Form::INPUT_WIDGET,
+				'widgetClass'=>'\kartik\widgets\Select2',
 				'options'=>[
-					'data'=>ArrayHelper::map($o, 'id', 'name'),
+					'data'=>ArrayHelper::map(Role::find()->where(['status'=>true])->all(), 'id', 'name'),
 					'options' => [
-						'placeholder' => Yii::t("app", "Select a group"),
-						'required' => true,
+						'placeholder' => Yii::t("app", "Select a role"),
+						'multiple'=>true,
+						//'required' => true,
 					],
 					'pluginOptions' => [
 						//'tags' => true,
+						'allowClear' => false,
 						'tokenSeparators' => [',', ' '],
 						'maximumInputLength' => 10,
 					],
-				], 
+				],
 				//'hint'=>Yii::t('app','Select a group...'),
 			],
-			'username'=>[
-				'type'=>Form::INPUT_TEXT, 
-				'options'=>[
-					'placeholder'=>Yii::t('app','Enter a UserName...'),
-				],
-			],
-			'email'=>[
-				'type'=>Form::INPUT_WIDGET, 
-				'widgetClass'=>'\yii\widgets\MaskedInput', 
-				'options'=>[
-					'clientOptions' => [
-						'alias' =>  'email',
-					],
-				],
-			],
-			'password'=>[
-				'type'=>Form::INPUT_PASSWORD, 
-				'options'=>[
-					'placeholder'=>Yii::t('app','Enter a Password...'),
-				],
-			],
-		];
-	}
+            'username'=>[
+                'type'=>Form::INPUT_TEXT,
+                'options'=>[
+                    'placeholder'=>Yii::t('app','Enter a UserName...'),
+                ],
+            ],
+            'email'=>[
+                'type'=>Form::INPUT_WIDGET,
+                'widgetClass'=>'\yii\widgets\MaskedInput',
+                'options'=>[
+                    'clientOptions' => [
+                        'alias' =>  'email',
+                    ],
+                ],
+            ],
+            'password'=>[
+                'type'=>Form::INPUT_PASSWORD,
+                'options'=>[
+                    'placeholder'=>Yii::t('app','Enter a Password...'),
+                ],
+            ],
+        ];
+    }
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function attributeLabels()
     {
         return [
@@ -144,56 +161,56 @@ class User extends UserIdentity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
+    * @return \yii\db\ActiveQuery
+    */
     public function getAudits()
     {
         return $this->hasMany(Audit::className(), ['id_user' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
+    * @return \yii\db\ActiveQuery
+    */
     public function getAssignmentUsers()
     {
         return $this->hasMany(AssignmentUser::className(), ['id_user' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
+    * @return \yii\db\ActiveQuery
+    */
     public function getAssignments()
     {
         return $this->hasMany(Assignment::className(), ['id' => 'id_assignment'])->viaTable('assignment_user', ['id_user' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
+    * @return \yii\db\ActiveQuery
+    */
     public function getRoleUsers()
     {
         return $this->hasMany(RoleUser::className(), ['id_user' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
+    * @return \yii\db\ActiveQuery
+    */
     public function getRoles()
     {
         return $this->hasMany(Role::className(), ['id' => 'id_role'])->viaTable('role_user', ['id_user' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
+    * @return \yii\db\ActiveQuery
+    */
     public function getOrganization()
     {
         return $this->hasOne(Organization::className(), ['id' => 'id_organization']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
+    * @return \yii\db\ActiveQuery
+    */
     public function getStatus()
     {
         return $this->hasOne(UserStatus::className(), ['id' => 'id_status']);

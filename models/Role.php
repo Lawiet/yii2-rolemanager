@@ -45,23 +45,23 @@ class Role extends \yii\db\ActiveRecord
             [['name'], 'unique'],
         ];
     }
-	
+
     /**
      * {@inheritdoc}
      */
 	public function getFormAttribs() {
 		return [
 			'status'=>[
-				'type'=>Form::INPUT_WIDGET, 
-				'widgetClass'=>'\kartik\widgets\SwitchInput', 
+				'type'=>Form::INPUT_WIDGET,
+				'widgetClass'=>'\kartik\widgets\SwitchInput',
 			],
 			'permissions'=>[
-				'type'=>Form::INPUT_WIDGET, 
-				'widgetClass'=>'\kartik\widgets\Select2', 
+				'type'=>Form::INPUT_WIDGET,
+				'widgetClass'=>'\kartik\widgets\Select2',
 				'options'=>[
 					'data'=>ArrayHelper::map(Permission::find()->where(['status'=>true])->all(), 'id', 'name'),
 					'options' => [
-						'placeholder' => Yii::t("app", "Select a group"),
+						'placeholder' => Yii::t("app", "Select a permission"),
 						'multiple'=>true,
 						'required' => true,
 					],
@@ -71,11 +71,11 @@ class Role extends \yii\db\ActiveRecord
 						'tokenSeparators' => [',', ' '],
 						'maximumInputLength' => 10,
 					],
-				], 
+				],
 				//'hint'=>Yii::t('app','Select a group...'),
 			],
 			'name'=>[
-				'type'=>Form::INPUT_TEXT, 
+				'type'=>Form::INPUT_TEXT,
 				'options'=>[
 					'placeholder'=>Yii::t('app','Enter a Name...'),
 				],

@@ -22,7 +22,7 @@ class RoleController extends Controller
      */
     public function behaviors()
     {
-		return parent::behaviors();
+        return parent::behaviors();
     }
 
     /**
@@ -61,48 +61,48 @@ class RoleController extends Controller
     {
         $model = new Assignment();
         $postData = Yii::$app->request->post();
-		$save = true;
+        $save = true;
 
         if ($postData) {
             if ($model->load($postData)) {
-				$permissions = $postData['Role']['permissions'];
-				$model->date_modified = new Expression('NOW()');
-				$model->date_created = new Expression('NOW()');
-				
-				$transaction = Yii::$app->db->beginTransaction();
+                $permissions = $postData['Role']['permissions'];
+                $model->date_modified = new Expression('NOW()');
+                $model->date_created = new Expression('NOW()');
 
-				try {
-					if(!$model->save())
-						$save = false;
-					
-					PermissionRole::deleteAll(['id_role'=>$id]);
-					
-					if(!empty($permissions))
-						foreach($permissions as $permission){
-							$gr = new PermissionRole();
-							$gr->id_role = $id;
-							$gr->id_permission = $permission;
-							
-							if(!$gr->save())
-								$save = false;
-						}
-					
-					if ($save) {
-						$transaction->commit();
-						
-						return $this->redirect(['view', 'id' => $model->id]);
-					} else {
-						$transaction->rollBack();
-					}
-				} catch (Exception $e) {
-					$transaction->rollBack();
-				}
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    if(!$model->save())
+                        $save = false;
+
+                    PermissionRole::deleteAll(['id_role'=>$id]);
+
+                    if(!empty($permissions))
+                        foreach($permissions as $permission){
+                            $gr = new PermissionRole();
+                            $gr->id_role = $id;
+                            $gr->id_permission = $permission;
+
+                            if(!$gr->save())
+                                $save = false;
+                        }
+
+                    if ($save) {
+                        $transaction->commit();
+
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
             }
         }
-		
-		return $this->render('create', [
-			'model' => $model,
-		]);
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -115,47 +115,47 @@ class RoleController extends Controller
     {
         $model = $this->findModel($id);
         $postData = Yii::$app->request->post();
-		$save = true;
+        $save = true;
 
         if ($postData) {
             if ($model->load($postData)) {
-				$permissions = $postData['Role']['permissions'];
-				$model->date_modified = new Expression('NOW()');
-				
-				$transaction = Yii::$app->db->beginTransaction();
+                $permissions = $postData['Role']['permissions'];
+                $model->date_modified = new Expression('NOW()');
 
-				try {
-					if(!$model->save())
-						$save = false;
-					
-					PermissionRole::deleteAll(['id_role'=>$id]);
-					
-					if(!empty($permissions))
-						foreach($permissions as $permission){
-							$gr = new PermissionRole();
-							$gr->id_role = $id;
-							$gr->id_permission = $permission;
-							
-							if(!$gr->save())
-								$save = false;
-						}
-					
-					if ($save) {
-						$transaction->commit();
-						
-						return $this->redirect(['view', 'id' => $model->id]);
-					} else {
-						$transaction->rollBack();
-					}
-				} catch (Exception $e) {
-					$transaction->rollBack();
-				}
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    if(!$model->save())
+                        $save = false;
+
+                    PermissionRole::deleteAll(['id_role'=>$id]);
+
+                    if(!empty($permissions))
+                        foreach($permissions as $permission){
+                            $gr = new PermissionRole();
+                            $gr->id_role = $id;
+                            $gr->id_permission = $permission;
+
+                            if(!$gr->save())
+                                $save = false;
+                        }
+
+                    if ($save) {
+                        $transaction->commit();
+
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
             }
         }
-		
-		return $this->render('update', [
-			'model' => $model,
-		]);
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -166,11 +166,11 @@ class RoleController extends Controller
      */
     public function actionDelete($id)
     {
-		if($id < 2) {
+        if($id < 2) {
             throw new NotFoundHttpException(Yii::t('app', 'This item can not be delete.'));
-		}
+        }
 
-		$this->findModel($id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -188,6 +188,6 @@ class RoleController extends Controller
             return $model;
         }
 
-		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

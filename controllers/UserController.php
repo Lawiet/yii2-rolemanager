@@ -9,25 +9,26 @@ use yii\filters\VerbFilter;
 
 use lawiet\rbac\models\User;
 use lawiet\rbac\models\UserSearch;
+use lawiet\rbac\models\RoleUser;
 use lawiet\rbac\web\Controller;
 
 /**
- * UsersController implements the CRUD actions for Users model.
- */
+* UsersController implements the CRUD actions for Users model.
+*/
 class UserController extends Controller
 {
     /**
-     * @inheritdoc
-     */
+    * @inheritdoc
+    */
     public function behaviors()
     {
-		return parent::behaviors();
+        return parent::behaviors();
     }
 
     /**
-     * Lists all Users models.
-     * @return mixed
-     */
+    * Lists all Users models.
+    * @return mixed
+    */
     public function actionIndex()
     {
         $searchModel = new UserSearch();
@@ -40,10 +41,10 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single Users model.
-     * @param integer $id
-     * @return mixed
-     */
+    * Displays a single Users model.
+    * @param integer $id
+    * @return mixed
+    */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -52,91 +53,150 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new Users model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+    * Creates a new Users model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    * @return mixed
+    */
     public function actionCreate()
     {
         $model = new User();
         $postData = Yii::$app->request->post();
+        $save = true;
 
-        if ( $model->load(Yii::$app->request->post()) ) {
-			$model->date_modified = new Expression('NOW()');
-			$model->date_created = new Expression('NOW()');
-			
-			if(strrpos($model->password, "$2y$") < 0){
-				$model-setPassword($model->password);
-			}
-			
-			if( $model->save() ){
-				return $this->redirect(['view', 'id' => $model->id]);
-			}
+        if ($postData) {
+            if ($model->load($postData)) {
+                $roles = $postData['User']['roles'];
+                $model->date_modified = new Expression('NOW()');
+                $model->date_created = new Expression('NOW()');
+
+                if(strrpos($model->password, "$2y$") < 0){
+                    $model-setPassword($model->password);
+                }
+
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    if(!$model->save())
+                    $save = false;
+
+                    RoleUser::deleteAll(['id_role'=>$id]);
+
+                    if(!empty($roles))
+                    foreach($roles as $role){
+                        $gr = new RoleUser();
+                        $gr->id_user = $id;
+                        $gr->id_role = $role;
+
+                        if(!$gr->save())
+                        $save = false;
+                    }
+
+                    if ($save) {
+                        $transaction->commit();
+
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
-		
-		return $this->render('create', [
-			'model' => $model,
-		]);
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Updates an existing Users model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
+    * Updates an existing Users model.
+    * If update is successful, the browser will be redirected to the 'view' page.
+    * @param integer $id
+    * @return mixed
+    */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
         $postData = Yii::$app->request->post();
+        $save = true;
 
-        if ( $model->load(Yii::$app->request->post()) ) {
-			$model->date_modified = new Expression('NOW()');
-			
-			if(strrpos($model->password, "$2y$") < 0){
-				$model-setPassword($model->password);
-			}
-			
-			if( $model->save() ){
-				return $this->redirect(['view', 'id' => $model->id]);
-			}
+        if ($postData) {
+            if ($model->load($postData)) {
+                $roles = $postData['User']['roles'];
+                $model->date_modified = new Expression('NOW()');
+                $model->date_created = new Expression('NOW()');
+
+                if(strrpos($model->password, "$2y$") < 0){
+                    $model-setPassword($model->password);
+                }
+
+                $transaction = Yii::$app->db->beginTransaction();
+
+                try {
+                    if(!$model->save())
+                    $save = false;
+
+                    RoleUser::deleteAll(['id_role'=>$id]);
+
+                    if(!empty($roles))
+                    foreach($roles as $role){
+                        $gr = new RoleUser();
+                        $gr->id_user = $id;
+                        $gr->id_role = $role;
+
+                        if(!$gr->save())
+                        $save = false;
+                    }
+
+                    if ($save) {
+                        $transaction->commit();
+
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
-		
-		return $this->render('update', [
-			'model' => $model,
-		]);
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Deletes an existing Users model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
+    * Deletes an existing Users model.
+    * If deletion is successful, the browser will be redirected to the 'index' page.
+    * @param integer $id
+    * @return mixed
+    */
     public function actionDelete($id)
     {
-		if($id < 2) {
+        if($id < 2) {
             throw new NotFoundHttpException(Yii::t('app', 'This item can not be delete.'));
-		}
+        }
 
-		$this->findModel($id)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Users model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Users the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    * Finds the Users model based on its primary key value.
+    * If the model is not found, a 404 HTTP exception will be thrown.
+    * @param integer $id
+    * @return Users the loaded model
+    * @throws NotFoundHttpException if the model cannot be found
+    */
     protected function findModel($id)
     {
         if (($model = User::findOne($id)) !== null) {
             return $model;
         }
 
-		throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }
