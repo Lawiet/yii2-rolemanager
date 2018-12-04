@@ -1,14 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use lawiet\rbac\web\Breadcrumbs;
 
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Group */
 
 $this->title = Yii::t('app', 'Create Group');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
 ?>
 <div class="group-create">
 

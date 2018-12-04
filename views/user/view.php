@@ -2,13 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use lawiet\rbac\web\Breadcrumbs;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
 
 $this->title = $model->username;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
 ?>
 <div class="users-view">
 

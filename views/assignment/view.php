@@ -2,13 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use lawiet\rbac\web\Breadcrumbs;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Assignment */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assignments'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
 ?>
 <div class="assignment-view">
 

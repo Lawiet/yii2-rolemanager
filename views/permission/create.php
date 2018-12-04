@@ -1,14 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use lawiet\rbac\web\Breadcrumbs;
 
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Permission */
 
 $this->title = Yii::t('app', 'Create Permission');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Permissions'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
 ?>
 <div class="permission-create">
 

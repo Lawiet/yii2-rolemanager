@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use lawiet\rbac\web\Breadcrumbs;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Users */
@@ -8,9 +9,7 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'User',
 ]) . $model->username;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs($model->username, $model->id);
 ?>
 <div class="users-update">
 

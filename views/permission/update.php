@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use lawiet\rbac\web\Breadcrumbs;
 
 /* @var $this yii\web\View */
 /* @var $model lawiet\rbac\models\Permission */
@@ -8,9 +9,7 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Permission',
 ]) . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Permissions'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs($model->name, $model->id);
 ?>
 <div class="permission-update">
 

@@ -2,13 +2,14 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use lawiet\rbac\web\Breadcrumbs;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RolesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Roles');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
 ?>
 <div class="roles-index">
 
@@ -18,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Create Roles'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-	
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
