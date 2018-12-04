@@ -30,6 +30,7 @@ class Breadcrumbs extends Controller
         $controller = \Yii::$app->controller->id;
         $action = \Yii::$app->controller->action->id;
         $uri = '/' . $module . '/' . $controller;
+        $breadcrumbs = [];
 
         $permissions = Permission::find()
             ->andWhere(['uri'=>$uri])
@@ -49,7 +50,7 @@ class Breadcrumbs extends Controller
         }
         $breadcrumbs = array_reverse($breadcrumbs, true);
 
-        if (!in_array($action, ["index", "view", "create"])) {
+        if (!in_array($action, ["index", "view", "create", 'login', ''])) {
             $nombre = $nombre != "" ? Yii::t('app', $nombre) : Yii::t('app', 'view') . " " . Yii::t('app', $controller);
 
             if ($id != "") {
