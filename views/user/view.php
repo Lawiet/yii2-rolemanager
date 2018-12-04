@@ -30,7 +30,7 @@ $this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
         'attributes' => [
             'id',
             'status:boolean',
-            'id_organization.name',
+            'organization.name',
             'username',
             'email',
             'date_modified',

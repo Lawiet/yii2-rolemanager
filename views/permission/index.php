@@ -27,7 +27,7 @@ $this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_permission.name',
+            'permission.name',
             'status:boolean',
             'logged:boolean',
             'show_in_menu:boolean',

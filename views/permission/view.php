@@ -29,7 +29,7 @@ $this->params['breadcrumbs'] = Breadcrumbs::getBreadcrumbs();
         'model' => $model,
         'attributes' => [
             'id',
-            'id_permission.name',
+            'permission.name',
             'status:boolean',
             'logged:boolean',
             'show_in_menu:boolean',
